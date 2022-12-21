@@ -1,15 +1,42 @@
-#sidebar   {
-    height: 100%;
-    padding: 1rem;
+#sidebar {
+  height: fit-content;
+  padding: 0 1rem;
+
+  li {
+    list-style-type: none;
+    line-height: 21px;
+  }
+
+  ul {
+    padding: 0;
+  }
+
+  a {
+    text-decoration: none;
+    margin-left: 1rem;
+    margin-top: 0.125rem;
+    margin-bottom: 0.5rem;
+    padding: 0.1875rem 0.75rem;
+    color: rgb(0, 0, 0, 0.65);
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  .menu-block {
+    margin: 1rem 0;
+  }
+  .links-heading {
     display: flex;
-    flex-direction: column;
-    gap: 1rem;
-
-    button {
-        font-size: 1rem;
-        padding: 0.5rem 1rem;
-        border-radius: 5px;
-        width: 100%;
-
+    align-items: center;
+    gap: 0.25rem;
+    img {
+      aspect-ratio: inherit;
+      width: 1.5rem;
     }
+  }
+}
+
+.offcanvas-open {
+  display: flex;
+  overflow-y: visible;
 }

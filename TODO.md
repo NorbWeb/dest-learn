@@ -6,11 +6,9 @@ This is the markdown todo file for the dest-learn project.
 
 Things that need to be fixed, maked better or need some finish.
 
+- [ ] Set Layout
 - [ ] Navbar
-    - [ ] looks odd on mobile and crash the grid
 - [ ] Sidebar
-    - [ ] box take to much heigth on mobile
-    - [ ] maybe hidden with burger menu
 
 ## Content
 

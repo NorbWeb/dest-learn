@@ -1,0 +1,23 @@
+.info-grid {
+    display: grid;
+    grid-template-areas: "sidebar main";
+    grid-template-columns: 1fr 5fr;
+    gap: 1.5rem;
+}
+
+
+
+  .sidebar {
+    grid-area: sidebar;
+    display: block;
+    position: sticky;
+    overflow-y: auto;
+    top: 4rem;
+    height: calc(100vh - 4rem);
+    background-color: rgb(168, 167, 204);
+  }
+  .main {
+    grid-area: main;
+    background-color: rgb(204, 187, 167);
+    padding: 1rem;
+  }
