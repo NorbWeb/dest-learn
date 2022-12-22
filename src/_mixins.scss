@@ -1,0 +1,15 @@
+@mixin anchor($contrast) {
+  a {
+    text-decoration: none;
+    color: adjust-color($color: $contrast, $alpha: -0.25);
+
+    &:hover {
+      color: $contrast;
+    }
+
+    &.active {
+      color: $contrast;
+      font-weight: 500;
+    }
+  }
+}

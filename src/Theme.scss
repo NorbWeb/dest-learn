@@ -1,0 +1,58 @@
+@use "mixins";
+
+$primary: #4039a8;
+$secondary: rgb(248, 249, 250);
+$bg: #fff;
+$info: #f0ec27;
+$warn: #db1717;
+$success: #36c729;
+$text: #2b2b2b;
+$text-light: #d4d4d4;
+
+* {
+  color: $text;
+}
+
+body {
+  background-color: $bg;
+}
+
+.primary {
+  @include mixins.anchor($text-light);
+  background-color: $primary;
+  color: $text-light;  
+}
+.secondary {
+  @include mixins.anchor($text);
+  background-color: $secondary;
+  color: $text;
+}
+.bg {
+  @include mixins.anchor($text);
+  background-color: $bg;
+  color: $text;
+}
+.info {
+  @include mixins.anchor($text);
+  background-color: $info;
+  color: $text;
+}
+.warn {
+  @include mixins.anchor($text-light);
+  background-color: $warn;
+  color: $text-light;
+}
+.success {
+  @include mixins.anchor($text-light);
+  background-color: $success;
+  color: $text;
+}
+.text {
+  color: $text;
+}
+
+.text-light {
+  color: $text-light;
+}
+
+

@@ -5,7 +5,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: lightgray;
 }
 
 code {
@@ -20,31 +19,17 @@ body {
 
 #root {
   min-height: 100%;
+
   * {
     box-sizing: border-box;
+    
   }
-
-  .navbar {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 0.75rem 0;
-    z-index: 1020;
-    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
-    background-color: rgb(204, 167, 193);
-  }
-
-  .footer {
-    background-color: rgb(167, 190, 204);
-    padding: 1rem;
-  }
-
   .container {
     margin-left: auto;
     margin-right: auto;
     max-width: 1320px;
   }
+
+  
 }
 

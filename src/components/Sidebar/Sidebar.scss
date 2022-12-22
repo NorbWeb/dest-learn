@@ -1,6 +1,12 @@
-#sidebar {
-  height: fit-content;
-  padding: 0 1rem;
+.sidebar {
+  padding: 1rem;
+  grid-area: sidebar;
+  display: block;
+  position: sticky;
+  overflow-y: auto;
+  top: 4rem;
+  height: calc(100vh - 4rem);
+  background-color: rgb(168, 167, 204);
 
   li {
     list-style-type: none;
@@ -9,6 +15,7 @@
 
   ul {
     padding: 0;
+    margin: 0;
   }
 
   a {
@@ -23,8 +30,9 @@
   }
 
   .menu-block {
-    margin: 1rem 0;
+    margin-bottom: 1rem;
   }
+
   .links-heading {
     display: flex;
     align-items: center;
@@ -38,5 +46,4 @@
 
 .offcanvas-open {
   display: flex;
-  overflow-y: visible;
 }

@@ -1,0 +1,36 @@
+.sidebar-main-grid {
+  display: grid;
+  grid-template-areas: "sidebar main";
+  grid-template-columns: 1fr 5fr;
+  gap: 1.5rem;
+}
+
+.main {
+  grid-area: main;
+  display: grid;
+  grid-template-areas:
+    "intro toc"
+    "content toc";
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 4fr 1fr;
+
+  .intro {
+    grid-area: intro;
+    padding: 1rem 0 0 0.5rem;
+  }
+
+  .content {
+    grid-area: content;
+    padding-left: 0.5rem;
+  }
+
+  .toc {
+    grid-area: toc;
+    display: block;
+    position: sticky;
+    overflow-y: auto;
+    top: 4rem;
+    height: calc(100vh - 4rem);
+    padding: 1rem 0 0 1rem;
+  }
+}
