@@ -20,7 +20,7 @@ body {
 .primary {
   @include mixins.anchor($text-light);
   background-color: $primary;
-  color: $text-light;  
+  color: $text-light;
 }
 .secondary {
   @include mixins.anchor($text);
@@ -55,4 +55,11 @@ body {
   color: $text-light;
 }
 
-
+.dark {
+  @include mixins.anchor(rgb(60, 231, 68));
+  background-color: $text;
+  color: $text-light;
+  * {
+    color: $text-light;
+  }
+}

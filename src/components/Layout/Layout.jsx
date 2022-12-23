@@ -4,11 +4,11 @@ import "./Layout.scss";
 const Layout = () => {
   return (
     <>
-      <header id="header" className="primary dark">
+      <header id="header" className="primary mode">
         <Navbar />
       </header>
-        <Outlet className="dark"/>
-      <footer id="footer" className="secondary">
+      <Outlet />
+      <footer id="footer" className="secondary mode">
         <div className="container">Footer</div>
       </footer>
     </>

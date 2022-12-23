@@ -24,7 +24,7 @@ const Sidebar = () => {
   ]);
 
   return (
-    <aside className="sidebar bg">
+    <aside className="sidebar bg mode">
       <div className="offcanvas-body">
         <nav>
           <ul>
