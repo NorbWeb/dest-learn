@@ -3,6 +3,8 @@ import { Navbar } from "../Navigation/Navbar";
 import "./Layout.scss";
 const Layout = () => {
   return (
+
+    
     <>
       <header id="header" className="primary mode">
         <Navbar />

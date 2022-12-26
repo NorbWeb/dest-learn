@@ -5,9 +5,7 @@ import { Router } from "@solidjs/router";
 import "./index.scss";
 import "./Theme.scss";
 
-handleMode();
 
-console.log(modeChanger());
 
 render(
   () => (

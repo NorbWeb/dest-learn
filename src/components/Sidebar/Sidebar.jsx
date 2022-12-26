@@ -1,27 +1,20 @@
 import { createSignal, For } from "solid-js";
 import { A } from "@solidjs/router";
+import Logo from '../../assets/whisky-logo-96.png';
+
 
 import "./Sidebar.scss";
 const Sidebar = () => {
   const [item, setItem] = createSignal([
-    "Technologie",
-    "Mathematik",
-    "Drogenkunde",
-    "Spirituosen",
-    "Chemie",
+    {name: "Technologie", navItems: ["Destillation", "Item 2", "Item 3"]},
+    {name: "Mathematik", navItems: ["Einheiten", "Item 2", "Item 3"]},
+    {name: "Drogenkunde", navItems: ["Drogen", "Item 2", "Item 3"]},
+    {name: "Spirituosen", navItems: ["Verordnung", "Item 2", "Item 3"]},
+    {name: "Chemie", navItems: ["Chemie", "Item 2", "Item 3"]},
   ]);
 
 
-  const [subItem, setSubItem] = createSignal([
-    "Item 1",
-    "Item 2",
-    "Item 3",
-    "Item 4",
-    "Item 5",
-    "Item 6",
-    "Item 7",
-    "Item 8",
-  ]);
+
 
   return (
     <aside className="sidebar bg mode">
@@ -32,14 +25,14 @@ const Sidebar = () => {
               {(item) => (
                 <li className="menu-block">
                   <strong className="links-heading">
-                    <img src="src/assets/whisky-logo-96.png" alt="icon" />
-                    {item}
+                    <img src={Logo} alt="icon" />
+                    {item.name}
                   </strong>
                   <ul>
-                    <For each={subItem()}>
+                    <For each={item.navItems}>
                       {(subItem) => (
                         <li>
-                          <A href="#" activeClass="sidebar-active">
+                          <A href={`/home/${item.name.toLocaleLowerCase()}/${subItem.toLocaleLowerCase()}`} activeClass="sidebar-active">
                             {subItem}
                           </A>
                         </li>

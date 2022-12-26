@@ -34,3 +34,15 @@
     padding: 1rem 0 0 1rem;
   }
 }
+
+.content {
+  padding-top: 4rem;
+  margin-top: -4rem;
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+// .first {
+//   margin-top: 0;
+//   padding-top: 0;
+// }
+

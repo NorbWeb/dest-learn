@@ -1,9 +1,11 @@
 import { A } from "@solidjs/router";
 import { createSignal, For } from "solid-js";
 import "./Navbar.scss";
+import Logo from '../../assets/whisky-logo-96.png';
+
 const Navbar = () => {
   const [navItem, setNavItem] = createSignal([
-    { name: "Home", href: "/home" },
+    { name: "Home", href: "/home/technologie" },
     { name: "About", href: "/about" },
     { name: "User", href: "/user" },
     { name: "Admin", href: "/admin" },
@@ -12,8 +14,8 @@ const Navbar = () => {
   return (
     <>
       <nav id="navbar" className="container">
-        <A href="/home" activeClass={false} className="no-style">
-          <img src="src/assets/whisky-logo-96.png" alt="Logo" />
+        <A href="/home/technologie" activeClass={false} className="no-style">
+          <img src={Logo} alt="Logo" />
         </A>
         <ul>
           <For each={navItem()}>
