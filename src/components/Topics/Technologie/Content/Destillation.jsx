@@ -11,7 +11,7 @@ const Destillation = () => {
       </div>
       <br />
       <div className="content">
-        <h2 className="content first" id="Prinzip">Prinzip</h2>
+        <h2 className="headline" id={navItem()[0]}>{navItem()[0]}</h2>
         <p>
           dictumst vestibulum rhoncus est pellentesque elit ullamcorper
           dignissim cras tincidunt lobortis feugiat vivamus at augue eget arcu
@@ -24,7 +24,7 @@ const Destillation = () => {
           neque convallis a cras semper auctor neque vitae tempus quam
           pellentesque nec nam aliquam sem et tortor consequat id
         </p>
-        <h2 className="content" id="Gegenstrom">Gegenstrom</h2>
+        <h2 className="headline" id={navItem()[1]}>{navItem()[1]}</h2>
         <p>
           dictumst vestibulum rhoncus est pellentesque elit ullamcorper
           dignissim cras tincidunt lobortis feugiat vivamus at augue eget arcu
@@ -39,7 +39,7 @@ const Destillation = () => {
         </p>
       </div>
       <div className="toc">
-        <h2>Auf dieser Seite</h2>
+        <h3>Auf dieser Seite</h3>
         <div className="divider"></div>
         <nav id="TableOfContents">
           <ul>

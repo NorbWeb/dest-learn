@@ -1,7 +1,9 @@
+import { Outlet } from '@solidjs/router';
+
 const Drogenkunde = () => {
 return (
 <>
-<h1>Drogenkunde</h1>
+<Outlet />
 </>
 )
 };

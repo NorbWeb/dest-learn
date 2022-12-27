@@ -1,7 +1,6 @@
 import { Outlet } from '@solidjs/router';
-import './Technologie.scss';
 
-const Technologie = () => {
+const Mathematik = () => {
 return (
 <>
 <Outlet />
@@ -9,4 +8,4 @@ return (
 )
 };
 
-export {Technologie};
+export {Mathematik};

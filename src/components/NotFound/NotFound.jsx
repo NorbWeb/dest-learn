@@ -1,11 +1,13 @@
-import './NotFound.scss';
+import "./NotFound.scss";
 const NotFound = () => {
-return (
-<>
-<h1>404</h1>
-<p>Page not found.</p>
-</>
-)
+  return (
+    <>
+      <div>
+        <h1>404</h1>
+        <p>Page not found.</p>
+      </div>
+    </>
+  );
 };
 
-export {NotFound};
+export { NotFound };

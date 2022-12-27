@@ -1,20 +1,15 @@
 import { createSignal, For } from "solid-js";
 import { A } from "@solidjs/router";
-import Logo from '../../assets/whisky-logo-96.png';
-
+import Logo from "../../assets/whisky-logo-96.png";
 
 import "./Sidebar.scss";
 const Sidebar = () => {
   const [item, setItem] = createSignal([
-    {name: "Technologie", navItems: ["Destillation", "Item 2", "Item 3"]},
-    {name: "Mathematik", navItems: ["Einheiten", "Item 2", "Item 3"]},
-    {name: "Drogenkunde", navItems: ["Drogen", "Item 2", "Item 3"]},
-    {name: "Spirituosen", navItems: ["Verordnung", "Item 2", "Item 3"]},
-    {name: "Chemie", navItems: ["Chemie", "Item 2", "Item 3"]},
+    { name: "Technologie", navItems: ["Destillation", "Item 2", "Item 3"] },
+    { name: "Mathematik", navItems: ["Einheiten", "Item 2", "Item 3"] },
+    { name: "Drogenkunde", navItems: ["Drogen", "Item 2", "Item 3"] },
+    { name: "Spirituosen", navItems: ["Verordnung", "Item 2", "Item 3"] },
   ]);
-
-
-
 
   return (
     <aside className="sidebar bg mode">
@@ -32,7 +27,10 @@ const Sidebar = () => {
                     <For each={item.navItems}>
                       {(subItem) => (
                         <li>
-                          <A href={`/home/${item.name.toLocaleLowerCase()}/${subItem.toLocaleLowerCase()}`} activeClass="sidebar-active">
+                          <A
+                            href={`/dokumentation/${item.name.toLocaleLowerCase()}/${subItem.toLocaleLowerCase()}`}
+                            activeClass="sidebar-active"
+                          >
                             {subItem}
                           </A>
                         </li>

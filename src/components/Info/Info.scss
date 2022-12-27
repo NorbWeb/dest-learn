@@ -13,15 +13,29 @@
     "content toc";
   grid-template-rows: auto 1fr;
   grid-template-columns: 4fr 1fr;
+  gap: 1.5rem;
+
+  .no-style {
+    color: blue;
+    &:hover {
+      text-decoration: none;
+    }
+  }
 
   .intro {
     grid-area: intro;
     padding: 1rem 0 0 0.5rem;
+    margin-bottom: 2rem;
   }
 
   .content {
     grid-area: content;
     padding-left: 0.5rem;
+  }
+
+  .headline {
+    padding-top: 4rem;
+    margin-top: -4rem;
   }
 
   .toc {
@@ -32,17 +46,26 @@
     top: 4rem;
     height: calc(100vh - 4rem);
     padding: 1rem 0 0 1rem;
+
+    .divider {
+      border-top: 0.5px solid grey;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+
+      li {
+        margin-bottom: 0.25rem;
+      }
+
+      a {
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
   }
 }
-
-.content {
-  padding-top: 4rem;
-  margin-top: -4rem;
-  transition: cubic-bezier(0.075, 0.82, 0.165, 1);
-}
-
-// .first {
-//   margin-top: 0;
-//   padding-top: 0;
-// }
-
