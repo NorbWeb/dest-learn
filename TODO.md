@@ -6,9 +6,11 @@ This is the markdown todo file for the dest-learn project.
 
 Things that need to be fixed, maked better or need some finish.
 
-- [ ] Set Layout
 - [ ] Navbar
-- [ ] Sidebar
+    - [ ] responsiveness
+    - [-] Do we need nav items User and Admin? Something else? (disabled now)
+- [ ] Sidebar responsiveness
+- [ ] About us section
 
 ## Content
 
@@ -16,7 +18,6 @@ Tasks related to new content.
 
 - [ ] Database, maybe one of these: Firebase, Mongodb, Directus
 - [ ] Logo
-- [ ] Subsections for every MenuItem #prio1
 
 ## Style 
 
@@ -29,8 +30,9 @@ Tasks related to new content.
 All interesting things that comes in mind.
 
 - [ ] use the html progress tag <progress> for learning results or something else https://developer.mozilla.org/en-US/docs/Web/HTML/Element/progress
-- [ ] 
 
 # DONE
 
+- [x] Set Layout
+- [x] Subsections for every MenuItem #prio1
 

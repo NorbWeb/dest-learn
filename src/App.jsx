@@ -2,20 +2,19 @@ import { Routes, Route, Navigate } from "@solidjs/router";
 import { Layout } from "./components/Layout/Layout";
 import { Info } from "./components/Info/Info";
 import { User } from "./components/User/User";
-import { Destillation } from "./components/Topics/Technologie/Content/Destillation";
 import { NotFound } from "./components/NotFound/NotFound";
-import { Technologie } from "./components/Topics/Technologie/Technologie";
-import { Mathematik } from "./components/Topics/Mathematik/Mathematik";
-import { Drogenkunde } from "./components/Topics/Drogenkunde/Drogenkunde";
-import { Spirituosen } from "./components/Topics/Spirituosen/Spirituosen";
-import { Einheiten } from "./components/Topics/Mathematik/Content/Einheiten";
-import { Verordnung } from "./components/Topics/Spirituosen/Content/Verordnung";
+import { Routes_Technologie, Technologie } from "./components/Topics/Technologie/Technologie";
+import { Mathematik, Routes_Mathematik } from "./components/Topics/Mathematik/Mathematik";
+import { Drogenkunde, Routes_Drogenkunde } from "./components/Topics/Drogenkunde/Drogenkunde";
+import { Routes_Spirituosen, Spirituosen } from "./components/Topics/Spirituosen/Spirituosen";
+import { Home } from "./components/Home/Home";
 
 function App() {
   return (
     <>
       <Routes>
         <Route path="/" component={Layout}>
+          <Route path="/" component={Home}/>
           <Route
             path="/dokumentation"
             element={
@@ -24,16 +23,16 @@ function App() {
           />
           <Route path="dokumentation" component={Info}>
             <Route path="technologie" component={Technologie}>
-              <Route path="destillation" element={Destillation} />
+              <Routes_Technologie />
             </Route>
             <Route path="mathematik" component={Mathematik}>
-              <Route path="einheiten" element={Einheiten} />
+              <Routes_Mathematik />
             </Route>
             <Route path="drogenkunde" component={Drogenkunde}>
-              <Route path="destillation" element={Destillation} />
+              <Routes_Drogenkunde />
             </Route>
             <Route path="spirituosen" component={Spirituosen}>
-              <Route path="verordnung" element={Verordnung} />
+              <Routes_Spirituosen />
             </Route>
             <Route path="*" component={NotFound} />
           </Route>

@@ -1,58 +1,31 @@
-import { A } from "@solidjs/router";
-import { createSignal } from "solid-js";
+import { DocLayout } from "../../../Info/DocLayout";
 
 const Destillation = () => {
-  const [navItem, setNavItem] = createSignal(["Prinzip", "Gegenstrom"]);
+  const data = {
+    title: "Destillation",
+    subtitle:
+      "Hier lernst du alles rund ums Destillieren. Wir gehen auf das Prinzip, die Wirkmechanismen und den grundlegenden Aufbau einer Destillieranlage ein.",
+    headline: [
+      {
+        type: "text",
+        id: 1,
+        name: "Prinzip",
+        content:
+          "Lorem ipsum dolor sit amet consectetur adipiscing elit, urna consequat felis vehicula class ultricies mollis dictumst, aenean non a in donec nulla. Phasellus ante pellentesque erat cum risus consequat imperdiet aliquam, integer placerat et turpis mi eros nec lobortis taciti, vehicula nisl litora tellus ligula porttitor metus. Vivamus integer non suscipit taciti mus etiam at primis tempor sagittis sit, euismod libero facilisi aptent elementum felis blandit cursus gravida sociis erat ante, eleifend lectus nullam dapibus netus feugiat curae curabitur est ad. Massa curae fringilla porttitor quam sollicitudin iaculis aptent leo ligula euismod dictumst, orci penatibus mauris eros etiam praesent erat volutpat posuere hac. Metus fringilla nec ullamcorper odio aliquam lacinia conubia mauris tempor, etiam ultricies proin quisque lectus sociis id tristique, integer phasellus taciti pretium adipiscing tortor sagittis ligula.",
+      },
+      {
+        type: "text",
+        id: 2,
+        name: "Gegenstrom",
+        content:
+          "Lorem ipsum dolor sit amet consectetur adipiscing elit, urna consequat felis vehicula class ultricies mollis dictumst, aenean non a in donec nulla. Phasellus ante pellentesque erat cum risus consequat imperdiet aliquam, integer placerat et turpis mi eros nec lobortis taciti, vehicula nisl litora tellus ligula porttitor metus. Vivamus integer non suscipit taciti mus etiam at primis tempor sagittis sit, euismod libero facilisi aptent elementum felis blandit cursus gravida sociis erat ante, eleifend lectus nullam dapibus netus feugiat curae curabitur est ad. Massa curae fringilla porttitor quam sollicitudin iaculis aptent leo ligula euismod dictumst, orci penatibus mauris eros etiam praesent erat volutpat posuere hac. Metus fringilla nec ullamcorper odio aliquam lacinia conubia mauris tempor, etiam ultricies proin quisque lectus sociis id tristique, integer phasellus taciti pretium adipiscing tortor sagittis ligula.",
+      },
+    ],
+  };
 
   return (
     <>
-      <div className="intro">
-        <h1>Destillation</h1>Das ist Destillation.
-      </div>
-      <br />
-      <div className="content">
-        <h2 className="headline" id={navItem()[0]}>{navItem()[0]}</h2>
-        <p>
-          dictumst vestibulum rhoncus est pellentesque elit ullamcorper
-          dignissim cras tincidunt lobortis feugiat vivamus at augue eget arcu
-          dictum varius duis at consectetur lorem donec massa sapien faucibus et
-          molestie ac feugiat sed lectus vestibulum mattis ullamcorper velit sed
-          ullamcorper morbi tincidunt ornare massa eget egestas purus viverra
-          accumsan in nisl nisi scelerisque eu ultrices vitae auctor eu augue ut
-          lectus arcu bibendum at varius vel pharetra vel turpis nunc eget lorem
-          dolor sed viverra ipsum nunc aliquet bibendum enim facilisis gravida
-          neque convallis a cras semper auctor neque vitae tempus quam
-          pellentesque nec nam aliquam sem et tortor consequat id
-        </p>
-        <h2 className="headline" id={navItem()[1]}>{navItem()[1]}</h2>
-        <p>
-          dictumst vestibulum rhoncus est pellentesque elit ullamcorper
-          dignissim cras tincidunt lobortis feugiat vivamus at augue eget arcu
-          dictum varius duis at consectetur lorem donec massa sapien faucibus et
-          molestie ac feugiat sed lectus vestibulum mattis ullamcorper velit sed
-          ullamcorper morbi tincidunt ornare massa eget egestas purus viverra
-          accumsan in nisl nisi scelerisque eu ultrices vitae auctor eu augue ut
-          lectus arcu bibendum at varius vel pharetra vel turpis nunc eget lorem
-          dolor sed viverra ipsum nunc aliquet bibendum enim facilisis gravida
-          neque convallis a cras semper auctor neque vitae tempus quam
-          pellentesque nec nam aliquam sem et tortor consequat id
-        </p>
-      </div>
-      <div className="toc">
-        <h3>Auf dieser Seite</h3>
-        <div className="divider"></div>
-        <nav id="TableOfContents">
-          <ul>
-            <For each={navItem()}>
-              {(item) => (
-                <li>
-                  <A href={`#${item}`}>{item}</A>
-                </li>
-              )}
-            </For>
-          </ul>
-        </nav>
-      </div>
+      <DocLayout {...data} />
     </>
   );
 };

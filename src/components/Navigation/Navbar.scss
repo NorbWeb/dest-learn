@@ -19,6 +19,16 @@
     list-style-type: none;
     padding: 0.5rem;
   }
+
+  #logo {
+    transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+    &:hover {
+      transform: rotate(20deg) scale(1.1);
+    transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+    }
+  }
 }
 
 @media screen and (max-width: 992px) {
