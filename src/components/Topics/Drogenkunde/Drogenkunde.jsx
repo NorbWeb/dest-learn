@@ -1,4 +1,5 @@
 import { Outlet, Route } from '@solidjs/router';
+import { DrugCard } from './Content/DrugCard';
 
 const Drogenkunde = () => {
     return (
@@ -11,7 +12,7 @@ const Drogenkunde = () => {
 const Routes = () => {
     return (
         <>
-            <Route path="drogen" element={<h1>Drogen</h1>} />
+            <Route path="drogen" element={DrugCard} />
         </>
     )
 }
