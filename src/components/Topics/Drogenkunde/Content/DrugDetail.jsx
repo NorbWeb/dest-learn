@@ -1,7 +1,7 @@
 import "./DrugCard.scss";
 import Enzian from "../../../../assets/enzianwurzel.png";
 
-const DrugCard = () => {
+const DrugDetail = () => {
     const data = {
         id: 1,
         name: "Enzianwurzel",
@@ -74,4 +74,4 @@ const DrugCard = () => {
     );
 };
 
-export { DrugCard };
+export { DrugDetail };

@@ -1,8 +1,8 @@
 .card {
-  margin-top: 1rem;
-  border: 0.5px solid rgba(0, 0, 0, 0.175);
+  border: 0.5px solid #0000002d;
   border-radius: 15px;
-  width: 18rem;
+  width: 16.5rem;
+  height: fit-content;
 
   * {
     border-radius: inherit;
@@ -14,11 +14,25 @@
 
   .card-body {
     padding: 1rem;
+    border-top: 0.5px solid #0000002d;
+    border-radius: 0 0;
   }
 
   .card-title {
     margin: 0 0 0.5rem 0;
-    font-size: 1.25rem;
+    font-size: 1.15rem;
+    hyphens: auto;
+  }
+
+  .card-note {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    line-height: 1.325rem;
+    max-height: 8rem;
+    -webkit-box-orient: vertical;
+    display: block;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
   }
 
   img {
@@ -27,27 +41,32 @@
     width: 100%;
   }
 
-  p {
-    margin: 0;
-    display: flex;
-    justify-content: left;
+  &.small {
+    width: 10rem;
 
-    span {
-      width: 25%;
+    .card-title {
+      font-size: 1rem;
+      hyphens: auto;
+    }
+
+    .card-note {
+      display: none;
     }
   }
 
-  .list-box {
-    display: flex;
-    justify-content: left;
+  // &.list {
+  //   img,
+  //   .card-note {
+  //     display: none;
+  //   }
 
-    label {
-      width: 25%;
-    }
+  //   .card-body {
+  //     border: none;
+  //   }
+  //   border: none;
 
-    ul {
-      margin-top: 0;
-      padding-left: 20px;
-    }
-  }
+  //   .card-title {
+  //     font-size: 1rem;
+  //   }
+  // }
 }

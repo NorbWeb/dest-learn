@@ -1,0 +1,13 @@
+#drug-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-bottom: 1.5rem;
+
+}
+
+.drug-intro {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
