@@ -1,0 +1,53 @@
+.card {
+  margin-top: 1rem;
+  border: 0.5px solid rgba(0, 0, 0, 0.175);
+  border-radius: 15px;
+  width: 18rem;
+
+  * {
+    border-radius: inherit;
+  }
+
+  .bold {
+    font-weight: 700;
+  }
+
+  .card-body {
+    padding: 1rem;
+  }
+
+  .card-title {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.25rem;
+  }
+
+  img {
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  p {
+    margin: 0;
+    display: flex;
+    justify-content: left;
+
+    span {
+      width: 25%;
+    }
+  }
+
+  .list-box {
+    display: flex;
+    justify-content: left;
+
+    label {
+      width: 25%;
+    }
+
+    ul {
+      margin-top: 0;
+      padding-left: 20px;
+    }
+  }
+}

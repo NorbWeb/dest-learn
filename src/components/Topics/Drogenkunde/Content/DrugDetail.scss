@@ -1,0 +1,47 @@
+.card {
+    border: 1px black solid;
+    border-radius: 15px;
+    width: 18rem;
+  
+    .bold {
+      font-weight: 700;
+    }
+  
+    .profile {
+      padding: 1rem;
+    }
+  
+    .card-title {
+      font-size: 2rem;
+      font-weight: 500;
+      border: 0.5px solid grey;
+    }
+  
+    img {
+      width: 100%;
+    }
+  
+    p {
+      display: flex;
+      justify-content: left;
+  
+      span {
+        width: 25%;
+      }
+    }
+  
+    .list-box {
+      display: flex;
+      justify-content: left;
+  
+      label {
+        width: 25%;
+      }
+  
+      ul {
+        margin-top: 0;
+        padding-left: 20px;
+      }
+    }
+  }
+  
