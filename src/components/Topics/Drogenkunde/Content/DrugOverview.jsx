@@ -71,40 +71,45 @@ const items = [
 ];
 
 const DrugOverview = () => {
-  const [view, setView] = createSignal("Tile");
-  let matches = document.getElementsByClassName("card");
-  let drugViewPreference = "";
-  if(!localStorage.getItem('drugViewPreference')) {
-    drugViewPreference = view();
+  // view is variable for the layout in DrugOverview
+  const [view, setView] = createSignal();
+  // viewOptions is the array with all possible options
+  const viewOptions = ["tile", "small", "list"];
+
+  // onMount checks if a viewOption is in local store
+  // if no, set it to first option, if yes, set view to local store
+  if (!localStorage.getItem("drugViewPreference")) {
+    setView(viewOptions[0])
   } else {
-    drugViewPreference = localStorage.getItem('drugViewPreference')
+    setView(localStorage.getItem("drugViewPreference"));
+    console.debug("Get view from local store accomplished")
   }
 
-  createEffect(() => {
-    localStorage.setItem("drugViewPreference",`${view()}`)
-    console.log(view(), drugViewPreference)
+  // remove and add css class to displayed component
+  function setClass(remove, add) {
+    let matches = document.getElementsByClassName("card");
+    for (let i = 0; i < matches.length; i++) {
+      matches[i].classList.remove(remove);
+      matches.item(i).classList.add(add);
+    }
+  }
+
+  // updates local store to view and run setClass
+  // remove actual class (previous view()) and add new (new view())
+  createEffect((prev) => {
+    localStorage.setItem("drugViewPreference", `${view()}`);
+    setClass(prev, view());
   });
 
+  // on click function for button
+  // set view to the next option from viewOption array
   function handleClick() {
-    if (view() === "Tile") {
-      setView(() => "Small");
-      for (let i = 0; i < matches.length; i++) {
-        matches[i].classList.remove("tile");
-        matches.item(i).classList.add("small");
-      }
-    } else if (view() === "Small") {
-      setView(() => "List");
-      for (let i = 0; i < matches.length; i++) {
-        matches[i].classList.remove("small");
-        matches.item(i).classList.add("list");
-      }
-    } else if (view() === "List") {
-      setView(() => "Tile");
-      for (let i = 0; i < matches.length; i++) {
-        matches[i].classList.remove("list");
-        matches.item(i).classList.add("tile");
-      }
-    }drugViewPreference = localStorage.getItem('drugViewPreference')
+    let index = viewOptions.indexOf(view());
+    if (index < viewOptions.length - 1) {
+      setView(viewOptions[index + 1]);
+    } else {
+      setView(viewOptions[0]);
+    }
   }
 
   return (
@@ -120,7 +125,7 @@ const DrugOverview = () => {
         </div>
       </div>
       <div id="drug-content" className="content">
-        {view() != "List" ? (
+        {view() != "list" ? (
           <For each={items}>{(drug) => <DrugCard {...drug} />}</For>
         ) : (
           <ul>
