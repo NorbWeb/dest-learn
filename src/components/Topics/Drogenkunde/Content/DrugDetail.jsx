@@ -4,7 +4,6 @@ import "./DrugDetail.scss";
 
 const DrugDetail = () => {
   const params = useParams().id;
-  console.log(params);
   let filter = items.filter((e) => e.name.toLowerCase() === params);
   let data = filter[0];
 
@@ -19,8 +18,11 @@ const DrugDetail = () => {
         <div className="wrapper aligne-base justify-between">
           <h1 className="card-title">{data.name}</h1>
           <div className="btn-group">
-            <button onClick={handlePrint}>print</button>
-            <button onclick="history.back()">back</button>
+            <button className="btn icon-btn primary" onClick={handlePrint}>
+              {/* <img className="icon" src={printer} alt="print button" /> */}
+              <i class="bi-printer"></i>
+            </button>
+            <button className="btn primary" onclick="history.back()">back</button>
           </div>
         </div>
         <div className="divider" />
@@ -63,7 +65,7 @@ const DrugDetail = () => {
               </ul>
             </div>
           </div>
-          <img src={data.img} alt="Enzianwurzel" />
+          <img className="card-img" src={data.img} alt="Enzianwurzel" />
         </div>
       </div>
     </>

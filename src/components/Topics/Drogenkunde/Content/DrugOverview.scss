@@ -1,14 +1,23 @@
 #drug-content {
-    display: flex;
-    align-content: flex-start;
-    flex-wrap: wrap;
-    gap: 1rem;
-    padding-bottom: 1.5rem;
+  display: flex;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-bottom: 1.5rem;
 
+  ul {
+    margin-top: 0;
+  }
+  .list a {
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 .drug-intro {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
 }

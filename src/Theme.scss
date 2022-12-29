@@ -22,6 +22,7 @@ body {
   @include mixins.anchor($text-light);
   background-color: $primary;
   color: $text-light;
+  border-color: $primary
 }
 .secondary {
   @include mixins.anchor($text);
@@ -86,4 +87,28 @@ body {
 .btn-group {
   display: flex;
   gap: 1rem;
+}
+
+.shadow {
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+
+.btn {
+  border-radius: 0.375rem;
+  border-width: 1px;
+  border-style: solid;
+  padding: 0.375rem 0.75rem;
+}
+
+.icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  i {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    color: $text-light;
+  }
 }

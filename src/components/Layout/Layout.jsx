@@ -5,7 +5,7 @@ import "./Layout.scss";
 const Layout = () => {
   return (
     <>
-      <header id="header" className="primary mode">
+      <header id="header" className="primary mode shadow">
         <Navbar />
       </header>
       <Outlet />

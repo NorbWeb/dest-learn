@@ -8,7 +8,7 @@ const DrugCard = (props) => {
     <>
       <div name="DrugCard" className="card">
         <A href={drug.name.toLowerCase()}>
-          <img src={drug.img} alt={drug.name} />
+          <img className="card-img" src={drug.img} alt={drug.name} />
           <div className="card-body">
             <h4 className="card-title">{drug.name}</h4>
             <div class="card-note">{drug.note}</div>

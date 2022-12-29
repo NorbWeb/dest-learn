@@ -2,6 +2,12 @@
   border-radius: 15px;
   width: 16.5rem;
   height: fit-content;
+  transition: all 450ms ease;
+
+  &:hover {
+    transform: translateY(-10px);
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  }
 
   a {
     text-decoration: none;
@@ -40,7 +46,7 @@
     border-radius: 0%;
   }
 
-  img {
+  .card-img {
     aspect-ratio: 1/1;
     object-fit: cover;
     width: 100%;

@@ -2,6 +2,7 @@ import { createEffect, createSignal } from "solid-js";
 import { DrugCard } from "./DrugCard";
 import { items as data } from "./_DrugData";
 import "./DrugOverview.scss";
+import { A } from "@solidjs/router";
 
 const DrugOverview = () => {
   // view is variable for the layout in DrugOverview
@@ -60,7 +61,17 @@ const DrugOverview = () => {
           <For each={data}>{(drug) => <DrugCard {...drug} />}</For>
         ) : (
           <ul>
-            <For each={data}>{(drug) => <li>{drug.name}</li>}</For>
+            <For each={data}>
+              {(drug) => (
+                <li className="list">
+                  <A
+                    href={`/dokumentation/drogenkunde/sammlung/${drug.name.toLowerCase()}`}
+                  >
+                    {drug.name}
+                  </A>
+                </li>
+              )}
+            </For>
           </ul>
         )}
       </div>
