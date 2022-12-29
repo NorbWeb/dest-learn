@@ -1,4 +1,5 @@
 import { Outlet, Route } from '@solidjs/router';
+import { DrugDetail } from './Content/DrugDetail';
 import { DrugOverview } from './Content/DrugOverview';
 
 const Drogenkunde = () => {
@@ -12,7 +13,8 @@ const Drogenkunde = () => {
 const Routes = () => {
     return (
         <>
-            <Route path="drogen" element={DrugOverview} />
+            <Route path="sammlung" element={DrugOverview} />
+            <Route path="sammlung/:id" element={DrugDetail} />
         </>
     )
 }

@@ -7,7 +7,7 @@ const Sidebar = () => {
   const [item, setItem] = createSignal([
     { name: "Technologie", navItems: ["Destillation", "Test", "Item 3"] },
     { name: "Mathematik", navItems: ["Einheiten", "Item 2", "Item 3"] },
-    { name: "Drogenkunde", navItems: ["Drogen", "Item 2", "Item 3"] },
+    { name: "Drogenkunde", navItems: ["Sammlung", "Item 2", "Item 3"] },
     { name: "Spirituosen", navItems: ["Verordnung", "Item 2", "Item 3"] },
   ]);
 

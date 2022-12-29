@@ -1,8 +1,11 @@
 .card {
-  border: 0.5px solid #0000002d;
   border-radius: 15px;
   width: 16.5rem;
   height: fit-content;
+
+  a {
+    text-decoration: none;
+  }
 
   * {
     border-radius: inherit;
@@ -14,8 +17,9 @@
 
   .card-body {
     padding: 1rem;
-    border-top: 0.5px solid #0000002d;
-    border-radius: 0 0;
+    border: 0.5px solid #0000002d;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
   }
 
   .card-title {
@@ -33,12 +37,19 @@
     display: block;
     display: -webkit-box;
     -webkit-line-clamp: 4;
+    border-radius: 0%;
   }
 
   img {
     aspect-ratio: 1/1;
     object-fit: cover;
     width: 100%;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    margin-bottom: -4px;
+    border-top: 0.5px solid #0000002d;
+    border-left: 0.5px solid #0000002d;
+    border-right: 0.5px solid #0000002d;
   }
 
   &.small {
@@ -53,20 +64,4 @@
       display: none;
     }
   }
-
-  // &.list {
-  //   img,
-  //   .card-note {
-  //     display: none;
-  //   }
-
-  //   .card-body {
-  //     border: none;
-  //   }
-  //   border: none;
-
-  //   .card-title {
-  //     font-size: 1rem;
-  //   }
-  // }
 }

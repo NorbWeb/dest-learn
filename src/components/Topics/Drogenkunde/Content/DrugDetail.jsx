@@ -1,77 +1,73 @@
-import "./DrugCard.scss";
-import Enzian from "../../../../assets/enzianwurzel.png";
+import { useParams } from "@solidjs/router";
+import { items } from "./_DrugData";
+import "./DrugDetail.scss";
 
 const DrugDetail = () => {
-    const data = {
-        id: 1,
-        name: "Enzianwurzel",
-        type: "Wurzel",
-        family: "Enziangewächse",
-        origin: "Hochgebirge Europas",
-        ingredients: [
-            "bis 30% Gentianose (vergä. Dreifachzucker)",
-            "Gentin (gelber Farbstoff)",
-            "Gentiopikrin (Bitterstoff)",
-            "Amarogentin (Bitterstoff)",
-            "Pektine",
-            "6% fettes Öl",
-        ],
-        treatment: "Extraktionsverfahren",
-        use: [
-            "Alpenkräuter",
-            "Abteilikör",
-            "Boonekamp",
-            "Feinbitter",
-            "Halb und Halb",
-        ],
-        note: "Eine typische Bitterstoffdroge, die magenberuhigend und verdauungsfördernd wirkt. Wurde früher als Fiebermittel eingesetz",
-    };
+  const params = useParams().id;
+  console.log(params);
+  let filter = items.filter((e) => e.name.toLowerCase() === params);
+  let data = filter[0];
 
-    return (
-        <>
-            <div className="card">
-                <img src={Enzian} alt="Enzianwurzel" />
-                <div className="profile">
-                    <div className="card-title">{data.name}</div>
-                    <p>{data.note}</p>
-                    <p>
-                        <span className="bold">Art: </span>
-                        {data.type}
-                    </p>
-                    <p>
-                        <span className="bold">Familie: </span>
-                        {data.family}
-                    </p>
-                    <p>
-                        <span className="bold">Herkunft: </span>
-                        {data.origin}
-                    </p>
-                    <div className="list-box">
-                        <label htmlFor="list-ingredients">
-                            <span className="bold">Inhaltsstoffe: </span>
-                        </label>
-                        <ul name="list-ingredients">
-                            <For each={data.ingredients}>
-                                {(ingredient) => <li>{ingredient}</li>}
-                            </For>
-                        </ul>
-                    </div>
-                    <p>
-                        <span className="bold">Verarbeitung: </span>
-                        {data.treatment}
-                    </p>
-                    <div className="list-box">
-                        <label htmlFor="list-use">
-                            <span className="bold">Verwendung: </span>
-                        </label>
-                        <ul name="list-use">
-                            <For each={data.use}>{(use) => <li>{use}</li>}</For>
-                        </ul>
-                    </div>
-                </div>
+  function handlePrint() {
+    document.title = `Steckbrief ${data.name}`;
+    window.print();
+  }
+
+  return (
+    <>
+      <div id="drug-detail">
+        <div className="wrapper aligne-base justify-between">
+          <h1 className="card-title">{data.name}</h1>
+          <div className="btn-group">
+            <button onClick={handlePrint}>print</button>
+            <button onclick="history.back()">back</button>
+          </div>
+        </div>
+        <div className="divider" />
+        <div className="wrapper">
+          <div>
+            <p className="card-note">{data.note}</p>
+
+            <p>
+              <span className="bold">Art: </span>
+              {data.type}
+            </p>
+            <p>
+              <span className="bold">Familie: </span>
+              {data.family}
+            </p>
+            <p>
+              <span className="bold">Herkunft: </span>
+              {data.origin}
+            </p>
+            <div className="list-box">
+              <label htmlFor="list-ingredients">
+                <span className="bold">Inhaltsstoffe: </span>
+              </label>
+              <ul name="list-ingredients">
+                <For each={data.ingredients}>
+                  {(ingredient) => <li>{ingredient}</li>}
+                </For>
+              </ul>
             </div>
-        </>
-    );
+            <p>
+              <span className="bold">Verarbeitung: </span>
+              {data.treatment}
+            </p>
+            <div className="list-box">
+              <label htmlFor="list-use">
+                <span className="bold">Verwendung: </span>
+              </label>
+              <ul name="list-use">
+                <For each={data.use}>{(use) => <li>{use}</li>}</For>
+              </ul>
+            </div>
+          </div>
+          <img src={data.img} alt="Enzianwurzel" />
+        </div>
+      </div>
+    </>
+  );
 };
 
 export { DrugDetail };

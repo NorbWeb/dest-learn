@@ -8,6 +8,7 @@ $warn: #db1717;
 $success: #36c729;
 $text: #2b2b2b;
 $text-light: #d4d4d4;
+$border: #0000002d;
 
 * {
   color: $text;
@@ -62,4 +63,27 @@ body {
   * {
     color: $text-light;
   }
+}
+
+.divider {
+  border-top: 0.5px solid $border;
+  border-color: $border;
+}
+
+.wrapper {
+  display: flex;
+  align-items: flex-start;
+
+  &.aligne-base {
+    align-items: baseline;
+  }
+
+  &.justify-between {
+    justify-content: space-between;
+  }
+}
+
+.btn-group {
+  display: flex;
+  gap: 1rem;
 }

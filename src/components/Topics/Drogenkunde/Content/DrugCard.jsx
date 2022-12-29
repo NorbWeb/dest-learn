@@ -1,21 +1,19 @@
-import { createEffect } from "solid-js";
+import { A } from "@solidjs/router";
 import "./DrugCard.scss";
 
 const DrugCard = (props) => {
-  function handleClick() {
-    alert(`###### TODO ######\nZur Detailansicht ${data.name} navigieren.`);
-  }
-
-  const data = props;
+  const drug = props;
 
   return (
     <>
-      <div name="DrugCard" onClick={handleClick} className="card">
-        <img src={data.img} alt={data.name} />
-        <div className="card-body">
-          <h4 className="card-title">{data.name}</h4>
-          <div class="card-note">{data.note}</div>
-        </div>
+      <div name="DrugCard" className="card">
+        <A href={drug.name.toLowerCase()}>
+          <img src={drug.img} alt={drug.name} />
+          <div className="card-body">
+            <h4 className="card-title">{drug.name}</h4>
+            <div class="card-note">{drug.note}</div>
+          </div>
+        </A>
       </div>
     </>
   );

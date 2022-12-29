@@ -1,74 +1,7 @@
 import { createEffect, createSignal } from "solid-js";
 import { DrugCard } from "./DrugCard";
+import { items as data } from "./_DrugData";
 import "./DrugOverview.scss";
-
-const items = [
-  {
-    id: 1,
-    name: "Enzianwurzel",
-    type: "Wurzel",
-    family: "Enziangewächse",
-    origin: "Hochgebirge Europas",
-    ingredients: [
-      "bis 30% Gentianose (vergä. Dreifachzucker)",
-      "Gentin (gelber Farbstoff)",
-      "Gentiopikrin (Bitterstoff)",
-      "Amarogentin (Bitterstoff)",
-      "Pektine",
-      "6% fettes Öl",
-    ],
-    treatment: "Extraktionsverfahren",
-    use: [
-      "Alpenkräuter",
-      "Abteilikör",
-      "Boonekamp",
-      "Feinbitter",
-      "Halb und Halb",
-    ],
-    note: "Eine typische Bitterstoffdroge, die magenberuhigend und verdauungsfördernd wirkt. Wurde früher als Fiebermittel eingesetz.",
-    img: "/src/assets/enzianwurzel.png",
-  },
-  {
-    id: 2,
-    name: "Angelikawurzel",
-    type: "Wurzel",
-    family: "Doldengewächse",
-    origin: "Europa, China, Rußland",
-    ingredients: [
-      "1% etherisches Öl (Angelikaöl)",
-      "Bitterstoffe",
-      "Gerbstoffe",
-      "bis 6% Harz",
-      "Säuren (Baldriansäure, Angelikasäure)",
-      "bis 24% Zucker",
-      "Wachse",
-    ],
-    treatment: ["Extraktionsverfahren", "Destillation (wird feiner)"],
-    use: ["Stonsdorfer", "Altbitter", "Boonekamp", "Alpenkräuter", "Angostura"],
-    note: "Früher eines der wichtigsten Heilkräuter. Ein Magenmittel bei Koliken. Wirkt gegen Flatulenzen.",
-    img: "/src/assets/angelikawurzel.png",
-  },
-  {
-    id: 2,
-    name: "Angelikawurzel",
-    type: "Wurzel",
-    family: "Doldengewächse",
-    origin: "Europa, China, Rußland",
-    ingredients: [
-      "1% etherisches Öl (Angelikaöl)",
-      "Bitterstoffe",
-      "Gerbstoffe",
-      "bis 6% Harz",
-      "Säuren (Baldriansäure, Angelikasäure)",
-      "bis 24% Zucker",
-      "Wachse",
-    ],
-    treatment: ["Extraktionsverfahren", "Destillation (wird feiner)"],
-    use: ["Stonsdorfer", "Altbitter", "Boonekamp", "Alpenkräuter", "Angostura"],
-    note: "Früher eines der wichtigsten Heilkräuter. Ein Magenmittel bei Koliken. Wirkt gegen Flatulenzen.",
-    img: "/src/assets/angelikawurzel.png",
-  },
-];
 
 const DrugOverview = () => {
   // view is variable for the layout in DrugOverview
@@ -79,26 +12,24 @@ const DrugOverview = () => {
   // onMount checks if a viewOption is in local store
   // if no, set it to first option, if yes, set view to local store
   if (!localStorage.getItem("drugViewPreference")) {
-    setView(viewOptions[0])
+    setView(viewOptions[0]);
   } else {
     setView(localStorage.getItem("drugViewPreference"));
-    console.debug("Get view from local store accomplished")
+    console.debug("Get drugViewPreference from local store accomplished");
   }
 
   // remove and add css class to displayed component
-  function setClass(remove, add) {
+  function setClass(add) {
     let matches = document.getElementsByClassName("card");
     for (let i = 0; i < matches.length; i++) {
-      matches[i].classList.remove(remove);
-      matches.item(i).classList.add(add);
+      matches.item(i).className = `card ${add}`;
     }
   }
 
   // updates local store to view and run setClass
-  // remove actual class (previous view()) and add new (new view())
-  createEffect((prev) => {
+  createEffect(() => {
     localStorage.setItem("drugViewPreference", `${view()}`);
-    setClass(prev, view());
+    setClass(view());
   });
 
   // on click function for button
@@ -126,10 +57,10 @@ const DrugOverview = () => {
       </div>
       <div id="drug-content" className="content">
         {view() != "list" ? (
-          <For each={items}>{(drug) => <DrugCard {...drug} />}</For>
+          <For each={data}>{(drug) => <DrugCard {...drug} />}</For>
         ) : (
           <ul>
-            <For each={items}>{(drug) => <li>{drug.name}</li>}</For>
+            <For each={data}>{(drug) => <li>{drug.name}</li>}</For>
           </ul>
         )}
       </div>
