@@ -22,12 +22,13 @@ body {
   @include mixins.anchor($text-light);
   background-color: $primary;
   color: $text-light;
-  border-color: $primary
+  border-color: $primary;
 }
 .secondary {
   @include mixins.anchor($text);
   background-color: $secondary;
   color: $text;
+  border-color: $secondary;
 }
 .bg {
   @include mixins.anchor($text);
@@ -38,16 +39,19 @@ body {
   @include mixins.anchor($text);
   background-color: $info;
   color: $text;
+  border-color: $info;
 }
 .warn {
   @include mixins.anchor($text-light);
   background-color: $warn;
   color: $text-light;
+  border-color: $warn;
 }
 .success {
   @include mixins.anchor($text-light);
   background-color: $success;
   color: $text;
+  border-color: $success;
 }
 .text {
   color: $text;
@@ -93,7 +97,6 @@ body {
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
 
-
 .btn {
   border-radius: 0.375rem;
   border-width: 1px;
@@ -109,6 +112,6 @@ body {
   i {
     font-size: 1rem;
     line-height: 1.5rem;
-    color: $text-light;
+    color: inherit;
   }
 }
