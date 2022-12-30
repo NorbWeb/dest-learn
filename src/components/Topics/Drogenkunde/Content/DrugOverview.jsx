@@ -53,7 +53,7 @@ const DrugOverview = () => {
           in Spirituosen finden.
         </div>
         <div className="button-group">
-          <button onClick={handleClick}>{view()}</button>
+          <button className="btn primary" onClick={handleClick}>{view()==="tile" ? "Groß" : view() === "small" ? "Klein" : "Liste"}</button>
         </div>
       </div>
       <div id="drug-content" className="content">

@@ -20,12 +20,24 @@ body {
 
 .primary {
   @include mixins.anchor($text-light);
+  &.btn {
+    @include mixins.btn($primary);
+  }
+  &.icon-btn {
+    @include mixins.icon-btn;
+  }
   background-color: $primary;
   color: $text-light;
   border-color: $primary;
 }
 .secondary {
   @include mixins.anchor($text);
+  &.btn {
+    @include mixins.btn($secondary);
+  }
+  &.icon-btn {
+    @include mixins.icon-btn;
+  }
   background-color: $secondary;
   color: $text;
   border-color: $secondary;
@@ -37,18 +49,36 @@ body {
 }
 .info {
   @include mixins.anchor($text);
+  &.btn {
+    @include mixins.btn($info);
+  }
+  &.icon-btn {
+    @include mixins.icon-btn;
+  }
   background-color: $info;
   color: $text;
   border-color: $info;
 }
 .warn {
   @include mixins.anchor($text-light);
+  &.btn {
+    @include mixins.btn($warn);
+  }
+  &.icon-btn {
+    @include mixins.icon-btn;
+  }
   background-color: $warn;
   color: $text-light;
   border-color: $warn;
 }
 .success {
   @include mixins.anchor($text-light);
+  &.btn {
+    @include mixins.btn($success);
+  }
+  &.icon-btn {
+    @include mixins.icon-btn;
+  }
   background-color: $success;
   color: $text;
   border-color: $success;
@@ -95,23 +125,4 @@ body {
 
 .shadow {
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
-}
-
-.btn {
-  border-radius: 0.375rem;
-  border-width: 1px;
-  border-style: solid;
-  padding: 0.375rem 0.75rem;
-}
-
-.icon-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  i {
-    font-size: 1rem;
-    line-height: 1.5rem;
-    color: inherit;
-  }
 }
