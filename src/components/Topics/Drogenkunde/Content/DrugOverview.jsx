@@ -1,4 +1,4 @@
-import { createEffect, createSignal } from "solid-js";
+import { createEffect, createSignal, For } from "solid-js";
 import { DrugCard } from "./DrugCard";
 import { items as data } from "./_DrugData";
 import "./DrugOverview.scss";
@@ -33,17 +33,6 @@ const DrugOverview = () => {
     setClass(view());
   });
 
-  // on click function for button
-  // set view to the next option from viewOption array
-  function handleClick() {
-    let index = viewOptions.indexOf(view());
-    if (index < viewOptions.length - 1) {
-      setView(viewOptions[index + 1]);
-    } else {
-      setView(viewOptions[0]);
-    }
-  }
-
   return (
     <>
       <div className="intro drug-intro">
@@ -52,8 +41,18 @@ const DrugOverview = () => {
           Eine Sammlung typischer und weniger typischer Drogen, die Verwendung
           in Spirituosen finden.
         </div>
+        {/* loop over all viewOptions and generate a button with onClick, that setView to this option */}
         <div className="button-group">
-          <button className="btn primary" onClick={handleClick}>{view()==="tile" ? "Groß" : view() === "small" ? "Klein" : "Liste"}</button>
+          <For each={viewOptions}>
+            {(view) => (
+              <button
+                className="btn primary active"
+                onClick={() => setView(view)}
+              >
+                {view}
+              </button>
+            )}
+          </For>
         </div>
       </div>
       <div id="drug-content" className="content">

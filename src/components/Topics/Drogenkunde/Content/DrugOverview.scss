@@ -20,4 +20,18 @@
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
+
+ 
+}
+
+.button-group {
+  button:not(:last-of-type):not(:first-of-type)  {
+    border-radius: 0;
+  };
+  button:first-of-type {
+    border-radius: 0.375rem 0 0 0.375rem;
+  }
+  button:last-of-type {
+    border-radius: 0 0.375rem 0.375rem 0;
+  }
 }
