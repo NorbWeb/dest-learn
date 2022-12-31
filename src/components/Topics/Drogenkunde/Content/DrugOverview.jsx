@@ -33,46 +33,83 @@ const DrugOverview = () => {
     setClass(view());
   });
 
+  // filter data object for each type of drug and make it a categorie
+  // maybe via backend?
+  function filterCategories(inputArray) {
+    const types = [];
+    for (let i = 0; i < inputArray.length; i++) {
+      if (!types.includes(inputArray[i].type)) {
+        types.push(inputArray[i].type);
+      }
+    }
+    console.log(types);
+    return types;
+  }
+
+  function categorie(item) {
+    return data.filter((e) => e.type === item);
+  }
+
   return (
     <>
       <div className="intro drug-intro">
-        <div>
+        <div className="drug-intro-title">
           <h1>Drogensammlung</h1>
           Eine Sammlung typischer und weniger typischer Drogen, die Verwendung
           in Spirituosen finden.
         </div>
-        {/* loop over all viewOptions and generate a button with onClick, that setView to this option */}
         <div className="button-group">
           <For each={viewOptions}>
-            {(view) => (
+            {(option) => (
               <button
-                className="btn primary active"
-                onClick={() => setView(view)}
+                className={
+                  view() === option ? "btn primary active" : "btn primary "
+                }
+                onClick={() => setView(option)}
               >
-                {view}
+                {option}
               </button>
             )}
           </For>
         </div>
       </div>
       <div id="drug-content" className="content">
-        {view() != "list" ? (
-          <For each={data}>{(drug) => <DrugCard {...drug} />}</For>
-        ) : (
-          <ul>
-            <For each={data}>
-              {(drug) => (
-                <li className="list">
-                  <A
-                    href={`/dokumentation/drogenkunde/sammlung/${drug.name.toLowerCase()}`}
-                  >
-                    {drug.name}
-                  </A>
-                </li>
+        {/* Here are three for loops: */}
+        {/* 1. Loop: loops over an categorie array, made by the function filterCategories(). */}
+        {/* So every content is made for every categorie. */}
+        <For each={filterCategories(data)}>
+          {(drugType) => (
+            <div>
+              <h3 id={drugType}>{drugType}</h3>
+              {/* If statement, for displaying two varients of the content. */}
+              {/* If: Is the view not a list? Then DrugCard component. */}
+              {view() != "list" ? (
+                <div id="drug-content-tile">
+                  {/* 2. loop: filter data object by categorie */}
+                  <For each={categorie(drugType)}>
+                    {(drug) => <DrugCard {...drug} />}
+                  </For>
+                </div>
+              ) : (
+                // Else: the list component
+                <ul>
+                  {/* 3. loop: the same as second loop, but for the list component */}
+                  <For each={categorie(drugType)}>
+                    {(drug) => (
+                      <li className="list">
+                        <A
+                          href={`/dokumentation/drogenkunde/sammlung/${drug.name.toLowerCase()}`}
+                        >
+                          {drug.name}
+                        </A>
+                      </li>
+                    )}
+                  </For>
+                </ul>
               )}
-            </For>
-          </ul>
-        )}
+            </div>
+          )}
+        </For>
       </div>
       <div className="toc"></div>
     </>

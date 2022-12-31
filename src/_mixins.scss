@@ -29,17 +29,25 @@
   line-height: 1.5rem;
 
   &:hover {
-    background-color: darken($color, 5%);
+    background-color: darken($color, 10%);
+    border-color: darken($color, 10%);
   }
 
-  &:active {
-    background-color: darken($color, 10%);
+  &:active,
+  &.active {
+    background-color: darken($color, 15%);
+    border-color: darken($color, 15%);
   }
 
   &:disabled {
     background-color: grey;
     border-color: grey;
     pointer-events: none;
+  }
+
+  &.btn-sm {
+    font-size: 0.875rem;
+    padding: 0.1875rem 0.375rem;
   }
 }
 

@@ -2,7 +2,7 @@ export const items = [
   {
     id: 1,
     name: "Enzianwurzel",
-    type: "Wurzel",
+    type: "Test",
     family: "Enziangewächse",
     origin: "Hochgebirge Europas",
     ingredients: [
