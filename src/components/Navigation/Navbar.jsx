@@ -17,15 +17,7 @@ const Navbar = () => {
     color: "grey",
   };
 
-  const [loggedIn, { logIn, logOut }] = useAuth();
-
-  function handleClick() {
-    if (loggedIn() === true) {
-      logOut();
-    } else {
-      logIn();
-    }
-  }
+  const [loggedIn, { logOut }] = useAuth();
 
   return (
     <>
@@ -48,12 +40,13 @@ const Navbar = () => {
             )}
           </For>
         </ul>
-        <button
-          onClick={handleClick}
-          className={loggedIn() ? "btn warn log-btn" : "btn success log-btn"}
-        >
-          {loggedIn() ? "Log Out" : "Log In"}
-        </button>
+        {loggedIn() ? (
+          <button onClick={logOut} className="btn warn log-btn">
+            Log Out
+          </button>
+        ) : (
+          ""
+        )}
       </nav>
     </>
   );

@@ -19,7 +19,6 @@ const DrugDetail = () => {
           <h1 className="card-title">{data.name}</h1>
           <div className="btn-group">
             <button className="btn icon-btn primary" onClick={handlePrint}>
-              {/* <img className="icon" src={printer} alt="print button" /> */}
               <i class="bi-printer"></i>
             </button>
             <button className="btn primary" onclick="history.back()">back</button>

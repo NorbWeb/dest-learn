@@ -1,5 +1,3 @@
-import { A } from "@solidjs/router";
-
 const DocLayout = (props) => {
   let item = props;
   return (
@@ -47,7 +45,7 @@ const DocLayout = (props) => {
             <For each={item.headline}>
               {(item) => (
                 <li>
-                  <A href={`#${item.name}`}>{item.name}</A>
+                  <a href={`#${item.name}`}>{item.name}</a>
                 </li>
               )}
             </For>

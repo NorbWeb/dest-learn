@@ -1,64 +1,27 @@
-import { createEffect, createSignal, For } from "solid-js";
-import { DrugCard } from "./DrugCard";
-import { items as data } from "./_DrugData";
+import { createSignal, For } from "solid-js";
 import "./DrugOverview.scss";
-import { A } from "@solidjs/router";
+import { DrugList } from "./DrugList";
+import { AddDrug } from "./AddDrug";
 import { useAuth } from "../../../Context/AuthContext";
+import { useCategories } from "../../../Context/CategoriesContext";
 
 const DrugOverview = () => {
-  const [loggedIn] = useAuth();
-  // view is variable for the layout in DrugOverview
   const [view, setView] = createSignal();
-  // viewOptions is the array with all possible options
+  const [addDrug, setAddDrug] = createSignal(false);
   const viewOptions = ["tile", "small", "list"];
-
-  // onMount checks if a viewOption is in local store
-  // if no, set it to first option, if yes, set view to local store
-  if (!localStorage.getItem("drugViewPreference")) {
-    setView(viewOptions[0]);
-  } else {
-    setView(localStorage.getItem("drugViewPreference"));
-    console.debug("Get drugViewPreference from local store accomplished");
-  }
-
-  // remove and add css class to displayed component
-  function setClass(add) {
-    let matches = document.getElementsByClassName("card");
-    for (let i = 0; i < matches.length; i++) {
-      matches.item(i).className = `card ${add}`;
-    }
-  }
-
-  // updates local store to view and run setClass
-  createEffect(() => {
-    localStorage.setItem("drugViewPreference", `${view()}`);
-    setClass(view());
-  });
-
-  // filter data object for each type of drug and make it a categorie
-  // maybe via backend?
-  function filterCategories(inputArray) {
-    const category = [];
-    for (let i = 0; i < inputArray.length; i++) {
-      if (!category.includes(inputArray[i].category)) {
-        category.push(inputArray[i].category);
-      }
-    }
-    return category;
-  }
-
-  function categories(item) {
-    return data.filter((e) => e.category === item);
-  }
+  const propsDrugList = { view, setView, viewOptions };
+  const [loggedIn] = useAuth();
+  const [categories] = useCategories();
 
   return (
     <>
-      <div className="intro drug-intro">
+      <div id="drug-overview" className="intro">
         <div className="drug-intro-title">
           <h1>Drogensammlung</h1>
           Eine Sammlung typischer und weniger typischer Drogen, die Verwendung
           in Spirituosen finden.
         </div>
+        {/* Buttons to change the view */}
         <div className="button-group">
           <For each={viewOptions}>
             {(option) => (
@@ -75,54 +38,53 @@ const DrugOverview = () => {
         </div>
       </div>
       <div id="drug-content" className="content">
-        {/* Here are three for loops: */}
-        {/* 1. Loop: loops over an categorie array, made by the function filterCategories(). */}
-        {/* So every content is made for every categorie. */}
-        <For each={filterCategories(data)}>
-          {(drugCategory) => (
-            <div>
-              <div className="wrapper aligne-center gap-1">
-                <h3 id={drugCategory}>{drugCategory}</h3>
+        {/* When user is logged in, show button to add new drug. */}
+        {/* When clicked on add button, show AddDrug component else DrugList */}
+        {loggedIn() ? (
+          <>
+            {addDrug() ? (
+              <>
                 <button
-                  style={
-                    loggedIn() ? { display: "block" } : { display: "none" }
-                  }
-                  className="btn secondary icon-btn"
+                  onClick={() => setAddDrug(!addDrug())}
+                  className="btn secondary"
                 >
-                  <i class="bi bi-plus-square"></i>
+                  Back
                 </button>
-              </div>
-              {/* If statement, for displaying two varients of the content. */}
-              {/* If: Is the view not a list? Then DrugCard component. */}
-              {view() != "list" ? (
-                <div id="drug-content-tile">
-                  {/* 2. loop: filter data object by categorie */}
-                  <For each={categories(drugCategory)}>
-                    {(drug) => <DrugCard {...drug} />}
-                  </For>
-                </div>
-              ) : (
-                // Else: the list component
-                <ul>
-                  {/* 3. loop: the same as second loop, but for the list component */}
-                  <For each={categories(drugCategory)}>
-                    {(drug) => (
-                      <li className="list">
-                        <A
-                          href={`/dokumentation/drogenkunde/sammlung/${drug.name.toLowerCase()}`}
-                        >
-                          {drug.name}
-                        </A>
-                      </li>
-                    )}
-                  </For>
-                </ul>
-              )}
-            </div>
-          )}
-        </For>
+                <AddDrug />
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={() => setAddDrug(!addDrug())}
+                  className="btn secondary"
+                >
+                  Add new drug
+                </button>
+                <DrugList {...propsDrugList} />
+              </>
+            )}
+          </>
+        ) : (
+          <>
+            <DrugList {...propsDrugList} />
+          </>
+        )}
       </div>
-      <div className="toc"></div>
+      <div className="toc">
+        <h3>Auf dieser Seite</h3>
+        <div className="divider"></div>
+        <nav id="TableOfContents">
+          <ul>
+            <For each={categories()}>
+              {(category) => (
+                <li>
+                  <a href={`#${category}`}>{category}</a>
+                </li>
+              )}
+            </For>
+          </ul>
+        </nav>
+      </div>
     </>
   );
 };

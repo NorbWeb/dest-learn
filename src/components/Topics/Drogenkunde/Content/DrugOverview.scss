@@ -1,25 +1,4 @@
-#drug-content {
-  padding-bottom: 1.5rem;
-
-  #drug-content-tile {
-    display: flex;
-    align-content: flex-start;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-  
-  ul {
-    margin-top: 0;
-  }
-  .list a {
-    text-decoration: none;
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-}
-
-.drug-intro {
+#drug-overview {
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -28,16 +7,17 @@
   .drug-intro-title {
     width: 100%;
   }
-}
 
-.button-group {
-  button:not(:last-of-type):not(:first-of-type) {
-    border-radius: 0;
-  }
-  button:first-of-type {
-    border-radius: 0.375rem 0 0 0.375rem;
-  }
-  button:last-of-type {
-    border-radius: 0 0.375rem 0.375rem 0;
+  .button-group {
+    z-index: 1;
+    button:not(:last-of-type):not(:first-of-type) {
+      border-radius: 0;
+    }
+    button:first-of-type {
+      border-radius: 0.375rem 0 0 0.375rem;
+    }
+    button:last-of-type {
+      border-radius: 0 0.375rem 0.375rem 0;
+    }
   }
 }
