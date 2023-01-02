@@ -2,7 +2,8 @@ export const items = [
   {
     id: 1,
     name: "Enzianwurzel",
-    type: "Test",
+    type: "Wurzel",
+    category:"Wurzeldrogen",
     family: "Enziangewächse",
     origin: "Hochgebirge Europas",
     ingredients: [
@@ -28,6 +29,7 @@ export const items = [
     id: 2,
     name: "Angelikawurzel",
     type: "Wurzel",
+    category:"Wurzeldrogen",
     family: "Doldengewächse",
     origin: "Europa, China, Rußland",
     ingredients: [
@@ -54,6 +56,7 @@ export const items = [
     id: 3,
     name: "Süßholzwurzel",
     type: "Wurzel",
+    category:"Wurzeldrogen",
     family: "Hülsenfruchtgewächse",
     origin: "Südeuropa, Nordafrika, Südasien",
     ingredients: [

@@ -3,8 +3,10 @@ import { DrugCard } from "./DrugCard";
 import { items as data } from "./_DrugData";
 import "./DrugOverview.scss";
 import { A } from "@solidjs/router";
+import { useAuth } from "../../../Context/AuthContext";
 
 const DrugOverview = () => {
+  const [loggedIn] = useAuth();
   // view is variable for the layout in DrugOverview
   const [view, setView] = createSignal();
   // viewOptions is the array with all possible options
@@ -36,18 +38,17 @@ const DrugOverview = () => {
   // filter data object for each type of drug and make it a categorie
   // maybe via backend?
   function filterCategories(inputArray) {
-    const types = [];
+    const category = [];
     for (let i = 0; i < inputArray.length; i++) {
-      if (!types.includes(inputArray[i].type)) {
-        types.push(inputArray[i].type);
+      if (!category.includes(inputArray[i].category)) {
+        category.push(inputArray[i].category);
       }
     }
-    console.log(types);
-    return types;
+    return category;
   }
 
-  function categorie(item) {
-    return data.filter((e) => e.type === item);
+  function categories(item) {
+    return data.filter((e) => e.category === item);
   }
 
   return (
@@ -78,15 +79,25 @@ const DrugOverview = () => {
         {/* 1. Loop: loops over an categorie array, made by the function filterCategories(). */}
         {/* So every content is made for every categorie. */}
         <For each={filterCategories(data)}>
-          {(drugType) => (
+          {(drugCategory) => (
             <div>
-              <h3 id={drugType}>{drugType}</h3>
+              <div className="wrapper aligne-center gap-1">
+                <h3 id={drugCategory}>{drugCategory}</h3>
+                <button
+                  style={
+                    loggedIn() ? { display: "block" } : { display: "none" }
+                  }
+                  className="btn secondary icon-btn"
+                >
+                  <i class="bi bi-plus-square"></i>
+                </button>
+              </div>
               {/* If statement, for displaying two varients of the content. */}
               {/* If: Is the view not a list? Then DrugCard component. */}
               {view() != "list" ? (
                 <div id="drug-content-tile">
                   {/* 2. loop: filter data object by categorie */}
-                  <For each={categorie(drugType)}>
+                  <For each={categories(drugCategory)}>
                     {(drug) => <DrugCard {...drug} />}
                   </For>
                 </div>
@@ -94,7 +105,7 @@ const DrugOverview = () => {
                 // Else: the list component
                 <ul>
                   {/* 3. loop: the same as second loop, but for the list component */}
-                  <For each={categorie(drugType)}>
+                  <For each={categories(drugCategory)}>
                     {(drug) => (
                       <li className="list">
                         <A

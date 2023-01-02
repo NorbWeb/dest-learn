@@ -1,7 +1,7 @@
 @use "mixins";
 
 $primary: #4039a8;
-$secondary: rgb(248, 249, 250);
+$secondary: rgb(207, 211, 214);
 $bg: #fff;
 $info: #f0ec27;
 $warn: #db1717;
@@ -113,8 +113,16 @@ body {
     align-items: baseline;
   }
 
+  &.aligne-center {
+    align-items: center;
+  }
+
   &.justify-between {
     justify-content: space-between;
+  }
+
+  &.gap-1 {
+    gap: 1rem
   }
 }
 
