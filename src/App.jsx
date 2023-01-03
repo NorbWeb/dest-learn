@@ -3,19 +3,39 @@ import { Layout } from "./components/Layout/Layout";
 import { Info } from "./components/Info/Info";
 import { User } from "./components/User/User";
 import { NotFound } from "./components/NotFound/NotFound";
-import { Routes_Technologie, Technologie } from "./components/Topics/Technologie/Technologie";
-import { Mathematik, Routes_Mathematik } from "./components/Topics/Mathematik/Mathematik";
-import { Drogenkunde, Routes_Drogenkunde } from "./components/Topics/Drogenkunde/Drogenkunde";
-import { Routes_Spirituosen, Spirituosen } from "./components/Topics/Spirituosen/Spirituosen";
+import {
+  Routes_Technologie,
+  Technologie,
+} from "./components/Topics/Technologie/Technologie";
+import {
+  Mathematik,
+  Routes_Mathematik,
+} from "./components/Topics/Mathematik/Mathematik";
+import {
+  Drogenkunde,
+  Routes_Drogenkunde,
+} from "./components/Topics/Drogenkunde/Drogenkunde";
+import {
+  Routes_Spirituosen,
+  Spirituosen,
+} from "./components/Topics/Spirituosen/Spirituosen";
 import { Home } from "./components/Home/Home";
+import { createEffect } from "solid-js";
 
 function App() {
+
+  // createEffect(() => {
+  //   fetch("DrugData.json")
+  //   .then((res) => res.json())
+  //   .then((data) => console.log(data));
+  // })
+ 
 
   return (
     <>
       <Routes>
         <Route path="/" component={Layout}>
-          <Route path="/" component={Home}/>
+          <Route path="/" component={Home} />
           <Route
             path="/dokumentation"
             element={

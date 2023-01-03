@@ -1,0 +1,26 @@
+{
+  "id": 1,
+  "name": "Enzianwurzel",
+  "type": "Wurzel",
+  "category": "Wurzeldrogen",
+  "family": "Enziangewächse",
+  "origin": "Hochgebirge Europas",
+  "ingredients": [
+    "bis 30% Gentianose (vergä. Dreifachzucker)",
+    "Gentin (gelber Farbstoff)",
+    "Gentiopikrin (Bitterstoff)",
+    "Amarogentin (Bitterstoff)",
+    "Pektine",
+    "6% fettes Öl"
+  ],
+  "treatment": "Extraktionsverfahren",
+  "use": [
+    "Alpenkräuterlikör",
+    "Abteilikör",
+    "Boonekamp",
+    "Feinbitter",
+    "Halb und Halb"
+  ],
+  "note": "Eine typische Bitterstoffdroge, die magenberuhigend und verdauungsfördernd wirkt. Wurde früher als Fiebermittel eingesetz.",
+  "img": "/src/assets/enzianwurzel.png"
+}

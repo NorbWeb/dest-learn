@@ -1,4 +1,4 @@
-import { createSignal, For } from "solid-js";
+import { createSignal, For, Show } from "solid-js";
 import "./DrugOverview.scss";
 import { DrugList } from "./DrugList";
 import { AddDrug } from "./AddDrug";
@@ -26,9 +26,11 @@ const DrugOverview = () => {
           <For each={viewOptions}>
             {(option) => (
               <button
-                className={
-                  view() === option ? "btn primary active" : "btn primary "
-                }
+                classList={{
+                  active: option === view(),
+                  btn: true,
+                  primary: true,
+                }}
                 onClick={() => setView(option)}
               >
                 {option}
@@ -40,19 +42,10 @@ const DrugOverview = () => {
       <div id="drug-content" className="content">
         {/* When user is logged in, show button to add new drug. */}
         {/* When clicked on add button, show AddDrug component else DrugList */}
-        {loggedIn() ? (
-          <>
-            {addDrug() ? (
-              <>
-                <button
-                  onClick={() => setAddDrug(!addDrug())}
-                  className="btn secondary mb-1"
-                >
-                  Back
-                </button>
-                <AddDrug />
-              </>
-            ) : (
+        <Show when={loggedIn()} fallback={<DrugList {...propsDrugList} />}>
+          <Show
+            when={addDrug()}
+            fallback={
               <>
                 <button
                   onClick={() => setAddDrug(!addDrug())}
@@ -62,13 +55,19 @@ const DrugOverview = () => {
                 </button>
                 <DrugList {...propsDrugList} />
               </>
-            )}
-          </>
-        ) : (
-          <>
-            <DrugList {...propsDrugList} />
-          </>
-        )}
+            }
+          >
+            <>
+              <button
+                onClick={() => setAddDrug(!addDrug())}
+                className="btn secondary mb-1"
+              >
+                Back
+              </button>
+              <AddDrug />
+            </>
+          </Show>
+        </Show>
       </div>
       <div className="toc">
         <h3>Auf dieser Seite</h3>

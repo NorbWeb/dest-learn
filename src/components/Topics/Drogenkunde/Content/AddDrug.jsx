@@ -1,6 +1,6 @@
 import { createStore } from "solid-js/store";
 import "./AddDrug.scss";
-import { createEffect, createSignal, For } from "solid-js";
+import { createEffect, createSignal, For, Show } from "solid-js";
 import { useDrugData } from "../../../Context/DrugDataContext.jsx";
 
 const AddDrug = () => {
@@ -24,6 +24,12 @@ const AddDrug = () => {
     setNewDrug([e.target.name], e.currentTarget.value);
   };
 
+  function multipleInputs() {
+    let value = document.getElementById("ingredients").value;
+    setNewDrug("ingredients", [...newDrug.ingredients, value]);
+    document.getElementById("ingredients").value = "";
+  }
+
   function handleCategoryCheck(event) {
     if (event.target.checked) {
       setChecked(true);
@@ -37,7 +43,15 @@ const AddDrug = () => {
   function handelSubmit(event) {
     event.preventDefault();
     addNewDrug(newDrug);
+    alert("New drug added");
   }
+
+  // const MultipleOptions = () => {
+  //   const [count, setCount] = createSignal(1);
+  //   const arr = Array.from({ length: count() }).map(() => true);
+
+  //   return <For each={arr}>{(item) => <input value={item} />}</For>;
+  // };
 
   return (
     <>
@@ -46,8 +60,9 @@ const AddDrug = () => {
         <div id="drug-detail">
           <div className="wrapper aligne-base justify-between"></div>
           <div className="divider mb-1" />
-          <form action="" className="wrapper col gap-1">
+          <form className="wrapper col gap-1">
             <input
+              required
               name="name"
               type="text"
               value={newDrug.name}
@@ -55,6 +70,7 @@ const AddDrug = () => {
               placeholder="Name"
             />
             <input
+              required
               name="type"
               type="text"
               value={newDrug.type}
@@ -62,7 +78,18 @@ const AddDrug = () => {
               placeholder="Art"
             />
             <div className="wrapper gap-1">
-              {!checked() ? (
+              <Show
+                when={checked() === false}
+                fallback={
+                  <input
+                    name="category"
+                    type="text"
+                    value={newDrug.category}
+                    onInput={onInputChange}
+                    placeholder="Kategorie"
+                  />
+                }
+              >
                 <select
                   name="category"
                   value={newDrug.category}
@@ -73,20 +100,13 @@ const AddDrug = () => {
                     {(item) => <option value={item}>{item}</option>}
                   </For>
                 </select>
-              ) : (
-                <input
-                  name="category"
-                  type="text"
-                  value={newDrug.category}
-                  onInput={onInputChange}
-                  placeholder="Kategorie"
-                />
-              )}
+              </Show>
               <div className="wrapper aligne-center">
                 <input
                   type="checkbox"
                   name="new-category"
                   id="new-category"
+                  checked={checked()}
                   onClick={handleCategoryCheck}
                 />
                 <label htmlFor="new-category">Neue Kategorie?</label>
@@ -109,11 +129,19 @@ const AddDrug = () => {
             <div className="wrapper gap-1">
               <input
                 name="ingredients"
+                id="ingredients"
                 type="text"
-                value={newDrug.ingredients}
-                onInput={onInputChange}
+                // value={newDrug.ingredients}
+                // onInput={onInputChange}
                 placeholder="Inhaltsstoffe"
               />
+              <button
+                type="button"
+                onClick={multipleInputs}
+                className="btn primary btn-sm"
+              >
+                Add
+              </button>
               <div>Inhaltsstoffe {newDrug.ingredients}</div>
             </div>
             <input
@@ -148,9 +176,9 @@ const AddDrug = () => {
               placeholder="Bild"
             />
             <button
-              // type="submit"
               className="btn primary"
-              onclick={handelSubmit}
+              type="button"
+              onClick={handelSubmit}
             >
               submit
             </button>
