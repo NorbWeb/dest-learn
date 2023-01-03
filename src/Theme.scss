@@ -109,6 +109,14 @@ body {
   display: flex;
   align-items: flex-start;
 
+  &.row {
+    flex-direction: row;
+  }
+
+  &.col {
+    flex-direction: column;
+  }
+
   &.aligne-base {
     align-items: baseline;
   }
@@ -122,7 +130,7 @@ body {
   }
 
   &.gap-1 {
-    gap: 1rem
+    gap: 1rem;
   }
 }
 
@@ -135,3 +143,6 @@ body {
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
 
+.mb-1 {
+  margin-bottom: 1rem;
+}

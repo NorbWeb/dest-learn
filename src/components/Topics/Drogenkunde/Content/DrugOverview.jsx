@@ -3,7 +3,7 @@ import "./DrugOverview.scss";
 import { DrugList } from "./DrugList";
 import { AddDrug } from "./AddDrug";
 import { useAuth } from "../../../Context/AuthContext";
-import { useCategories } from "../../../Context/CategoriesContext";
+import { useDrugData } from "../../../Context/DrugDataContext";
 
 const DrugOverview = () => {
   const [view, setView] = createSignal();
@@ -11,7 +11,7 @@ const DrugOverview = () => {
   const viewOptions = ["tile", "small", "list"];
   const propsDrugList = { view, setView, viewOptions };
   const [loggedIn] = useAuth();
-  const [categories] = useCategories();
+  const [data, { getCategories }] = useDrugData();
 
   return (
     <>
@@ -46,7 +46,7 @@ const DrugOverview = () => {
               <>
                 <button
                   onClick={() => setAddDrug(!addDrug())}
-                  className="btn secondary"
+                  className="btn secondary mb-1"
                 >
                   Back
                 </button>
@@ -56,7 +56,7 @@ const DrugOverview = () => {
               <>
                 <button
                   onClick={() => setAddDrug(!addDrug())}
-                  className="btn secondary"
+                  className="btn secondary mb-1"
                 >
                   Add new drug
                 </button>
@@ -75,7 +75,7 @@ const DrugOverview = () => {
         <div className="divider"></div>
         <nav id="TableOfContents">
           <ul>
-            <For each={categories()}>
+            <For each={getCategories()}>
               {(category) => (
                 <li>
                   <a href={`#${category}`}>{category}</a>

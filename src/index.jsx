@@ -4,8 +4,8 @@ import App from "./App";
 import { Router } from "@solidjs/router";
 import "./index.scss";
 import { AuthProvider } from "./components/Context/AuthContext";
-import { CategoriesProvider } from "./components/Context/CategoriesContext";
-import { items } from "./components/Topics/Drogenkunde/Content/_DrugData.jsx";
+import { items } from "./_DrugData.jsx";
+import { DrugDataProvider } from "./components/Context/DrugDataContext";
 
 let userLoggedIn = "";
 if (!localStorage.getItem("userLoggedIn")) {
@@ -14,25 +14,16 @@ if (!localStorage.getItem("userLoggedIn")) {
   userLoggedIn = true;
 }
 
-function getCategories(inputArray) {
-  const category = [];
-  for (let i = 0; i < inputArray.length; i++) {
-    if (!category.includes(inputArray[i].category)) {
-      category.push(inputArray[i].category);
-    }
-  }
-  return category;
-}
-
 render(
   () => (
-    <AuthProvider loggedIn={userLoggedIn}>
-      <CategoriesProvider categories={getCategories(items)}>
+    <DrugDataProvider data={items}>
+      <AuthProvider loggedIn={userLoggedIn}>
         <Router>
           <App />
         </Router>
-      </CategoriesProvider>
-    </AuthProvider>
+      </AuthProvider>
+    </DrugDataProvider>
   ),
   document.getElementById("root")
 );
+

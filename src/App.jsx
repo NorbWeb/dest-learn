@@ -10,6 +10,7 @@ import { Routes_Spirituosen, Spirituosen } from "./components/Topics/Spirituosen
 import { Home } from "./components/Home/Home";
 
 function App() {
+
   return (
     <>
       <Routes>

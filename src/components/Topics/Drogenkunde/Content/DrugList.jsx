@@ -1,10 +1,12 @@
 import { createEffect, For, mergeProps } from "solid-js";
 import { DrugCard } from "./DrugCard";
-import { items as data } from "./_DrugData";
+// import { items as data } from "../../../../_DrugData";
+import { useDrugData } from "../../../Context/DrugDataContext";
 import "./DrugList.scss";
 import { A } from "@solidjs/router";
 
 const DrugList = (props) => {
+  const [data, { getCategories }] = useDrugData();
   const merged = mergeProps(props);
   // view is variable for the layout in DrugOverview
   const view = merged.view;
@@ -36,18 +38,18 @@ const DrugList = (props) => {
 
   // filter data object for each type of drug and make it a categorie
   // maybe via backend?
-  function getCategories(inputArray) {
-    const category = [];
-    for (let i = 0; i < inputArray.length; i++) {
-      if (!category.includes(inputArray[i].category)) {
-        category.push(inputArray[i].category);
-      }
-    }
-    return category;
-  }
+  // function getCategories(inputArray) {
+  //   const category = [];
+  //   for (let i = 0; i < inputArray.length; i++) {
+  //     if (!category.includes(inputArray[i].category)) {
+  //       category.push(inputArray[i].category);
+  //     }
+  //   }
+  //   return category;
+  // }
 
   function categories(item) {
-    return data.filter((e) => e.category === item);
+    return data().filter((e) => e.category === item);
   }
 
   return (
@@ -55,14 +57,16 @@ const DrugList = (props) => {
       {/* Here are three for-loops: */}
       {/* 1. Loop: loops over an categorie array, made by the function getCategories(). */}
       {/* So every content is made for every categorie. */}
-      <For each={getCategories(data)}>
+      <For each={getCategories()}>
         {(drugCategory) => (
-          <div>
-            <h3 className="headline" id={drugCategory}>{drugCategory}</h3>
+          <div className="category-box">
+            <h3 className="headline" id={drugCategory}>
+              {drugCategory}
+            </h3>
             {/* If statement, for displaying two varients of the content. */}
             {/* If: Is the view not a list? Then DrugCard component. */}
             {view() != "list" ? (
-              <div id="drug-content-tile">
+              <div class="drug-content-tile">
                 {/* 2. loop: filter data object by categorie */}
                 <For each={categories(drugCategory)}>
                   {(drug) => <DrugCard {...drug} />}
