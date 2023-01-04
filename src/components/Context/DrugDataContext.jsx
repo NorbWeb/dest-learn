@@ -1,21 +1,50 @@
 import { createSignal, createContext, useContext } from "solid-js";
+import { createEffect } from "solid-js";
 
 const DrugDataContext = createContext();
 
 export function DrugDataProvider(props) {
-  const [data, setData] = createSignal(props.data || []),
+  const fetchData = () => {
+    fetch("../../drugdata.json", {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+      .then(function (response) {
+        // console.log(response);
+        return response.json();
+      })
+      .then(function (data) {
+        // console.log(data);
+        setData(data);
+      });
+  };
+  createEffect(() => {
+    fetchData();
+  });
+
+  const [data, setData] = createSignal(),
     store = [
       data,
       {
+        getData(item) {
+          setData(item);
+        },
+
         getCategories(item) {
           item = data();
           const category = [];
-          for (let i = 0; i < item.length; i++) {
-            if (!category.includes(item[i].category)) {
-              category.push(item[i].category);
+          if (!data()) {
+            [];
+          } else {
+            for (let i = 0; i < item.length; i++) {
+              if (!category.includes(item[i].category)) {
+                category.push(item[i].category);
+              }
             }
+            return category;
           }
-          return category;
         },
 
         addNewDrug(item) {

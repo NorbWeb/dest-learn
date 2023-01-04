@@ -4,7 +4,6 @@ import App from "./App";
 import { Router } from "@solidjs/router";
 import "./index.scss";
 import { AuthProvider } from "./components/Context/AuthContext";
-import { items } from "./_DrugData.jsx";
 import { DrugDataProvider } from "./components/Context/DrugDataContext";
 
 let userLoggedIn = "";
@@ -16,13 +15,13 @@ if (!localStorage.getItem("userLoggedIn")) {
 
 render(
   () => (
-    <DrugDataProvider data={items}>
-      <AuthProvider loggedIn={userLoggedIn}>
+    <AuthProvider loggedIn={userLoggedIn}>
+      <DrugDataProvider>
         <Router>
           <App />
         </Router>
-      </AuthProvider>
-    </DrugDataProvider>
+      </DrugDataProvider>
+    </AuthProvider>
   ),
   document.getElementById("root")
 );

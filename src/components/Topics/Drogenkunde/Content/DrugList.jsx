@@ -19,7 +19,7 @@ const DrugList = (props) => {
     setView(viewOptions[0]);
   } else {
     setView(localStorage.getItem("drugViewPreference"));
-    console.debug("Get drugViewPreference from local store accomplished");
+    // console.debug("Get drugViewPreference from local store accomplished");
   }
 
   // remove and add css class to displayed component

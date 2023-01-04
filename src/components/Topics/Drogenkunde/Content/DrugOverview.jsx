@@ -42,30 +42,32 @@ const DrugOverview = () => {
       <div id="drug-content" className="content">
         {/* When user is logged in, show button to add new drug. */}
         {/* When clicked on add button, show AddDrug component else DrugList */}
-        <Show when={loggedIn()} fallback={<DrugList {...propsDrugList} />}>
-          <Show
-            when={addDrug()}
-            fallback={
+        <Show when={data()} fallback={<div>loading drugs...</div>}>
+          <Show when={loggedIn()} fallback={<DrugList {...propsDrugList} />}>
+            <Show
+              when={addDrug()}
+              fallback={
+                <>
+                  <button
+                    onClick={() => setAddDrug(!addDrug())}
+                    className="btn secondary mb-1"
+                  >
+                    Add new drug
+                  </button>
+                  <DrugList {...propsDrugList} />
+                </>
+              }
+            >
               <>
                 <button
                   onClick={() => setAddDrug(!addDrug())}
                   className="btn secondary mb-1"
                 >
-                  Add new drug
+                  Back
                 </button>
-                <DrugList {...propsDrugList} />
+                <AddDrug />
               </>
-            }
-          >
-            <>
-              <button
-                onClick={() => setAddDrug(!addDrug())}
-                className="btn secondary mb-1"
-              >
-                Back
-              </button>
-              <AddDrug />
-            </>
+            </Show>
           </Show>
         </Show>
       </div>

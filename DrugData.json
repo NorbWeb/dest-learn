@@ -1,26 +1,87 @@
-{
-  "id": 1,
-  "name": "Enzianwurzel",
-  "type": "Wurzel",
-  "category": "Wurzeldrogen",
-  "family": "Enziangewächse",
-  "origin": "Hochgebirge Europas",
-  "ingredients": [
-    "bis 30% Gentianose (vergä. Dreifachzucker)",
-    "Gentin (gelber Farbstoff)",
-    "Gentiopikrin (Bitterstoff)",
-    "Amarogentin (Bitterstoff)",
-    "Pektine",
-    "6% fettes Öl"
-  ],
-  "treatment": "Extraktionsverfahren",
-  "use": [
-    "Alpenkräuterlikör",
-    "Abteilikör",
-    "Boonekamp",
-    "Feinbitter",
-    "Halb und Halb"
-  ],
-  "note": "Eine typische Bitterstoffdroge, die magenberuhigend und verdauungsfördernd wirkt. Wurde früher als Fiebermittel eingesetz.",
-  "img": "/src/assets/enzianwurzel.png"
-}
+[
+  {
+    "id": 1,
+    "name": "Enzianwurzel",
+    "type": "Wurzel",
+    "category": "Wurzeldrogen",
+    "family": "Enziangewächse",
+    "origin": "Hochgebirge Europas",
+    "ingredients": [
+      "bis 30% Gentianose (vergä. Dreifachzucker)",
+      "Gentin (gelber Farbstoff)",
+      "Gentiopikrin (Bitterstoff)",
+      "Amarogentin (Bitterstoff)",
+      "Pektine",
+      "6% fettes Öl"
+    ],
+    "treatment": "Extraktionsverfahren",
+    "use": [
+      "Alpenkräuterlikör",
+      "Abteilikör",
+      "Boonekamp",
+      "Feinbitter",
+      "Halb und Halb"
+    ],
+    "note": "Eine typische Bitterstoffdroge, die magenberuhigend und verdauungsfördernd wirkt. Wurde früher als Fiebermittel eingesetz.",
+    "img": "/src/assets/enzianwurzel.png"
+  },
+  {
+    "id": 2,
+    "name": "Angelikawurzel",
+    "type": "Wurzel",
+    "category": "Wurzeldrogen",
+    "family": "Doldengewächse",
+    "origin": "Europa, China, Rußland",
+    "ingredients": [
+      "1% etherisches Öl (Angelikaöl)",
+      "Bitterstoffe",
+      "Gerbstoffe",
+      "bis 6% Harz",
+      "Säuren (Baldriansäure, Angelikasäure)",
+      "bis 24% Zucker",
+      "Wachse"
+    ],
+    "treatment": [
+      "Extraktionsverfahren",
+      "Destillation (wird feiner)"
+    ],
+    "use": [
+      "Stonsdorfer",
+      "Altbitter",
+      "Boonekamp",
+      "Alpenkräuterlikör",
+      "Angostura"
+    ],
+    "note": "Früher eines der wichtigsten Heilkräuter. Ein Magenmittel bei Koliken. Wirkt gegen Flatulenzen.",
+    "img": "/src/assets/angelikawurzel.png"
+  },
+  {
+    "id": 3,
+    "name": "Süßholzwurzel",
+    "type": "Wurzel",
+    "category": "Wurzeldrogen",
+    "family": "Hülsenfruchtgewächse",
+    "origin": "Südeuropa, Nordafrika, Südasien",
+    "ingredients": [
+      "7% Glycyrrhizinsäure (stark süß)",
+      "Stärke",
+      "Bitterstoffe",
+      "bis 23% Zucker",
+      "Mannit",
+      "Farbstoff (gelb)",
+      "Cumarin"
+    ],
+    "treatment": [
+      "Extraktionsverfahren"
+    ],
+    "use": [
+      "Boonekamp",
+      "Angostura",
+      "Stoonsdorfer",
+      "Alpenkräuterlikör",
+      "Pastis"
+    ],
+    "note": "Der eingedickte Saft wird zu Lakritz gepresst. Beschleunig die Heilung bei Magengeschwüren. Durch Zugabe von Ammoniumchlorid ensteht Salmiak. \nKennzeichnung auf Spirituosen: \n - 10 bis 290 mg/l -> 'Enthält Süßholz' \n - ab 300 mg/l -> 'Enthält Süßholz - bei hohem Blutdruck sollte ein übermäßiger Verzehr dieses Erzeugnisses vermieden werden'",
+    "img": "/src/assets/suessholzwurzel.png"
+  }
+]

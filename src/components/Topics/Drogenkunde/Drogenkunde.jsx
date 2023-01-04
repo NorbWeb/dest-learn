@@ -1,22 +1,23 @@
-import { Outlet, Route } from '@solidjs/router';
-import { DrugDetail } from './Content/DrugDetail';
-import { DrugOverview } from './Content/DrugOverview';
+import { Outlet, Route } from "@solidjs/router";
+import { DrugDetail } from "./Content/DrugDetail";
+import { DrugOverview } from "./Content/DrugOverview";
 
 const Drogenkunde = () => {
-    return (
-        <>
-            <Outlet />
-        </>
-    )
+
+  return (
+    <>
+      <Outlet />
+    </>
+  );
 };
 
 const Routes = () => {
-    return (
-        <>
-            <Route path="sammlung" element={DrugOverview} />
-            <Route path="sammlung/:id" element={DrugDetail} />
-        </>
-    )
-}
+  return (
+    <>
+      <Route path="sammlung" element={DrugOverview} />
+      <Route path="sammlung/:id" element={DrugDetail} />
+    </>
+  );
+};
 export { Drogenkunde };
-export { Routes as Routes_Drogenkunde }
+export { Routes as Routes_Drogenkunde };

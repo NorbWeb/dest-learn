@@ -20,17 +20,8 @@ import {
   Spirituosen,
 } from "./components/Topics/Spirituosen/Spirituosen";
 import { Home } from "./components/Home/Home";
-import { createEffect } from "solid-js";
 
 function App() {
-
-  // createEffect(() => {
-  //   fetch("DrugData.json")
-  //   .then((res) => res.json())
-  //   .then((data) => console.log(data));
-  // })
- 
-
   return (
     <>
       <Routes>
