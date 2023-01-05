@@ -36,18 +36,6 @@ const DrugList = (props) => {
     setClass(view());
   });
 
-  // filter data object for each type of drug and make it a categorie
-  // maybe via backend?
-  // function getCategories(inputArray) {
-  //   const category = [];
-  //   for (let i = 0; i < inputArray.length; i++) {
-  //     if (!category.includes(inputArray[i].category)) {
-  //       category.push(inputArray[i].category);
-  //     }
-  //   }
-  //   return category;
-  // }
-
   function categories(item) {
     return data().filter((e) => e.category === item);
   }

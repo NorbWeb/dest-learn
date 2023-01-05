@@ -1,21 +1,22 @@
 import { A } from "@solidjs/router";
-import { createSignal, For } from "solid-js";
+import { createSignal, For, Show } from "solid-js";
 import "./Navbar.scss";
 import Logo from "../../assets/whisky-logo-96.png";
 import { useAuth } from "../Context/AuthContext";
+import { LogInButton } from "../Authentification/LogInButton";
 
 const Navbar = () => {
   const [navItem, setNavItem] = createSignal([
-    { name: "Dokumentation", href: "/dokumentation", disabled: false },
-    { name: "Über uns", href: "/about", disabled: false },
-    { name: "User", href: "/user", disabled: false },
-    { name: "Admin", href: "/admin", disabled: true },
-  ]);
+    {
+      name: "Dokumentation",
+      href: "/dokumentation",
 
-  const disabledStyle = {
-    "pointer-events": "none",
-    color: "grey",
-  };
+      auth: false,
+    },
+    { name: "Über uns", href: "/about", auth: false },
+    { name: "User", href: "/user", auth: true },
+    { name: "Admin", href: "/admin", auth: true },
+  ]);
 
   const [loggedIn, { logOut }] = useAuth();
 
@@ -28,25 +29,28 @@ const Navbar = () => {
         <ul>
           <For each={navItem()}>
             {(item) => (
-              <li>
-                <A
-                  style={item.disabled ? disabledStyle : {}}
-                  href={item.href}
-                  end={false}
-                >
-                  {item.name}
-                </A>
-              </li>
+              <Show
+                when={loggedIn()}
+                fallback={
+                  <Show when={!item.auth}>
+                    <li>
+                      <A href={item.href} end={false}>
+                        {item.name}
+                      </A>
+                    </li>
+                  </Show>
+                }
+              >
+                <li>
+                  <A href={item.href} end={false}>
+                    {item.name}
+                  </A>
+                </li>
+              </Show>
             )}
           </For>
         </ul>
-        {loggedIn() ? (
-          <button onClick={logOut} className="btn warn log-btn">
-            Log Out
-          </button>
-        ) : (
-          ""
-        )}
+        <LogInButton />
       </nav>
     </>
   );

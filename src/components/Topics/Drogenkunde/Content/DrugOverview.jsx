@@ -17,27 +17,31 @@ const DrugOverview = () => {
     <>
       <div id="drug-overview" className="intro">
         <div className="drug-intro-title">
-          <h1>Drogensammlung</h1>
-          Eine Sammlung typischer und weniger typischer Drogen, die Verwendung
-          in Spirituosen finden.
+          <Show when={!addDrug()} fallback={<h1>Neue Droge anlegen</h1>}>
+            <h1>Drogensammlung</h1>
+            Eine Sammlung typischer und weniger typischer Drogen, die Verwendung
+            in Spirituosen finden.
+          </Show>
         </div>
         {/* Buttons to change the view */}
-        <div className="button-group">
-          <For each={viewOptions}>
-            {(option) => (
-              <button
-                classList={{
-                  active: option === view(),
-                  btn: true,
-                  primary: true,
-                }}
-                onClick={() => setView(option)}
-              >
-                {option}
-              </button>
-            )}
-          </For>
-        </div>
+        <Show when={!addDrug()}>
+          <div className="button-group">
+            <For each={viewOptions}>
+              {(option) => (
+                <button
+                  classList={{
+                    active: option === view(),
+                    btn: true,
+                    primary: true,
+                  }}
+                  onClick={() => setView(option)}
+                >
+                  {option}
+                </button>
+              )}
+            </For>
+          </div>
+        </Show>
       </div>
       <div id="drug-content" className="content">
         {/* When user is logged in, show button to add new drug. */}
@@ -72,19 +76,21 @@ const DrugOverview = () => {
         </Show>
       </div>
       <div className="toc">
-        <h3>Auf dieser Seite</h3>
-        <div className="divider"></div>
-        <nav id="TableOfContents">
-          <ul>
-            <For each={getCategories()}>
-              {(category) => (
-                <li>
-                  <a href={`#${category}`}>{category}</a>
-                </li>
-              )}
-            </For>
-          </ul>
-        </nav>
+        <Show when={!addDrug()}>
+          <h3>Auf dieser Seite</h3>
+          <div className="divider"></div>
+          <nav id="TableOfContents">
+            <ul>
+              <For each={getCategories()}>
+                {(category) => (
+                  <li>
+                    <a href={`#${category}`}>{category}</a>
+                  </li>
+                )}
+              </For>
+            </ul>
+          </nav>
+        </Show>
       </div>
     </>
   );

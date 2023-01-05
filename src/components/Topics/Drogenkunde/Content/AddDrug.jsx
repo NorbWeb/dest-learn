@@ -1,5 +1,5 @@
-import { createStore } from "solid-js/store";
 import "./AddDrug.scss";
+import { createStore } from "solid-js/store";
 import { createEffect, createSignal, For, Show } from "solid-js";
 import { useDrugData } from "../../../Context/DrugDataContext.jsx";
 
@@ -20,7 +20,12 @@ const AddDrug = () => {
     img: "",
   });
 
+  createEffect(() => {
+    getCategories();
+  });
+
   const onInputChange = (e) => {
+    e.preventDefault();
     setNewDrug([e.target.name], e.currentTarget.value);
   };
 
@@ -38,8 +43,6 @@ const AddDrug = () => {
     }
   }
 
-  createEffect(() => {});
-
   function handelSubmit(event) {
     event.preventDefault();
     addNewDrug(newDrug);
@@ -52,7 +55,6 @@ const AddDrug = () => {
 
   //   return <For each={arr}>{(item) => <input value={item} />}</For>;
   // };
-
   return (
     <>
       <div id="add-drug" className="">
@@ -62,7 +64,7 @@ const AddDrug = () => {
           <div className="divider mb-1" />
           <form className="wrapper col gap-1">
             <input
-              required
+              autofocus
               name="name"
               type="text"
               value={newDrug.name}
@@ -70,7 +72,6 @@ const AddDrug = () => {
               placeholder="Name"
             />
             <input
-              required
               name="type"
               type="text"
               value={newDrug.type}
@@ -131,8 +132,6 @@ const AddDrug = () => {
                 name="ingredients"
                 id="ingredients"
                 type="text"
-                // value={newDrug.ingredients}
-                // onInput={onInputChange}
                 placeholder="Inhaltsstoffe"
               />
               <button
