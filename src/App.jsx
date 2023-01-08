@@ -20,6 +20,7 @@ import {
   Spirituosen,
 } from "./components/Topics/Spirituosen/Spirituosen";
 import { Home } from "./components/Home/Home";
+import { About } from "./components/About/About";
 
 function App() {
   return (
@@ -55,7 +56,7 @@ function App() {
           />
           <Route
             path="about"
-            element={<div className="container">About</div>}
+            component={About}
           />
           <Route path="*" component={NotFound} />
         </Route>
