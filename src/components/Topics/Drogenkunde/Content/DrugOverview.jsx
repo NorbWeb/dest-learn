@@ -13,6 +13,8 @@ const DrugOverview = () => {
   const [loggedIn] = useAuth();
   const [data, { getCategories }] = useDrugData();
 
+
+
   return (
     <>
       <div id="drug-overview" className="intro">

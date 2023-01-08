@@ -1,4 +1,9 @@
-import { createSignal, createContext, useContext } from "solid-js";
+import {
+  createSignal,
+  createContext,
+  useContext,
+  createEffect,
+} from "solid-js";
 
 const DrugDataContext = createContext();
 
@@ -19,6 +24,10 @@ export function DrugDataProvider(props) {
         setData(data);
       });
   };
+
+  createEffect(() => {
+    fetchData();
+  });
 
   const [data, setData] = createSignal(),
     store = [
