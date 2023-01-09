@@ -1,29 +1,10 @@
-import {
-  createEffect,
-  For,
-  Show,
-} from "solid-js";
+import { For, Show } from "solid-js";
 import "./DrugLearn.scss";
 import { DrugCard } from "./DrugCard";
 import { useShuffleData } from "../../../../Context/ShuffleData";
 
 const DrugLearn = () => {
-  const [data, {getRandom}] = useShuffleData();
-  // function shuffleArray() {
-  //   if (data()) {
-  //     setRandomArr(
-  //       randomArr().sort(function (a, b) {
-  //         return 0.5 - Math.random();
-  //       })
-  //     );
-  //     console.log(randomArr());
-  //   }
-  // }
-  function handleShuffle() {
-  }
-
-  createEffect(()=>{
-  })
+  const [data, { getRandom }] = useShuffleData();
 
   return (
     <>
@@ -32,7 +13,7 @@ const DrugLearn = () => {
         Some text.
       </div>
       <br />
-      <div className="content wrapper gap-1 flex-wrap">
+      <div id="drug-learn" className="content wrapper gap-1 flex-wrap ">
         <Show when={data()} fallback={<div>loading...</div>}>
           <For each={data()}>
             {(drug) => (

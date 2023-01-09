@@ -1,0 +1,57 @@
+#drug-learn {
+  align-content: flex-start;
+
+  .card {
+    position: relative;
+    .card-title {
+      text-align: center;
+      // animation: flip2 0.4s ease forwards;
+      &.ani {
+        animation: flip1 1.5s ease forwards;
+      }
+    }
+
+    .view-btn {
+      position: absolute;
+      right: 0.5rem;
+      bottom: 4.5rem;
+    }
+  }
+}
+
+@keyframes flip1 {
+  0% {
+    transform: scale(0.1);
+  }
+
+  30% {
+    transform: scale(1);
+  }
+  80% {
+    transform: scale(1);
+  }
+  90% {
+    transform: rotate(10deg) scale(1.4);
+  }
+  100% {
+    transform: scale(0.1);
+  }
+}
+
+@keyframes flip2 {
+  0% {
+    transform: scale(2);
+  }
+
+  33% {
+    transform: scale(0.8);
+  }
+
+  66% {
+    transform: scale(1.3);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
