@@ -1,0 +1,9 @@
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="270px" height="269px" viewBox="-0.5 -0.5 270 269">
+<defs/>
+<g>
+<rect x="0" y="0" width="400" height="400" fill="#b2b2b2" stroke="#9b9b9b" pointer-events="none" />
+ <text x="50%" y="50%" text-anchor="middle" fill="#ffffff" font-size="30">Placeholder</text>
+<!-- <rect x="39" y="39" width="190" height="190" fill="#b2b2b2" stroke="none" pointer-events="none"/> -->
+</g>
+</svg>
