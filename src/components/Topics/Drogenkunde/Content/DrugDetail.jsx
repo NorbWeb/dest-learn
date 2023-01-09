@@ -1,5 +1,5 @@
 import { useParams } from "@solidjs/router";
-import { useDrugData } from "../../../Context/DrugDataContext";
+import { useDrugData } from "../../../../Context/DrugDataContext";
 import "./DrugDetail.scss";
 
 const DrugDetail = () => {

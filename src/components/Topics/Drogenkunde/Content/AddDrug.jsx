@@ -1,7 +1,7 @@
 import "./AddDrug.scss";
 import { createStore } from "solid-js/store";
 import { createEffect, createSignal, For, Show } from "solid-js";
-import { useDrugData } from "../../../Context/DrugDataContext.jsx";
+import { useDrugData } from "../../../../Context/DrugDataContext.jsx";
 
 const AddDrug = () => {
   const [data, { getCategories, addNewDrug }] = useDrugData();

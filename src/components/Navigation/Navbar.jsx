@@ -2,7 +2,7 @@ import { A } from "@solidjs/router";
 import { createSignal, For, Show } from "solid-js";
 import "./Navbar.scss";
 import Logo from "../../assets/whisky-logo-96.png";
-import { useAuth } from "../Context/AuthContext";
+import { useAuth } from "../../Context/AuthContext";
 import { LogInButton } from "../Authentification/LogInButton";
 
 const Navbar = () => {

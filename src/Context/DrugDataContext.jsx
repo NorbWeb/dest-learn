@@ -20,25 +20,34 @@ export function DrugDataProvider(props) {
         return response.json();
       })
       .then(function (data) {
-        // console.log(data);
-        setData(data);
+        // console.log(data.drugs);
+        setData(data.drugs);
       });
   };
 
   createEffect(() => {
     fetchData();
   });
-
   const [data, setData] = createSignal(),
     store = [
       data,
       {
-        getData(item) {
-          setData(item);
+        getRandom() {
+          
+          let random = [];
+          if (!data()) {
+            [];
+          } else {
+            let item = [...data()];
+            random = item.sort(function (a, b) {
+              return 0.5 - Math.random();
+            });
+            return random;
+          }
         },
 
-        getCategories(item) {
-          item = data();
+        getCategories() {
+          let item = data();
           const category = [];
           if (!data()) {
             [];
@@ -48,7 +57,7 @@ export function DrugDataProvider(props) {
                 category.push(item[i].category);
               }
             }
-            return category;
+            return category.sort();
           }
         },
 

@@ -1,5 +1,5 @@
 import "./LogInButton.scss";
-import { useAuth } from "../Context/AuthContext";
+import { useAuth } from "../../Context/AuthContext";
 
 const LogInButton = () => {
   const [loggedIn, { logIn, logOut }] = useAuth();
@@ -9,7 +9,7 @@ const LogInButton = () => {
       <Show
         when={loggedIn()}
         fallback={
-          <button onClick={()=>logIn("user")} className="btn success log-btn">
+          <button onClick={() => logIn("user")} className="btn success log-btn">
             Log In
           </button>
         }

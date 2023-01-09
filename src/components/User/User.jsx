@@ -1,5 +1,5 @@
 import { A } from "@solidjs/router";
-import { useAuth } from "../Context/AuthContext";
+import { useAuth } from "../../Context/AuthContext";
 import "./User.scss";
 const User = () => {
   const [loggedIn, { logIn, logOut }] = useAuth();

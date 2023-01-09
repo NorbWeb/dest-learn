@@ -132,6 +132,9 @@ body {
   &.gap-1 {
     gap: 1rem;
   }
+  &.flex-wrap {
+    flex-wrap: wrap;
+  }
 }
 
 .btn-group {

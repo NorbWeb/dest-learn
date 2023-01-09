@@ -1,7 +1,7 @@
 import { createEffect, For, mergeProps } from "solid-js";
 import { DrugCard } from "./DrugCard";
 // import { items as data } from "../../../../_DrugData";
-import { useDrugData } from "../../../Context/DrugDataContext";
+import { useDrugData } from "../../../../Context/DrugDataContext";
 import "./DrugList.scss";
 import { A } from "@solidjs/router";
 

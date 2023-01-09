@@ -2,8 +2,8 @@ import { createSignal, For, Show } from "solid-js";
 import "./DrugOverview.scss";
 import { DrugList } from "./DrugList";
 import { AddDrug } from "./AddDrug";
-import { useAuth } from "../../../Context/AuthContext";
-import { useDrugData } from "../../../Context/DrugDataContext";
+import { useAuth } from "../../../../Context/AuthContext";
+import { useDrugData } from "../../../../Context/DrugDataContext";
 
 const DrugOverview = () => {
   const [view, setView] = createSignal();
@@ -12,9 +12,6 @@ const DrugOverview = () => {
   const propsDrugList = { view, setView, viewOptions };
   const [loggedIn] = useAuth();
   const [data, { getCategories }] = useDrugData();
-
-
-
   return (
     <>
       <div id="drug-overview" className="intro">
