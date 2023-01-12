@@ -1,7 +1,7 @@
 import { A } from "@solidjs/router";
 import { createEffect, createSignal, Show } from "solid-js";
 import "./DrugCard.scss";
-import placeholder from "/dist/assets/placeholder.a89b4425.svg";
+import placeholder from "/src/assets/placeholder.svg";
 
 const DrugCard = (props) => {
   const drug = props;
