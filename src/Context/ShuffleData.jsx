@@ -4,31 +4,33 @@ import {
   useContext,
   createEffect,
 } from "solid-js";
+import { drugs } from "../../drugdata.jsx";
+
 
 const ShuffleDataContext = createContext();
 
 export function ShuffleDataProvider(props) {
-  const fetchData = () => {
-    fetch("../../drugdata.json", {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    })
-      .then(function (response) {
-        // console.log(response);
-        return response.json();
-      })
-      .then(function (data) {
-        // console.log(data.drugs);
-        setData(data.drugs);
-      });
-  };
+  // const fetchData = () => {
+  //   fetch("../../drugdata.json", {
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Accept: "application/json",
+  //     },
+  //   })
+  //     .then(function (response) {
+  //       // console.log(response);
+  //       return response.json();
+  //     })
+  //     .then(function (data) {
+  //       // console.log(data.drugs);
+  //       setData(data.drugs);
+  //     });
+  // };
 
-  createEffect(() => {
-    fetchData();
-  });
-  const [data, setData] = createSignal(),
+  // createEffect(() => {
+  //   fetchData();
+  // });
+  const [data, setData] = createSignal(drugs),
     store = [
       data,
       {
