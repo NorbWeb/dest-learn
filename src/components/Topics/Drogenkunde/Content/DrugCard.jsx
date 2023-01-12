@@ -28,7 +28,7 @@ const DrugCard = (props) => {
             <A href={drug.name.toLowerCase()}>
               <img
                 className="card-img"
-                src={drug.img ? drug.img : placeholder}
+                src={drug.img ? `/src/assets/${drug.img}` : placeholder}
                 alt={drug.name}
               />
               <div className="card-body">
