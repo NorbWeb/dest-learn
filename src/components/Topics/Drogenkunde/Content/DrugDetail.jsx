@@ -67,7 +67,7 @@ const DrugDetail = () => {
               </ul>
             </div>
           </div>
-          <img className="card-img" src={drug.img} alt={drug.name} />
+          <img className="card-img" src={`/${drug.img}`} alt={drug.name} />
         </div>
       </div>
     </>
