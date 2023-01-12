@@ -47,7 +47,7 @@ const DrugCard = (props) => {
         >
           <img
             className="card-img"
-            src={drug.img ?  `./assets/${drug.img}` : placeholder}
+            src={drug.img ?  `assets/${drug.img}` : placeholder}
             alt={drug.name}
           />
           <Show when={!show()}>
