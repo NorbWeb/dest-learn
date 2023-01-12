@@ -1,12 +1,10 @@
 #about {
   #about-me {
-    
-      width: 85%;
+    width: 85%;
 
-      img{
-        margin-left: 2rem;
-        clip-path: polygon(45% 0, 100% 0, 100% 75%, 50% 100%, 0 100%, 0% 25%);
-      }
-    
+    img {
+      margin-left: 2rem;
+      border-radius: 15px;
+    }
   }
 }

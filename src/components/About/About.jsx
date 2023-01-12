@@ -32,7 +32,7 @@ const About = () => {
               dieser Beruf nicht in Vergessenheit gerät.
             </p>
           </div>
-          <img src="/src/assets/placeholder.svg" alt="Bild von Norbert" />
+          <img src="/placeholder.svg" alt="Bild von Norbert" />
         </div>
       </section>
     </div>

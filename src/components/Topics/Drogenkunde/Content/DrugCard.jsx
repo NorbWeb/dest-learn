@@ -1,7 +1,6 @@
 import { A } from "@solidjs/router";
 import { createEffect, createSignal, Show } from "solid-js";
 import "./DrugCard.scss";
-import placeholder from "/public/placeholder.svg";
 
 const DrugCard = (props) => {
   const drug = props;
@@ -28,7 +27,7 @@ const DrugCard = (props) => {
             <A href={drug.name.toLowerCase()}>
               <img
                 className="card-img"
-                src={drug.img ? `/${drug.img}` : placeholder}
+                src={drug.img ? `/${drug.img}` : "/placeholder.svg"}
                 alt={drug.name}
               />
               <div className="card-body">
@@ -47,7 +46,7 @@ const DrugCard = (props) => {
         >
           <img
             className="card-img"
-            src={drug.img ?  `/${drug.img}` : placeholder}
+            src={drug.img ?  `/${drug.img}` : "/placeholder.svg"}
             alt={drug.name}
           />
           <Show when={!show()}>
