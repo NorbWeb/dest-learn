@@ -23,7 +23,7 @@ export let drugs = [
       "Halb und Halb",
     ],
     note: "Eine typische Bitterstoffdroge, die magenberuhigend und verdauungsfördernd wirkt. Wurde früher als Fiebermittel eingesetz.",
-    img: "/src/assets/enzianwurzel.png",
+    img: "./assets/enzianwurzel.png",
   },
   {
     id: 2,
@@ -50,7 +50,7 @@ export let drugs = [
       "Stonsdorfer",
     ],
     note: "Früher eines der wichtigsten Heilkräuter. Ein Magenmittel bei Koliken. Wirkt gegen Flatulenzen.",
-    img: "/src/assets/angelikawurzel.png",
+    img: "./assets/angelikawurzel.png",
   },
   {
     id: 3,
@@ -77,7 +77,7 @@ export let drugs = [
       "Stonsdorfer",
     ],
     note: "Der eingedickte Saft wird zu Lakritz gepresst. Beschleunig die Heilung bei Magengeschwüren. Durch Zugabe von Ammoniumchlorid ensteht Salmiak. \nKennzeichnung auf Spirituosen: \n - 10 bis 290 mg/l -> 'Enthält Süßholz' \n - ab 300 mg/l -> 'Enthält Süßholz - bei hohem Blutdruck sollte ein übermäßiger Verzehr dieses Erzeugnisses vermieden werden'",
-    img: "/src/assets/suessholzwurzel.png",
+    img: "./assets/suessholzwurzel.png",
   },
   {
     id: 4,
@@ -103,6 +103,6 @@ export let drugs = [
       "Stonsdorfer",
     ],
     note: "Wurde früher gegen Malaria und Wadenkrämpfe verwendet. Ist eine typische Bitterstoffdroge und wirkt verdauungsfördernd und appetitanregend.",
-    img: "/src/assets/chinarinde.png",
+    img: "./assets/chinarinde.png",
   },
 ];
