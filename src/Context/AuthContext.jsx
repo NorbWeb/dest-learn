@@ -1,20 +1,30 @@
-import { createSignal, createContext, useContext } from "solid-js";
-
+import { getAuth } from "firebase/auth";
+import { createSignal, createContext, useContext, createEffect } from "solid-js";
 const AuthContext = createContext();
 
 export function AuthProvider(props) {
+
+
+createEffect(()=>{
+  const auth = getAuth();
+  if(auth){
+    console.log(auth.name)
+  }
+})
+
+
+
+
   const [loggedIn, setLoggedIn] = createSignal(props.loggedIn || false),
     store = [
       loggedIn,
       {
         logIn() {
           setLoggedIn(() => true);
-          localStorage.setItem("userLoggedIn", "true");
         },
 
         logOut() {
           setLoggedIn(() => false);
-          localStorage.removeItem("userLoggedIn");
         },
       },
     ];

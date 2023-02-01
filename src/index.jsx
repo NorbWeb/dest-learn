@@ -3,20 +3,30 @@ import { render } from "solid-js/web";
 import App from "./App";
 import { Router } from "@solidjs/router";
 import "./index.scss";
-import { AuthProvider } from "./Context/AuthContext";
+// import { AuthProvider } from "./Context/AuthContext";
 import { DrugDataProvider } from "./Context/DrugDataContext";
 import { ShuffleDataProvider } from "./Context/ShuffleData";
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { createEffect } from "solid-js";
 
-let userLoggedIn = "";
-if (!localStorage.getItem("userLoggedIn")) {
-  userLoggedIn = false;
-} else {
-  userLoggedIn = true;
-}
+const auth = getAuth();
+
+createEffect(()=>{
+  onAuthStateChanged(auth, (user)=>{
+    if(user){
+      console.log(user, auth)
+    } else {
+      userLoggedIn = null
+    }
+  })
+})
+
+let userLoggedIn = null;
+
 
 render(
   () => (
-    <AuthProvider loggedIn={userLoggedIn}>
+    // <AuthProvider loggedIn={userLoggedIn}>
       <DrugDataProvider>
         <ShuffleDataProvider>
           <Router>
@@ -24,7 +34,7 @@ render(
           </Router>
         </ShuffleDataProvider>
       </DrugDataProvider>
-    </AuthProvider>
+    // </AuthProvider>
   ),
   document.getElementById("root")
 );
