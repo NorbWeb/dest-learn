@@ -14,7 +14,7 @@ const Navbar = () => {
       auth: false,
     },
     { name: "Über uns", href: "/about", auth: false },
-    { name: "User", href: "/user", auth: true },
+    { name: "User", href: "/user", auth: false },
     { name: "Admin", href: "/admin", auth: true },
   ]);
 
