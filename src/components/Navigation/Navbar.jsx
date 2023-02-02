@@ -2,8 +2,9 @@ import { A } from "@solidjs/router";
 import { createSignal, For, Show } from "solid-js";
 import "./Navbar.scss";
 import Logo from "../../assets/whisky-logo-96.png";
-import { useAuth } from "../../Context/AuthContext";
+// import { useAuth } from "../../Context/AuthContext";
 import { LogInButton } from "../Authentification/LogInButton";
+import { getAuth } from "firebase/auth";
 
 const Navbar = () => {
   const [navItem, setNavItem] = createSignal([
@@ -18,7 +19,7 @@ const Navbar = () => {
     { name: "Admin", href: "/admin", auth: true },
   ]);
 
-  const [loggedIn, { logOut }] = useAuth();
+const auth = getAuth()
 
   return (
     <>
@@ -30,7 +31,7 @@ const Navbar = () => {
           <For each={navItem()}>
             {(item) => (
               <Show
-                when={loggedIn()}
+                when={true}
                 fallback={
                   <Show when={!item.auth}>
                     <li>
@@ -50,7 +51,6 @@ const Navbar = () => {
             )}
           </For>
         </ul>
-        <LogInButton />
       </nav>
     </>
   );
