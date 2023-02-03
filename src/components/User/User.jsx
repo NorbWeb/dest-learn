@@ -1,21 +1,17 @@
-import { A } from "@solidjs/router";
-import { createEffect, createSignal } from "solid-js";
+import { createSignal } from "solid-js";
 import { useAuth } from "../../Context/AuthContext";
 import { logginEmailPassword } from "../../firebase";
 import "./User.scss";
 
 const User = () => {
-  const [loggedIn, { logIn, logOut }] = useAuth();
   const [email, setEmail] = createSignal("");
   const [password, setPassword] = createSignal("");
-
-  createEffect(() => {
-    // console.log(email());
-    // console.log(password());
-  });
+  const [logedIn, { toggleLogInState }] = useAuth();
+  const adminUsers = import.meta.env.VITE_ADMIN.split(",");
 
   const handelLogin = () => {
     logginEmailPassword(email(), password(), showValidationError);
+    toggleLogInState();
   };
 
   const showValidationError = (message) => {

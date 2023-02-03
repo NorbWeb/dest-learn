@@ -2,16 +2,17 @@ import { createSignal, For, Show } from "solid-js";
 import "./DrugOverview.scss";
 import { DrugList } from "./DrugList";
 import { AddDrug } from "./AddDrug";
-import { useAuth } from "../../../../Context/AuthContext";
 import { useDrugData } from "../../../../Context/DrugDataContext";
+import { useAuth } from "../../../../Context/AuthContext";
 
 const DrugOverview = () => {
   const [view, setView] = createSignal();
   const [addDrug, setAddDrug] = createSignal(false);
   const viewOptions = ["tile", "small", "list"];
   const propsDrugList = { view, setView, viewOptions };
-  const [loggedIn] = useAuth();
   const [data, { getCategories }] = useDrugData();
+  const [logedIn] = useAuth();
+
   return (
     <>
       <div id="drug-overview" className="intro">
@@ -46,7 +47,7 @@ const DrugOverview = () => {
         {/* When user is logged in, show button to add new drug. */}
         {/* When clicked on add button, show AddDrug component else DrugList */}
         <Show when={data()} fallback={<div>loading drugs...</div>}>
-          <Show when={loggedIn()} fallback={<DrugList {...propsDrugList} />}>
+          <Show when={logedIn()} fallback={<DrugList {...propsDrugList} />}>
             <Show
               when={addDrug()}
               fallback={

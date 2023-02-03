@@ -4,13 +4,10 @@ import {
   getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
 // import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyDFoMpPJHvKLlW-L8Mqek2K6DAM40x_iYo",
   authDomain: "dest-learn.firebaseapp.com",
@@ -38,24 +35,37 @@ const logginEmailPassword = async (email, password, validator) => {
       loginEmail,
       loginPassword
     );
-    console.log(userCredential.user);
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        const uid = user.uid;
-        console.log(uid);
-        // ...
-      } else {
-        // User is signed out
-        // ...
-      }
-    });
-
     validator(true);
   } catch (error) {
     validator(error);
   }
 };
 
-export { logginEmailPassword };
+
+const monitorAuthState = async () => {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      sessionStorage.setItem("logedInUser", user.uid);
+      // sessionStorage.setItem("userRole", "admin");
+    } else if (user) {
+      sessionStorage.setItem("logedInUser", user.uid);
+    } else {
+      sessionStorage.removeItem("logedInUser");
+      // sessionStorage.removeItem("userRole");
+    }
+  });
+};
+
+monitorAuthState();
+
+const handleSignOut = () => {
+  signOut(auth)
+    .then(() => {
+      // Sign-out successful.
+    })
+    .catch((error) => {
+      // An error happened.
+    });
+};
+
+export { logginEmailPassword, handleSignOut };

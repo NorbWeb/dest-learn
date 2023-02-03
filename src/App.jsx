@@ -23,6 +23,8 @@ import { Home } from "./components/Home/Home";
 import { About } from "./components/About/About";
 
 function App() {
+  
+
   return (
     <>
       <Routes>
@@ -54,10 +56,7 @@ function App() {
             path="admin"
             element={<div className="container">Admin</div>}
           />
-          <Route
-            path="about"
-            component={About}
-          />
+          <Route path="about" component={About} />
           <Route path="*" component={NotFound} />
         </Route>
       </Routes>
@@ -66,4 +65,3 @@ function App() {
 }
 
 export default App;
-
