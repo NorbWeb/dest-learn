@@ -46,7 +46,18 @@ const Navbar = () => {
               //     </A>
               //   </li>
               // </Show>
-              <Show when={item.auth === false}>
+              <Show
+                when={logedIn()}
+                fallback={
+                  <Show when={item.auth === false}>
+                    <li>
+                      <A href={item.href} end={false}>
+                        {item.name}
+                      </A>
+                    </li>
+                  </Show>
+                }
+              >
                 <li>
                   <A href={item.href} end={false}>
                     {item.name}

@@ -1,5 +1,4 @@
-import { Outlet, Route } from "@solidjs/router";
-import { Verordnung } from "./Content/Verordnung";
+import { Outlet } from "@solidjs/router";
 
 const Spirituosen = () => {
   return (
@@ -9,14 +8,4 @@ const Spirituosen = () => {
   );
 };
 
-const Routes = () => {
-  return (
-    <>
-      <Route path="verordnung" element={Verordnung} />
-    </>
-  )
-}
-
 export { Spirituosen };
-export { Routes as Routes_Spirituosen }
-

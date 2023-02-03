@@ -3,11 +3,11 @@ import { handleSignOut } from "../../firebase";
 import "./LogInButton.scss";
 
 const LogInButton = () => {
-  const [logedIn, { toggleLogInState }] = useAuth();
+  const [logedIn, { changeLogInState }] = useAuth();
 
   const handleClick = () => {
     handleSignOut();
-    toggleLogInState();
+    changeLogInState(false);
   };
 
   return (

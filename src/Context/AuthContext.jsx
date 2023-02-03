@@ -1,13 +1,21 @@
-import { createSignal, createContext, useContext } from "solid-js";
+import {
+  createSignal,
+  createContext,
+  useContext,
+  createEffect,
+} from "solid-js";
 const AuthContext = createContext();
 
 export function AuthProvider(props) {
+  createEffect(() => {
+    // console.log(logedIn());
+  });
   const [logedIn, setLogedIn] = createSignal(props.observer || false),
     store = [
       logedIn,
       {
-        toggleLogInState() {
-          setLogedIn(() => !logedIn());
+        changeLogInState(item) {
+          setLogedIn(() => item);
         },
       },
     ];

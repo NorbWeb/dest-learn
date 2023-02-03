@@ -41,17 +41,12 @@ const logginEmailPassword = async (email, password, validator) => {
   }
 };
 
-
 const monitorAuthState = async () => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       sessionStorage.setItem("logedInUser", user.uid);
-      // sessionStorage.setItem("userRole", "admin");
-    } else if (user) {
-      sessionStorage.setItem("logedInUser", user.uid);
     } else {
       sessionStorage.removeItem("logedInUser");
-      // sessionStorage.removeItem("userRole");
     }
   });
 };

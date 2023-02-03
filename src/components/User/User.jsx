@@ -6,16 +6,15 @@ import "./User.scss";
 const User = () => {
   const [email, setEmail] = createSignal("");
   const [password, setPassword] = createSignal("");
-  const [logedIn, { toggleLogInState }] = useAuth();
-  const adminUsers = import.meta.env.VITE_ADMIN.split(",");
+  const [logedIn, { changeLogInState }] = useAuth();
 
   const handelLogin = () => {
     logginEmailPassword(email(), password(), showValidationError);
-    toggleLogInState();
+    changeLogInState(true);
   };
 
   const showValidationError = (message) => {
-    let box = document.getElementById("loginError");
+    let box = document.getElementById("logInError");
     if (message === true) {
       box.innerHTML = "";
       setEmail("");
@@ -48,7 +47,7 @@ const User = () => {
             Los geht's!
           </button>
         </div>
-        <div id="loginError" className="validation error"></div>
+        <div id="logInError" className="validation error"></div>
       </div>
     </>
   );
