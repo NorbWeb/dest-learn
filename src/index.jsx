@@ -3,18 +3,20 @@ import { render } from "solid-js/web";
 import App from "./App";
 import { Router } from "@solidjs/router";
 import "./index.scss";
-import { AuthProvider } from "./Context/AuthContext";
 import { DrugDataProvider } from "./Context/DrugDataContext";
 import { ShuffleDataProvider } from "./Context/ShuffleData";
+import { UserProvider } from "./Context/AuthContext";
 
-let logedIn = false;
-if (sessionStorage.getItem("logedInUser")) {
-  logedIn = true;
-}
+// let logedIn = false;
+// if (currentUser) {
+//   logedIn = true;
+// } else {
+//   logedIn = false;
+// }
 
 render(
   () => (
-    <AuthProvider observer={logedIn}>
+    <UserProvider>
       <DrugDataProvider>
         <ShuffleDataProvider>
           <Router>
@@ -22,7 +24,7 @@ render(
           </Router>
         </ShuffleDataProvider>
       </DrugDataProvider>
-    </AuthProvider>
+    </UserProvider>
   ),
   document.getElementById("root")
 );

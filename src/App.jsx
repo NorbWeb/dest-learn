@@ -1,33 +1,30 @@
 import "./App.scss";
-import { Routes, Route, Navigate } from "@solidjs/router";
-
+import { Routes } from "@solidjs/router";
+import { AppRoutes } from "./AppRoutes/AppRoutes";
+import { createEffect } from "solid-js";
 import { useAuth } from "./Context/AuthContext";
-import { AppRoutes, AuthRoutes } from "./AppRoutes/AppRoutes";
-import { createEffect, Show } from "solid-js";
 
 function App() {
-  const [logedIn] = useAuth();
   const adminUsers = import.meta.env.VITE_ADMIN.split(",");
   let adminCheck = false;
-  const isAdmin = () => {
-    let compare = sessionStorage.getItem("logedInUser");
-    if (adminUsers.includes(compare)) {
+  const isAdmin = async () => {
+    if (adminUsers.includes("test")) {
       adminCheck = true;
     } else {
       adminCheck = false;
     }
   };
+  const [user] = useAuth();
 
   createEffect(() => {
     isAdmin();
-    console.log("adminCheck: " + adminCheck);
+    // console.log("adminCheck: " + adminCheck);
   });
 
   return (
     <>
       <Routes>
         <AppRoutes />
-        <AuthRoutes logedIn={logedIn()} admin={adminCheck} />
       </Routes>
     </>
   );

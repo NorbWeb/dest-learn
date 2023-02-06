@@ -11,7 +11,7 @@ const DrugOverview = () => {
   const viewOptions = ["tile", "small", "list"];
   const propsDrugList = { view, setView, viewOptions };
   const [data, { getCategories }] = useDrugData();
-  const [logedIn] = useAuth();
+  const [user] = useAuth();
 
   return (
     <>
@@ -47,7 +47,7 @@ const DrugOverview = () => {
         {/* When user is logged in, show button to add new drug. */}
         {/* When clicked on add button, show AddDrug component else DrugList */}
         <Show when={data()} fallback={<div>loading drugs...</div>}>
-          <Show when={logedIn()} fallback={<DrugList {...propsDrugList} />}>
+          <Show when={user()} fallback={<DrugList {...propsDrugList} />}>
             <Show
               when={addDrug()}
               fallback={

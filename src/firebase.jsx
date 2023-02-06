@@ -1,11 +1,7 @@
 // Import the functions you need from the SDKs you need
+import { Navigate } from "@solidjs/router";
 import { initializeApp } from "firebase/app";
-import {
-  getAuth,
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  signOut,
-} from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 // import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
@@ -41,26 +37,12 @@ const logginEmailPassword = async (email, password, validator) => {
   }
 };
 
-const monitorAuthState = async () => {
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      sessionStorage.setItem("logedInUser", user.uid);
-    } else {
-      sessionStorage.removeItem("logedInUser");
-    }
-  });
-};
-
-monitorAuthState();
-
 const handleSignOut = () => {
   signOut(auth)
-    .then(() => {
-      // Sign-out successful.
-    })
+    .then(() => {})
     .catch((error) => {
       // An error happened.
     });
 };
 
-export { logginEmailPassword, handleSignOut };
+export { logginEmailPassword, handleSignOut, auth };

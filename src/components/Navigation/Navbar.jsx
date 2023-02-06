@@ -1,23 +1,30 @@
 import "./Navbar.scss";
 import { A } from "@solidjs/router";
-import { createSignal, For, Show } from "solid-js";
+import { Show } from "solid-js";
 import Logo from "../../assets/whisky-logo-96.png";
-import { LogInButton } from "../Authentification/LogInButton";
+import { LogOutButton } from "../Authentification/LogOutButton";
 import { useAuth } from "../../Context/AuthContext";
 
 const Navbar = () => {
-  const [navItem, setNavItem] = createSignal([
+  const [user] = useAuth();
+  const navItem = [
     {
       name: "Dokumentation",
       href: "/dokumentation",
-
-      auth: false,
     },
-    { name: "Über uns", href: "/about", auth: false },
-    { name: "User", href: "/user", auth: false },
-    { name: "Admin", href: "/admin", auth: true },
-  ]);
-  const [logedIn] = useAuth();
+    { name: "Über uns", href: "/about" },
+
+    {
+      name: "User",
+      href: "/user/login",
+    },
+    {
+      name: "User",
+      href: "/user/dashboard",
+    },
+
+    { name: "Admin", href: "/admin" },
+  ];
 
   return (
     <>
@@ -26,48 +33,40 @@ const Navbar = () => {
           <img src={Logo} alt="Logo" id="logo" />
         </A>
         <ul>
-          <For each={navItem()}>
-            {(item) => (
-              // <Show
-              //   when={logedIn() === "cTLrwz2fnxVC3xl8RRgkda3kp6v2"}
-              //   fallback={
-              //     <Show when={!item.auth}>
-              //       <li>
-              //         <A href={item.href} end={false}>
-              //           {item.name}
-              //         </A>
-              //       </li>
-              //     </Show>
-              //   }
-              // >
-              //   <li>
-              //     <A href={item.href} end={false}>
-              //       {item.name}
-              //     </A>
-              //   </li>
-              // </Show>
-              <Show
-                when={logedIn()}
-                fallback={
-                  <Show when={item.auth === false}>
-                    <li>
-                      <A href={item.href} end={false}>
-                        {item.name}
-                      </A>
-                    </li>
-                  </Show>
-                }
-              >
-                <li>
-                  <A href={item.href} end={false}>
-                    {item.name}
-                  </A>
-                </li>
-              </Show>
-            )}
-          </For>
+          <li>
+            <A href={navItem[0].href} end={false}>
+              {navItem[0].name}
+            </A>
+          </li>
+          <li>
+            <A href={navItem[1].href} end={false}>
+              {navItem[1].name}
+            </A>
+          </li>
+          <Show
+            when={user()}
+            fallback={
+              <li>
+                <A href={navItem[2].href} end={false}>
+                  {navItem[2].name}
+                </A>
+              </li>
+            }
+          >
+            <li>
+              <A href={navItem[3].href} end={false}>
+                {navItem[3].name}
+              </A>
+            </li>
+          </Show>
+
+          <li>
+            <A href={navItem[4].href} end={false}>
+              {navItem[4].name}
+            </A>
+          </li>
         </ul>
-        <LogInButton />
+        <LogOutButton />
       </nav>
     </>
   );

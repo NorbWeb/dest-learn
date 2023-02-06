@@ -14,8 +14,15 @@ import { Routes_Spirituosen } from "./R_Spirituosen";
 import { Home } from "../components/Home/Home";
 import { About } from "../components/About/About";
 import { Show } from "solid-js";
+import { LoadingSpinner } from "../components/Helper/LoadingSpinner/LoadingSpinner";
+import { Routes_User } from "./R_User";
+import { useAuth } from "../Context/AuthContext";
+import { UserDashboard } from "../components/User/Content/UserDashboard";
+import { LogInForm } from "../components/Authentification/LogInForm";
 
 const AppRoutes = () => {
+  const [user] = useAuth();
+
   return (
     <Route path="/" component={Layout}>
       <Route path="/" component={Home} />
@@ -38,7 +45,9 @@ const AppRoutes = () => {
         </Route>
         <Route path="*" component={NotFound} />
       </Route>
-      <Route path="user" component={User} />
+      <Route path="user" component={User}>
+        <Routes_User />
+      </Route>
       <Route path="about" component={About} />
       <Route path="*" component={NotFound} />
     </Route>
@@ -48,29 +57,16 @@ const AppRoutes = () => {
 // Empty helper component
 const Default = (props) => {
   return (
-    <div id="admin" className="container">
-      {props.name}
+    <div id={props.name.toLowerCase()} className="container">
+      <LoadingSpinner />
     </div>
   );
 };
 
 const compare = ["admin", "test"];
 
-console.log(window.location.href.includes(compare));
 
-const Redirect = () => {
-  return <Navigate href="/user" />;
-};
 
-const AuthRoutes = (props) => {
-  return (
-    <Route path="/" component={Layout}>
-      <Show when={props.logedIn === true} fallback={<Redirect />}>
-        <Route path="/admin" element={<Default name="Admin" />} />
-        <Route path="/test" element={<Default name="Test" />} />
-      </Show>
-    </Route>
-  );
-};
 
-export { AppRoutes, AuthRoutes };
+
+export { AppRoutes };
