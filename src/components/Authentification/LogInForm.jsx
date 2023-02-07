@@ -1,5 +1,5 @@
 import { useNavigate } from "@solidjs/router";
-import { createSignal, Show } from "solid-js";
+import { createEffect, createSignal } from "solid-js";
 import { useAuth } from "../../Context/AuthContext";
 import { logginEmailPassword } from "../../firebase";
 import "./LogInForm.scss";
@@ -27,6 +27,16 @@ const LogInForm = () => {
       }
     }
   };
+
+  function redirect() {
+    if (user()) {
+      navigate("/user/dashboard");
+    }
+  }
+
+  createEffect(() => {
+    redirect();
+  });
 
   return (
     <div className="log-in-form">

@@ -4,7 +4,7 @@ import { Einheiten } from "../components/Topics/Mathematik/Content/Einheiten";
 const Routes = () => {
   return (
     <>
-      <Route path="einheiten" element={Einheiten} />
+      <Route path="einheiten" component={Einheiten} />
     </>
   );
 };

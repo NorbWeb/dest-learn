@@ -1,5 +1,4 @@
 // Import the functions you need from the SDKs you need
-import { Navigate } from "@solidjs/router";
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 // import { getAnalytics } from "firebase/analytics";

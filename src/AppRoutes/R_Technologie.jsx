@@ -5,8 +5,8 @@ import { Test } from "../components/Topics/Technologie/Content/Test";
 const Routes = () => {
   return (
     <>
-      <Route path="destillation" element={Destillation} />
-      <Route path="test" element={Test} />
+      <Route path="destillation" component={Destillation} />
+      <Route path="test" component={Test} />
     </>
   );
 };

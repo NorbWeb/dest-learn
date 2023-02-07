@@ -8,7 +8,7 @@ import {
 import { auth } from "../firebase";
 const AuthContext = createContext();
 
-export function UserProvider(props) {
+export function AuthProvider(props) {
   const monitorAuthState = async () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {

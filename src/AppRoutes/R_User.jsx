@@ -1,14 +1,14 @@
 import { Route } from "@solidjs/router";
 import { LogInForm } from "../components/Authentification/LogInForm";
-import { LogOutMessage } from "../components/Authentification/LogOutMessage";
+import { AddDrug } from "../components/Topics/Drogenkunde/Content/AddDrug";
 import { UserDashboard } from "../components/User/Content/UserDashboard";
 
 const Routes = () => {
   return (
     <>
-      <Route path="/login" element={LogInForm} />
-      <Route path="/logout" element={LogOutMessage} />
-      <Route path="/dashboard" element={UserDashboard} />
+      <Route path="login" component={LogInForm} />
+      <Route path="dashboard" component={UserDashboard} />
+      <Route path="neuedroge" component={AddDrug} />
     </>
   );
 };

@@ -1,3 +1,4 @@
+import { A } from "@solidjs/router";
 import { useAuth } from "../../../Context/AuthContext";
 import "./UserDashboard.scss";
 
@@ -10,7 +11,9 @@ const UserDashboard = () => {
         Hallo {user().displayName ? user().displayName : user().email}
       </h3>
       <div className="box">
-        <div className="placeholder-box"></div>
+        <A href="/user/neuedroge">
+          <div className="placeholder-box"></div>
+        </A>
         <div className="placeholder-box"></div>
         <div className="placeholder-box"></div>
         <div className="placeholder-box"></div>

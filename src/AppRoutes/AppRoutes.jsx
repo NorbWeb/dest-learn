@@ -1,4 +1,4 @@
-import { Route, Navigate, useNavigate, useParams } from "@solidjs/router";
+import { Route, Navigate } from "@solidjs/router";
 import { Layout } from "../components/Layout/Layout";
 import { Info } from "../components/Info/Info";
 import { User } from "../components/User/User";
@@ -13,16 +13,10 @@ import { Routes_Drogenkunde } from "./R_Drogenkunde";
 import { Routes_Spirituosen } from "./R_Spirituosen";
 import { Home } from "../components/Home/Home";
 import { About } from "../components/About/About";
-import { Show } from "solid-js";
 import { LoadingSpinner } from "../components/Helper/LoadingSpinner/LoadingSpinner";
 import { Routes_User } from "./R_User";
-import { useAuth } from "../Context/AuthContext";
-import { UserDashboard } from "../components/User/Content/UserDashboard";
-import { LogInForm } from "../components/Authentification/LogInForm";
 
 const AppRoutes = () => {
-  const [user] = useAuth();
-
   return (
     <Route path="/" component={Layout}>
       <Route path="/" component={Home} />
@@ -45,6 +39,10 @@ const AppRoutes = () => {
         </Route>
         <Route path="*" component={NotFound} />
       </Route>
+      <Route
+        path="/user"
+        element={<Navigate href="/user/dashboard" />}
+      />
       <Route path="user" component={User}>
         <Routes_User />
       </Route>
@@ -62,11 +60,5 @@ const Default = (props) => {
     </div>
   );
 };
-
-const compare = ["admin", "test"];
-
-
-
-
 
 export { AppRoutes };

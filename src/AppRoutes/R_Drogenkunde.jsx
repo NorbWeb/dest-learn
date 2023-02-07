@@ -6,9 +6,9 @@ import { DrugOverview } from "../components/Topics/Drogenkunde/Content/DrugOverv
 const Routes = () => {
   return (
     <>
-      <Route path="sammlung" element={DrugOverview} />
-      <Route path="sammlung/:id" element={DrugDetail} />
-      <Route path="lernen" element={DrugLearn} />
+      <Route path="sammlung" component={DrugOverview} />
+      <Route path="sammlung/:id" component={DrugDetail} />
+      <Route path="lernen" component={DrugLearn} />
     </>
   );
 };

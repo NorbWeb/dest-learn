@@ -1,22 +1,15 @@
 /* @refresh reload */
+import "./index.scss";
 import { render } from "solid-js/web";
 import App from "./App";
 import { Router } from "@solidjs/router";
-import "./index.scss";
 import { DrugDataProvider } from "./Context/DrugDataContext";
 import { ShuffleDataProvider } from "./Context/ShuffleData";
-import { UserProvider } from "./Context/AuthContext";
-
-// let logedIn = false;
-// if (currentUser) {
-//   logedIn = true;
-// } else {
-//   logedIn = false;
-// }
+import { AuthProvider } from "./Context/AuthContext";
 
 render(
   () => (
-    <UserProvider>
+    <AuthProvider>
       <DrugDataProvider>
         <ShuffleDataProvider>
           <Router>
@@ -24,7 +17,7 @@ render(
           </Router>
         </ShuffleDataProvider>
       </DrugDataProvider>
-    </UserProvider>
+    </AuthProvider>
   ),
   document.getElementById("root")
 );

@@ -1,4 +1,3 @@
-import { useNavigate } from "@solidjs/router";
 import { Show } from "solid-js";
 import { useAuth } from "../../Context/AuthContext";
 import { handleSignOut } from "../../firebase";
@@ -6,11 +5,9 @@ import "./LogOutButton.scss";
 
 const LogOutButton = () => {
   const [user] = useAuth();
-  const navigate = useNavigate();
 
   const handleClick = () => {
     handleSignOut();
-    navigate("/user/logout");
   };
 
   return (

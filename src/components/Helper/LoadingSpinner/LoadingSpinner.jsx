@@ -2,16 +2,23 @@ import { onMount } from "solid-js";
 import "./LoadingSpinner.scss";
 
 const LoadingSpinner = () => {
-  let test = "Bitte warten";
   const handleText = () => {
     let text = document.getElementById("spinner-text");
+    let spinner = document.getElementById("spinner");
+    let shield = document.getElementById("shield");
+
     if (!text) {
       null;
     } else {
-      text.innerHTML = test;
+      text.innerHTML = "Bitte warten";
       setTimeout(() => {
         text.innerHTML = "Dauert...";
       }, 5000);
+      setTimeout(() => {
+        text.innerHTML = "Sorry, probier es später nochmal";
+        spinner.classList.add("hide");
+        shield.classList.remove("hide");
+      }, 10000);
     }
   };
 
@@ -23,7 +30,8 @@ const LoadingSpinner = () => {
     <>
       <div className="loading-spinner">
         <h4 id="spinner-text"></h4>
-        <div className="spinner"></div>
+        <div id="spinner" className="spinner"></div>
+        <i id="shield" class="bi bi-x-octagon hide"></i>
       </div>
     </>
   );
