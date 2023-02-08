@@ -2,7 +2,7 @@ import { Route, Navigate } from "@solidjs/router";
 import { Layout } from "../components/Layout/Layout";
 import { Info } from "../components/Info/Info";
 import { User } from "../components/User/User";
-import { NotFound } from "../components/NotFound/NotFound";
+import { NotFound } from "../components/Helper/NotFound/NotFound";
 import { Technologie } from "../components/Topics/Technologie/Technologie";
 import { Mathematik } from "../components/Topics/Mathematik/Mathematik";
 import { Drogenkunde } from "../components/Topics/Drogenkunde/Drogenkunde";
