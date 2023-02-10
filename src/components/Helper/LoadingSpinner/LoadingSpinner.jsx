@@ -31,7 +31,16 @@ const LoadingSpinner = () => {
       <div className="loading-spinner">
         <h4 id="spinner-text"></h4>
         <div id="spinner" className="spinner"></div>
-        <i id="shield" class="bi bi-x-octagon hide"></i>
+        <div id="shield" className='hide'>
+          <button
+            className="btn primary "
+            onClick={() => {
+              history.back();
+            }}
+          >
+            Zurück
+          </button>
+        </div>
       </div>
     </>
   );

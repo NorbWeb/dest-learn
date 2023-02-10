@@ -6,8 +6,8 @@ import { useDrugData } from "../../../../Context/DrugDataContext.jsx";
 const AddDrug = () => {
   const [data, { getCategories, addNewDrug }] = useDrugData();
   const [checked, setChecked] = createSignal(false);
-  const [countIngredients, setCountIngredients] = createSignal([""]);
-  const [countUse, setCountUse] = createSignal([""]);
+  const [countIngredients, setCountIngredients] = createSignal(["", "", ""]);
+  const [countUse, setCountUse] = createSignal(["", "", ""]);
   const [newDrug, setNewDrug] = createStore({
     id: "",
     name: "",
@@ -84,6 +84,9 @@ const AddDrug = () => {
   return (
     <>
       <div id="add-drug" className="">
+        <button className="btn primary" onClick={() => history.back()}>
+          Zurück
+        </button>
         <form onSubmit={handelSubmit}>
           <div className="left wrapper col gap-1">
             <input

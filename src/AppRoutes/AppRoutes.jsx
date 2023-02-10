@@ -39,10 +39,7 @@ const AppRoutes = () => {
         </Route>
         <Route path="*" component={NotFound} />
       </Route>
-      <Route
-        path="/user"
-        element={<Navigate href="/user/dashboard" />}
-      />
+      <Route path="/user" element={<Navigate href="/user/dashboard" />} />
       <Route path="user" component={User}>
         <Routes_User />
       </Route>
@@ -53,12 +50,26 @@ const AppRoutes = () => {
 };
 
 // Empty helper component
-const Default = (props) => {
+const DefaultComponent = (props) => {
   return (
-    <div id={props.name.toLowerCase()} className="container">
-      <LoadingSpinner />
+    <div id={props.name.toLowerCase()} className="container default-component">
+      <h2>{props.name}</h2>
+      {props.loading ? <LoadingSpinner /> : ""}
+      {props.back ? (
+        <button
+          className="btn primary"
+          style={"margin:1rem"}
+          onClick={() => {
+            history.back();
+          }}
+        >
+          Zurück
+        </button>
+      ) : (
+        ""
+      )}
     </div>
   );
 };
 
-export { AppRoutes };
+export { AppRoutes, DefaultComponent };

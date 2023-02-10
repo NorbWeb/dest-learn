@@ -154,4 +154,10 @@ body {
   color: $warn;
 }
 
+.hover-bigger {
+  @include mixins.hover-bigger()
+}
 
+.default-component {
+  text-align: center;
+}

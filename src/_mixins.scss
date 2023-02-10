@@ -65,3 +65,12 @@
     color: inherit;
   }
 }
+
+@mixin hover-bigger {
+  transition: all 350ms ease;
+  &:hover {
+    transform: translateY(-0.25rem);
+    transition: all 350ms ease;
+    box-shadow: 5px 5px  7px grey;
+  }
+}

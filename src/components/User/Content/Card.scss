@@ -1,0 +1,30 @@
+.user-content-card {
+  $br: 1rem;
+
+  width: 12.5rem;
+  height: 12.5rem;
+  text-decoration: none;
+  border-radius: $br;
+
+  .user-content-card-title {
+    border-radius: $br $br 0 0;
+    width: 100%;
+    height: 25%;
+    padding: 0 0.5rem;
+    font-weight: 600;
+    color: #d4d4d4;
+    background-color: rgb(119, 94, 27);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .user-content-card-body {
+    img {
+      aspect-ratio: 1/ (3/4);
+      width: 100%;
+      border-radius: 0 0 $br $br;
+      object-fit: cover;
+    }
+  }
+}
