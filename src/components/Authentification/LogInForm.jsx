@@ -9,7 +9,8 @@ const LogInForm = () => {
   const [email, setEmail] = createSignal("");
   const [password, setPassword] = createSignal("");
 
-  const handelLogin = () => {
+  const handelLogin = (event) => {
+    event.preventDefault();
     logginEmailPassword(email(), password(), showValidationError);
   };
 
@@ -41,11 +42,12 @@ const LogInForm = () => {
   return (
     <div className="log-in-form">
       <h3>Willkommen zurück!</h3>
-      <div className="form">
+      <form onSubmit={handelLogin} className="form">
         <input
           name="email"
           type="email"
           placeholder="E-Mail"
+          required
           onInput={(e) => setEmail(e.currentTarget.value)}
           value={email()}
         />
@@ -53,13 +55,12 @@ const LogInForm = () => {
           name="password"
           type="password"
           placeholder="Passwort"
+          required
           onInput={(e) => setPassword(e.currentTarget.value)}
           value={password()}
         />
-        <button type="submit" onClick={() => handelLogin()}>
-          Los geht's!
-        </button>
-      </div>
+        <button type="submit" className='btn primary'>Los geht's!</button>
+      </form>
       <div id="logInError" className="validation error"></div>
     </div>
   );

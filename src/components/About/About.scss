@@ -1,7 +1,13 @@
 #about {
+  min-height: calc(100vh - 9rem);
+  padding-top: 1rem;
+
   #about-me {
     width: 85%;
 
+    h1 {
+      margin: 0 0 1rem 0;
+    }
     img {
       margin-left: 2rem;
       border-radius: 15px;

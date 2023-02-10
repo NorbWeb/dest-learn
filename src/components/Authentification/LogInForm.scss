@@ -1,6 +1,7 @@
 .log-in-form {
   width: 100%;
-  height: calc(100vh - 9rem);
+  position: relative;
+  top: 25vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -12,16 +13,16 @@
     gap: 1rem;
 
     input {
-      min-width: 10vw;
-      width: 20vw;
-      max-width: 40vw;
+      min-width: 10rem;
+      width: 15rem;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
     }
   }
 
   .validation {
-    min-width: 10vw;
-    width: 20vw;
-    max-width: 40vw;
+    min-width: 10rem;
+    width: 15rem;
     height: 5rem;
     display: flex;
     justify-content: center;

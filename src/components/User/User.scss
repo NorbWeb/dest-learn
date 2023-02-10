@@ -1,8 +1,10 @@
 #user {
   min-height: calc(100vh - 9rem);
+  padding-top: 1rem;
 
   .title {
     text-align: center;
+    margin: 0 0 1rem 0;
   }
 
   .box {
@@ -16,8 +18,8 @@
       height: 15rem;
       background-color: lightblue;
 
-      &::before{
-        content: 'Some content';
+      &::before {
+        content: "Some content";
       }
     }
   }

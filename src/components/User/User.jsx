@@ -13,9 +13,6 @@ const User = () => {
           <Match when={!user()}>
             <Navigate href="/user/login" />
           </Match>
-          <Match when={user()}>
-            {/* <Navigate href="/user/dashboard" /> */}
-          </Match>
         </Switch>
         <Outlet />
       </div>
