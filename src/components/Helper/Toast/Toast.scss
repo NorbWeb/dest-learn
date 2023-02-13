@@ -1,0 +1,7 @@
+.toast-container {
+    display: none;
+
+    &.show {
+        display: block;
+    }
+}

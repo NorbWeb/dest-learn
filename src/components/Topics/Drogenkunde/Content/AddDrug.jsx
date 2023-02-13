@@ -2,6 +2,7 @@ import "./AddDrug.scss";
 import { createStore } from "solid-js/store";
 import { createEffect, createSignal, For, Index, Show } from "solid-js";
 import { useDrugData } from "../../../../Context/DrugDataContext.jsx";
+import { showToast, Toast } from "../../../Helper/Toast/Toast";
 
 const AddDrug = () => {
   const [data, { getCategories, addNewDrug }] = useDrugData();
@@ -77,21 +78,25 @@ const AddDrug = () => {
 
   function handelSubmit(event) {
     event.preventDefault();
-    addNewDrug(newDrug);
-    alert("New drug added");
+    // addNewDrug(newDrug);
+    // alert("New drug added");
+    showToast(toastProps.id);
   }
+
+  const toastProps = {id: 'add-drug-taost', message: 'Droge hinzugefügt'}
+  const isRequired = false;
 
   return (
     <>
       <div id="add-drug" className="">
-        <button className="btn primary" onClick={() => history.back()}>
+        <button className="btn primary btn-back" onClick={() => history.back()}>
           Zurück
         </button>
         <form onSubmit={handelSubmit}>
           <div className="left wrapper col gap-1">
             <input
               autofocus
-              required
+              required={isRequired}
               name="name"
               type="text"
               value={newDrug.name}
@@ -99,7 +104,7 @@ const AddDrug = () => {
               placeholder="Name"
             />
             <input
-              required
+              required={isRequired}
               name="type"
               type="text"
               value={newDrug.type}
@@ -111,7 +116,7 @@ const AddDrug = () => {
                 when={checked() === false}
                 fallback={
                   <input
-                    required
+                    required={isRequired}
                     name="category"
                     type="text"
                     value={newDrug.category}
@@ -122,7 +127,7 @@ const AddDrug = () => {
               >
                 <select
                   name="category"
-                  required
+                  required={isRequired}
                   value={newDrug.category}
                   onInput={onInputChange}
                 >
@@ -144,7 +149,7 @@ const AddDrug = () => {
               </div>
             </div>
             <input
-              required
+              required={isRequired}
               name="family"
               type="text"
               value={newDrug.family}
@@ -152,7 +157,7 @@ const AddDrug = () => {
               placeholder="Familie"
             />
             <input
-              required
+              required={isRequired}
               name="origin"
               type="text"
               value={newDrug.origin}
@@ -161,7 +166,7 @@ const AddDrug = () => {
             />
 
             <input
-              required
+              required={isRequired}
               name="treatment"
               type="text"
               value={newDrug.treatment}
@@ -169,7 +174,7 @@ const AddDrug = () => {
               placeholder="Verarbeitung"
             />
             <textarea
-              required
+              required={isRequired}
               name="note"
               type="text"
               value={newDrug.note}
@@ -183,9 +188,6 @@ const AddDrug = () => {
               // onInput={(e)=> setNewDrug({img: e.target.value})}
               placeholder="Bild"
             />
-            <button className="btn primary" type="submit">
-              submit
-            </button>
           </div>
           <div className="right wrapper gap-1">
             <div className="wrapper gap-1">
@@ -197,7 +199,7 @@ const AddDrug = () => {
                       {(ingredient, index) => (
                         <li>
                           <input
-                            required
+                            required={isRequired}
                             id={"ingredient-" + index()}
                             value={ingredient}
                             onChange={(e) =>
@@ -237,7 +239,7 @@ const AddDrug = () => {
                       {(use, index) => (
                         <li>
                           <input
-                            required
+                            required={isRequired}
                             id={"use-" + index()}
                             value={use}
                             onChange={(e) => onInputChangeUse(e, index())}
@@ -267,7 +269,13 @@ const AddDrug = () => {
               </div>
             </div>
           </div>
+          <span className="btn-span">
+            <button className="btn primary submit-btn" type="submit">
+              submit
+            </button>
+          </span>
         </form>
+        <Toast props={toastProps} />
       </div>
     </>
   );

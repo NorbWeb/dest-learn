@@ -56,15 +56,18 @@ const DefaultComponent = (props) => {
       <h2>{props.name}</h2>
       {props.loading ? <LoadingSpinner /> : ""}
       {props.back ? (
-        <button
-          className="btn primary"
-          style={"margin:1rem"}
-          onClick={() => {
-            history.back();
-          }}
-        >
-          Zurück
-        </button>
+        <>
+          <div>Noch keine Inhalte auf dieser Seite vorhanden.</div>
+          <button
+            className="btn primary"
+            style={"margin:1rem"}
+            onClick={() => {
+              history.back();
+            }}
+          >
+            Zurück
+          </button>
+        </>
       ) : (
         ""
       )}

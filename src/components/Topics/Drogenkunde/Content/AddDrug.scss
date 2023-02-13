@@ -1,11 +1,24 @@
 #add-drug {
-    label {
-        font-size: 0.875rem;
-    }
+  label {
+    font-size: 0.875rem;
+  }
 
-    form {
-        display: flex;
-        flex-wrap: wrap;
-        padding: 1rem 0;
+  .btn-back {
+    margin-bottom: 1rem;
+  }
+
+  form {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 1rem;
+
+    .btn-span {
+      width: 100%;
+      margin-top: 1rem;
+      .submit-btn {
+        height: fit-content;
+        margin: auto;
+      }
     }
+  }
 }

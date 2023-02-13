@@ -6,8 +6,8 @@ import "./UserDashboard.scss";
 const UserDashboard = () => {
   const [user] = useAuth();
   const props = [
-    { route: "add-drug", title: "Droge anlegen" },
-    { route: "edit-drug", title: "Droge bearbeiten" },
+    { route: "add-drug", title: "Droge anlegen" , foto: '/spices.jpg', color: 1},
+    { route: "edit-drug", title: "Droge bearbeiten" , foto: '/spices2.jpg', color: 2},
   ];
   return (
     <>
@@ -16,7 +16,7 @@ const UserDashboard = () => {
       </h3>
       <div className="box">
         <For each={props}>
-          {(section) => <Card route={section.route} title={section.title} />}
+          {(section) => <Card  props={section} />}
         </For>
       </div>
     </>
