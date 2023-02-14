@@ -1,7 +1,41 @@
 .toast-container {
-    display: none;
+  display: none;
+  position: fixed;
+  z-index: 1;
+  bottom: 2rem;
+  width: 100%;
+  transition: all 350ms ease;
 
-    &.show {
-        display: block;
-    }
+  .toast-message {
+    width: fit-content;
+    max-width: 25rem;
+    height: fit-content;
+    padding: 1rem 2rem;
+    margin: auto;
+    border-radius: 1rem;
+    background-color: #fff;
+    border: 0.2rem dashed grey;
+    box-shadow: 3px 3px 4px grey;
+  }
+
+  &.show {
+    display: block;
+    animation: appear 3000ms ease both;
+  }
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }

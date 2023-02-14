@@ -78,12 +78,15 @@ const AddDrug = () => {
 
   function handelSubmit(event) {
     event.preventDefault();
-    // addNewDrug(newDrug);
-    // alert("New drug added");
+    addNewDrug(newDrug);
     showToast(toastProps.id);
   }
 
-  const toastProps = {id: 'add-drug-taost', message: 'Droge hinzugefügt'}
+  const toastProps = {
+    id: "add-drug-taost",
+    message:
+      "Droge hinzugefügt!",
+  };
   const isRequired = false;
 
   return (
