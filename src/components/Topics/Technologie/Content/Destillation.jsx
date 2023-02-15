@@ -1,7 +1,10 @@
+import { createEffect, Show } from "solid-js";
+import { useContent } from "../../../../Context/ContentContext";
+import { LoadingSpinner } from "../../../Helper/LoadingSpinner/LoadingSpinner";
 import { DocLayout } from "../../../Info/DocLayout";
 
 const Destillation = () => {
-  const data = {
+  const testData = {
     title: "Destillation",
     subtitle:
       "Hier lernst du alles rund ums Destillieren. Wir gehen auf das Prinzip, die Wirkmechanismen und den grundlegenden Aufbau einer Destillieranlage ein.",
@@ -23,9 +26,15 @@ const Destillation = () => {
     ],
   };
 
+  const [data] = useContent();
+
+  createEffect(() => {});
+
   return (
     <>
-      <DocLayout {...data} />
+      <Show when={data()} fallback={<LoadingSpinner />}>
+        <DocLayout {...data()[0]} />
+      </Show>
     </>
   );
 };
