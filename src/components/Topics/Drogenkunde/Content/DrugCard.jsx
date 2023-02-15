@@ -1,5 +1,5 @@
 import { A } from "@solidjs/router";
-import { createEffect, createSignal, Show } from "solid-js";
+import { createSignal, Show } from "solid-js";
 import "./DrugCard.scss";
 
 const DrugCard = (props) => {
@@ -24,10 +24,10 @@ const DrugCard = (props) => {
         when={props.simple}
         fallback={
           <div name="DrugCard" className="card">
-            <A href={drug.name.toLowerCase()}>
+            <A href={drug.id}>
               <img
                 className="card-img"
-                src={drug.img ? `/${drug.img}` : "/placeholder.svg"}
+                src={drug.img ? drug.img : "/placeholder.svg"}
                 alt={drug.name}
               />
               <div className="card-body">
@@ -46,7 +46,7 @@ const DrugCard = (props) => {
         >
           <img
             className="card-img"
-            src={drug.img ?  `/${drug.img}` : "/placeholder.svg"}
+            src={drug.img ? drug.img : "/placeholder.svg"}
             alt={drug.name}
           />
           <Show when={!show()}>

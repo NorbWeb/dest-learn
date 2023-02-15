@@ -1,8 +1,12 @@
 .loading-spinner {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
+  position: absolute;
+  .loading-spinner-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 
   .spinner {
     display: flex;
@@ -21,6 +25,10 @@
 
   .hide {
     display: none;
+  }
+
+  #sorry {
+    font-size: 3rem;
   }
 }
 

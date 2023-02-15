@@ -2,6 +2,7 @@ import { For, Show } from "solid-js";
 import "./DrugLearn.scss";
 import { DrugCard } from "./DrugCard";
 import { useShuffleData } from "../../../../Context/ShuffleData";
+import { LoadingSpinner } from "../../../Helper/LoadingSpinner/LoadingSpinner";
 
 const DrugLearn = () => {
   const [data, { getRandom }] = useShuffleData();
@@ -14,7 +15,7 @@ const DrugLearn = () => {
       </div>
       <br />
       <div id="drug-learn" className="content wrapper gap-1 flex-wrap ">
-        <Show when={data()} fallback={<div>loading...</div>}>
+        <Show when={data()} fallback={<LoadingSpinner />}>
           <For each={data()}>
             {(drug) => (
               <DrugCard simple {...drug}>

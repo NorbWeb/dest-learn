@@ -4,33 +4,22 @@ import {
   useContext,
   createEffect,
 } from "solid-js";
-import { drugs } from "../../drugdata.jsx";
-
+import { getDocs, collection } from "firebase/firestore/lite";
+import { db } from "../firebase";
 
 const ShuffleDataContext = createContext();
 
 export function ShuffleDataProvider(props) {
-  // const fetchData = () => {
-  //   fetch("../../drugdata.json", {
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Accept: "application/json",
-  //     },
-  //   })
-  //     .then(function (response) {
-  //       // console.log(response);
-  //       return response.json();
-  //     })
-  //     .then(function (data) {
-  //       // console.log(data.drugs);
-  //       setData(data.drugs);
-  //     });
-  // };
+  const getDrugs = async () => {
+    const querySnapshot = await getDocs(collection(db, "drugs"));
+    setData(querySnapshot.docs.map((doc) => doc.data()));
+  };
 
-  // createEffect(() => {
-  //   fetchData();
-  // });
-  const [data, setData] = createSignal(drugs),
+  createEffect(() => {
+    getDrugs();
+  });
+
+  const [data, setData] = createSignal(),
     store = [
       data,
       {

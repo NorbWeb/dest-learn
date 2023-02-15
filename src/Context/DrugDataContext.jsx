@@ -4,38 +4,73 @@ import {
   useContext,
   createEffect,
 } from "solid-js";
-import { drugs } from "../../drugdata.jsx";
+import { getDocs, collection } from "firebase/firestore/lite";
+import { db } from "../firebase";
+
 const DrugDataContext = createContext();
 
 export function DrugDataProvider(props) {
-//   const fetchData = () => {
-//     fetch("../../drugdata.json", {
-//       headers: {
-//         "Content-Type": "application/json",
-//         Accept: "application/json",
-//       },
-//     })
-//       .then(function (response) {
-//         // console.log(response);
-//         return response.json();
-//       })
-//       .then(function (data) {
-//         // console.log(data.drugs);
-//         setData(data.drugs);
-//       });
-//   };
+  const getDrugs = async () => {
+    const querySnapshot = await getDocs(collection(db, "drugs"));
+    let data = querySnapshot.docs.map((doc) => doc.data());
+    let id = querySnapshot.docs.map((doc) => doc.id);
+    data.map((drug, index) => (drug.id = id[index]));
 
-//   createEffect(() => {
-//     fetchData();
-//   });
+    let drugData = {
+      allDrugs: data,
+      categories: [],
+    };
 
-  
-  const [data, setData] = createSignal(drugs),
+    let list = [];
+    for (let i = 0; i < data.length; i++) {
+      if (!list.includes(data[i].category)) {
+        list.push(data[i].category);
+      }
+    }
+    for (let i = 0; i < list.length; i++) {
+      let obj = {};
+      obj.category = list[i];
+      obj.drugList = [];
+      for (let j = 0; j < data.length; j++) {
+        if (data[j].category === list[i]) {
+          obj.drugList.push(data[j]);
+        }
+      }
+      drugData.categories.push(obj);
+    }
+
+    // console.log(drugData);
+    setData(drugData);
+  };
+  //   const fetchData = () => {
+  //     fetch("../../drugdata.json", {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Accept: "application/json",
+  //       },
+  //     })
+  //       .then(function (response) {
+  //         // console.log(response);
+  //         return response.json();
+  //       })
+  //       .then(function (data) {
+  //         // console.log(data.drugs);
+  //         setData(data.drugs);
+  //       });
+  //   };
+
+  // createEffect(() => {
+  //   fetchData();
+  // });
+  createEffect(() => {
+    getDrugs();
+  });
+
+  const [data, setData] = createSignal(),
     store = [
       data,
       {
         getRandom() {
-          
           let random = [];
           if (!data()) {
             [];
@@ -65,6 +100,14 @@ export function DrugDataProvider(props) {
 
         addNewDrug(item) {
           setData([...data(), item]);
+        },
+
+        drugById(item) {
+          if (!data()) {
+            [];
+          } else {
+            return data().allDrugs.filter((drug) => drug.id === item);
+          }
         },
       },
     ];

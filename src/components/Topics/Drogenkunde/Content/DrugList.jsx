@@ -1,25 +1,17 @@
-import { createEffect, For, mergeProps } from "solid-js";
+import { createEffect, For } from "solid-js";
 import { DrugCard } from "./DrugCard";
-// import { items as data } from "../../../../_DrugData";
 import { useDrugData } from "../../../../Context/DrugDataContext";
 import "./DrugList.scss";
 import { A } from "@solidjs/router";
 
 const DrugList = (props) => {
-  const [data, { getCategories }] = useDrugData();
-  const merged = mergeProps(props);
-  // view is variable for the layout in DrugOverview
-  const view = merged.view;
-  const setView = merged.setView;
-  // viewOptions is the array with all possible options
-  const viewOptions = merged.viewOptions;
-  // onMount checks if a viewOption is in local store
-  // if no, set it to first option, if yes, set view to local store
+  const [data] = useDrugData();
+  const { view, setView, viewOptions } = props;
+
   if (!localStorage.getItem("drugViewPreference")) {
     setView(viewOptions[0]);
   } else {
     setView(localStorage.getItem("drugViewPreference"));
-    // console.debug("Get drugViewPreference from local store accomplished");
   }
 
   // remove and add css class to displayed component
@@ -36,39 +28,27 @@ const DrugList = (props) => {
     setClass(view());
   });
 
-  function categories(item) {
-    return data().filter((e) => e.category === item);
-  }
-
   return (
     <>
-      {/* Here are three for-loops: */}
-      {/* 1. Loop: loops over an categorie array, made by the function getCategories(). */}
-      {/* So every content is made for every categorie. */}
-      <For each={getCategories()}>
-        {(drugCategory) => (
+      <For each={data().categories}>
+        {(item) => (
           <div className="category-box">
-            <h3 className="headline" id={drugCategory}>
-              {drugCategory}
+            <h3 className="headline" id={item.category}>
+              {item.category}
             </h3>
-            {/* If statement, for displaying two varients of the content. */}
-            {/* If: Is the view not a list? Then DrugCard component. */}
             {view() != "list" ? (
               <div class="drug-content-tile">
-                {/* 2. loop: filter data object by categorie */}
-                <For each={categories(drugCategory)}>
+                <For each={item.drugList}>
                   {(drug) => <DrugCard {...drug} />}
                 </For>
               </div>
             ) : (
-              // Else: the list component
               <ul>
-                {/* 3. loop: the same as second loop, but for the list component */}
-                <For each={categories(drugCategory)}>
+                <For each={item.drugList}>
                   {(drug) => (
                     <li className="list">
                       <A
-                        href={`/dokumentation/drogenkunde/sammlung/${drug.name.toLowerCase()}`}
+                        href={`/dokumentation/drogenkunde/sammlung/${drug.id}`}
                       >
                         {drug.name}
                       </A>

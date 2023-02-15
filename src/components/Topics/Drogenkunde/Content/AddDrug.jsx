@@ -3,14 +3,16 @@ import { createStore } from "solid-js/store";
 import { createEffect, createSignal, For, Index, Show } from "solid-js";
 import { useDrugData } from "../../../../Context/DrugDataContext.jsx";
 import { showToast, Toast } from "../../../Helper/Toast/Toast";
+import { storage, db } from "../../../../firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { addDoc, collection } from "firebase/firestore/lite";
 
 const AddDrug = () => {
-  const [data, { getCategories, addNewDrug }] = useDrugData();
+  const [data, { getCategories }] = useDrugData();
   const [checked, setChecked] = createSignal(false);
   const [countIngredients, setCountIngredients] = createSignal(["", "", ""]);
   const [countUse, setCountUse] = createSignal(["", "", ""]);
   const [newDrug, setNewDrug] = createStore({
-    id: "",
     name: "",
     type: "",
     category: "",
@@ -23,15 +25,46 @@ const AddDrug = () => {
     img: "",
   });
 
-  createEffect(() => {
-    getCategories();
-    setNewDrug(["ingredients"], countIngredients());
-    setNewDrug(["use"], countUse());
-  });
+  function handelSubmit(event) {
+    const storageRef = ref(storage, `drug-images/${newDrug.img.name}`);
+    event.preventDefault();
+    uploadBytes(storageRef, newDrug.img).then((snapshot) => {
+      getDownloadURL(snapshot.ref).then((downloadUrl) => {
+        saveDrug({
+          name: newDrug.name,
+          type: newDrug.type,
+          category: newDrug.category,
+          family: newDrug.family,
+          origin: newDrug.origin,
+          ingredients: newDrug.ingredients,
+          treatment: newDrug.treatment,
+          use: newDrug.use,
+          note: newDrug.note,
+          img: downloadUrl,
+        });
+      });
+    });
+  }
+
+  const saveDrug = async (drug) => {
+    // console.log(drug);
+    try {
+      await addDoc(collection(db, "drugs"), drug);
+      showToast(toastProps.id);
+      window.location.reload(false);
+    } catch (error) {
+      console.debug(error);
+    }
+  };
 
   const onInputChange = (e) => {
     e.preventDefault();
     setNewDrug([e.target.name], e.currentTarget.value);
+  };
+
+  const onInputChangeFile = (e) => {
+    e.preventDefault();
+    setNewDrug([e.target.name], e.currentTarget.files[0]);
   };
 
   const onInputChangeIngredient = (e, index) => {
@@ -76,18 +109,17 @@ const AddDrug = () => {
     }
   }
 
-  function handelSubmit(event) {
-    event.preventDefault();
-    addNewDrug(newDrug);
-    showToast(toastProps.id);
-  }
-
   const toastProps = {
     id: "add-drug-taost",
-    message:
-      "Droge hinzugefügt!",
+    message: "Droge hinzugefügt!",
   };
   const isRequired = false;
+
+  createEffect(() => {
+    getCategories();
+    setNewDrug(["ingredients"], countIngredients());
+    setNewDrug(["use"], countUse());
+  });
 
   return (
     <>
@@ -185,11 +217,10 @@ const AddDrug = () => {
               placeholder="Notiz"
             />
             <input
-              name="drug-img"
+              name="img"
               type="file"
-              // value={newDrug().img}
-              // onInput={(e)=> setNewDrug({img: e.target.value})}
-              placeholder="Bild"
+              files={newDrug.img}
+              onChange={onInputChangeFile}
             />
           </div>
           <div className="right wrapper gap-1">
