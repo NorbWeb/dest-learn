@@ -1,6 +1,6 @@
 import { Route } from "@solidjs/router";
 import { LogInForm } from "../components/Authentification/LogInForm";
-import { AddDrug } from "../components/Topics/Drogenkunde/Content/AddDrug";
+import { AddDrug } from "../components/Topics/Drogenkunde/AddDrug";
 import { UserDashboard } from "../components/User/Content/UserDashboard";
 import { DefaultComponent } from "./AppRoutes";
 

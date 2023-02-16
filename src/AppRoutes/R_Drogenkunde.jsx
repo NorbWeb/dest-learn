@@ -1,7 +1,7 @@
 import { Route } from "@solidjs/router";
-import { DrugDetail } from "../components/Topics/Drogenkunde/Content/DrugDetail";
-import { DrugLearn } from "../components/Topics/Drogenkunde/Content/DrugLearn";
-import { DrugOverview } from "../components/Topics/Drogenkunde/Content/DrugOverview";
+import { DrugDetail } from "../components/Topics/Drogenkunde/DrugDetail";
+import { DrugLearn } from "../components/Topics/Drogenkunde/DrugLearn";
+import { DrugOverview } from "../components/Topics/Drogenkunde/DrugOverview";
 
 const Routes = () => {
   return (

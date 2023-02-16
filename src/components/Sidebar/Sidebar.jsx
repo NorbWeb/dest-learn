@@ -5,10 +5,10 @@ import Logo from "../../assets/whisky-logo-96.png";
 import "./Sidebar.scss";
 const Sidebar = () => {
   const [item, setItem] = createSignal([
-    { name: "Technologie", navItems: ["Destillation", "Test", "Item 3"] },
+    { name: "Technologie", navItems: ["Destillation", "Item 2", "Item 3"] },
     { name: "Mathematik", navItems: ["Einheiten", "Item 2", "Item 3"] },
     { name: "Drogenkunde", navItems: ["Sammlung", "Lernen", "Item 3"] },
-    { name: "Spirituosen", navItems: ["Verordnung", "Item 2", "Item 3"] },
+    { name: "Spirituosen", navItems: ["Sammlung", "Verordnung", "Item 3"] },
   ]);
 
   return (

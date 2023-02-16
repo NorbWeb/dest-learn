@@ -1,0 +1,71 @@
+#add-drug {
+  .btn-back {
+    margin-bottom: 1rem;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+
+    label {
+      margin-bottom: 0.25rem;
+    }
+
+    input {
+      width: 20rem;
+      border-radius: 0.5rem;
+      border: 1px solid grey;
+      font-size: 1rem;
+      padding: 0.25rem 0.5rem;
+      margin-bottom: 0.5rem;
+
+      &.image {
+        border: none;
+      }
+
+      &.error {
+        border: 1px solid red;
+        &:focus {
+          outline: 1px solid red;
+        }
+      }
+    }
+
+    textarea {
+      width: 100%;
+      height: 15rem;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      padding: 0.25rem 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .multi-input {
+      ol {
+        padding-left: 1rem;
+        margin-top: 0.5rem;
+      }
+
+      .multi-input-body {
+        margin-top: 0.5rem;
+      }
+
+      input {
+        border-radius: 0.5rem 0 0 0.5rem;
+      }
+
+      .remove {
+        height: 1.875rem;
+      }
+    }
+
+    .btn-span {
+      width: 100%;
+      margin-top: 1rem;
+      .submit-btn {
+        height: fit-content;
+        margin: auto;
+      }
+    }
+  }
+}

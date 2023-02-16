@@ -1,12 +1,8 @@
-import { Route, Navigate } from "@solidjs/router";
+import { Route, Navigate, Outlet } from "@solidjs/router";
 import { Layout } from "../components/Layout/Layout";
 import { Info } from "../components/Info/Info";
 import { User } from "../components/User/User";
 import { NotFound } from "../components/Helper/NotFound/NotFound";
-import { Technologie } from "../components/Topics/Technologie/Technologie";
-import { Mathematik } from "../components/Topics/Mathematik/Mathematik";
-import { Drogenkunde } from "../components/Topics/Drogenkunde/Drogenkunde";
-import { Spirituosen } from "../components/Topics/Spirituosen/Spirituosen";
 import { Routes_Technologie } from "./R_Technologie";
 import { Routes_Mathematik } from "./R_Mathematik";
 import { Routes_Drogenkunde } from "./R_Drogenkunde";
@@ -25,16 +21,16 @@ const AppRoutes = () => {
         element={<Navigate href="/dokumentation/technologie/destillation" />}
       />
       <Route path="dokumentation" component={Info}>
-        <Route path="technologie" component={Technologie}>
+        <Route path="technologie" element={<Outlet />}>
           <Routes_Technologie />
         </Route>
-        <Route path="mathematik" component={Mathematik}>
+        <Route path="mathematik" element={<Outlet />}>
           <Routes_Mathematik />
         </Route>
-        <Route path="drogenkunde" component={Drogenkunde}>
+        <Route path="drogenkunde" element={<Outlet />}>
           <Routes_Drogenkunde />
         </Route>
-        <Route path="spirituosen" component={Spirituosen}>
+        <Route path="spirituosen" element={<Outlet />}>
           <Routes_Spirituosen />
         </Route>
         <Route path="*" component={NotFound} />

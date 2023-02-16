@@ -1,8 +1,8 @@
 import { For, Show } from "solid-js";
 import "./DrugLearn.scss";
 import { DrugCard } from "./DrugCard";
-import { useShuffleData } from "../../../../Context/ShuffleData";
-import { LoadingSpinner } from "../../../Helper/LoadingSpinner/LoadingSpinner";
+import { useShuffleData } from "../../../Context/ShuffleData";
+import { LoadingSpinner } from "../../Helper/LoadingSpinner/LoadingSpinner";
 
 const DrugLearn = () => {
   const [data, { getRandom }] = useShuffleData();

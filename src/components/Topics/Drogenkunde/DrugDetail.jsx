@@ -1,7 +1,7 @@
 import { useParams } from "@solidjs/router";
-import { createEffect, createSignal, lazy, Show } from "solid-js";
-import { useDrugData } from "../../../../Context/DrugDataContext";
-import { LoadingSpinner } from "../../../Helper/LoadingSpinner/LoadingSpinner";
+import { createEffect, createSignal, Show } from "solid-js";
+import { useDrugData } from "../../../Context/DrugDataContext";
+import { LoadingSpinner } from "../../Helper/LoadingSpinner/LoadingSpinner";
 import "./DrugDetail.scss";
 
 const DrugDetail = () => {

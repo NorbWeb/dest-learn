@@ -1,8 +1,8 @@
 import "./DrugOverview.scss";
 import { createSignal, For, Show } from "solid-js";
 import { DrugList } from "./DrugList";
-import { useDrugData } from "../../../../Context/DrugDataContext";
-import { LoadingSpinner } from "../../../Helper/LoadingSpinner/LoadingSpinner";
+import { useDrugData } from "../../../Context/DrugDataContext";
+import { LoadingSpinner } from "../../Helper/LoadingSpinner/LoadingSpinner";
 
 const DrugOverview = () => {
   const [view, setView] = createSignal();

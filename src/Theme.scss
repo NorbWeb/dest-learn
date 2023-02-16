@@ -118,7 +118,7 @@ body {
   }
 
   &.aligne-base {
-    align-items: baseline;
+    align-items:baseline;
   }
 
   &.aligne-center {
@@ -127,6 +127,26 @@ body {
 
   &.justify-between {
     justify-content: space-between;
+  }
+
+  &.justify-around {
+    justify-content: space-around;
+  }
+
+  &.justify-evenly {
+    justify-content: space-evenly;
+  }
+
+  &.justify-center {
+    justify-content: center;
+  }
+
+  &.justify-start {
+    justify-content: flex-start;
+  }
+
+  &.justify-end {
+    justify-content: flex-end;
   }
 
   &.gap-1 {
@@ -155,7 +175,7 @@ body {
 }
 
 .hover-bigger {
-  @include mixins.hover-bigger()
+  @include mixins.hover-bigger();
 }
 
 .default-component {

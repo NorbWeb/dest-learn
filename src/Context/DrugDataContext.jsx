@@ -10,6 +10,7 @@ import { db } from "../firebase";
 const DrugDataContext = createContext();
 
 export function DrugDataProvider(props) {
+  let categorieList = "";
   const getDrugs = async () => {
     const querySnapshot = await getDocs(collection(db, "drugs"));
     let data = querySnapshot.docs.map((doc) => doc.data());
@@ -27,6 +28,7 @@ export function DrugDataProvider(props) {
         list.push(data[i].category);
       }
     }
+    categorieList = list;
     for (let i = 0; i < list.length; i++) {
       let obj = {};
       obj.category = list[i];
@@ -38,8 +40,7 @@ export function DrugDataProvider(props) {
       }
       drugData.categories.push(obj);
     }
-
-    // console.log(drugData);
+    // console.log(drugData, categorieList);
     setData(drugData);
   };
   //   const fetchData = () => {
@@ -84,22 +85,11 @@ export function DrugDataProvider(props) {
         },
 
         getCategories() {
-          let item = data();
-          const category = [];
           if (!data()) {
             [];
           } else {
-            for (let i = 0; i < item.length; i++) {
-              if (!category.includes(item[i].category)) {
-                category.push(item[i].category);
-              }
-            }
-            return category.sort();
+            return categorieList;
           }
-        },
-
-        addNewDrug(item) {
-          setData([...data(), item]);
         },
 
         drugById(item) {
