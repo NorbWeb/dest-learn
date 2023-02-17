@@ -62,10 +62,20 @@ const DrugDetail = () => {
                   </For>
                 </ul>
               </div>
-              <p>
-                <span className="bold">Verarbeitung: </span>
-                {drug().treatment}
-              </p>
+              <div className="list-box">
+                <label htmlFor="list-treatments">
+                  <span className="bold">Verarbeitung: </span>
+                </label>
+                <ul name="list-treatments">
+                  <For each={drug().treatment}>
+                    {(treatment) => (
+                      <li classList={{ highlight: drug().highlight != "" }}>
+                        {treatment}
+                      </li>
+                    )}
+                  </For>
+                </ul>
+              </div>
               <div className="list-box">
                 <label htmlFor="list-use">
                   <span className="bold">Verwendung: </span>

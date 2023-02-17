@@ -1,20 +1,15 @@
 import "./Toast.scss";
 
 const Toast = (props) => {
-  const { id, message } = props.props;
+  const { id, children, success } = props;
   return (
     <>
       <div className="toast-container hide" id={id}>
-        <div className="toast-message">{message}</div>
+        <div className="toast-message">{children}</div>
       </div>
     </>
   );
 };
 
-const showToast = (id) => {
-  let selector = document.getElementById(id);
-  selector.classList.add("show");
-  setTimeout(() => selector.classList.remove("show"), 3000);
-};
 
-export { Toast, showToast };
+export { Toast };

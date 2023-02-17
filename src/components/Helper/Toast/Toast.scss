@@ -1,9 +1,13 @@
+@import '../../../Theme.scss';
+
 .toast-container {
-  display: none;
+  // display: none;
   position: fixed;
   z-index: 1;
-  bottom: 2rem;
-  width: 100%;
+  top: 7.5rem;
+  left: 50%;
+  margin: auto;
+  transform: translate(-50%, -50%);
   transition: all 350ms ease;
 
   .toast-message {
@@ -12,10 +16,14 @@
     height: fit-content;
     padding: 1rem 2rem;
     margin: auto;
-    border-radius: 1rem;
+    border-radius: 0.25rem;
     background-color: #fff;
-    border: 0.2rem dashed grey;
     box-shadow: 3px 3px 4px grey;
+
+    &.positiv {
+      color: #fff;
+      background-color: $success;
+    }
   }
 
   &.show {

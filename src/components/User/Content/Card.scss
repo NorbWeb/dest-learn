@@ -20,7 +20,7 @@
 
   .user-content-card-body {
     img {
-      aspect-ratio: 1/ (3/4);
+      aspect-ratio: calc( 1/ (3/4));
       width: 100%;
       border-radius: 0 0 $br $br;
       object-fit: cover;

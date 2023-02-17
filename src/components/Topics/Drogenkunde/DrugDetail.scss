@@ -43,6 +43,12 @@
       margin-top: 0;
       padding-left: 20px;
     }
+
+    .highlight {
+      &::after{
+        content: ' (bevorzugt)';
+      }
+    }
   }
 }
 
