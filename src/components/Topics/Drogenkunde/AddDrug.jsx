@@ -32,29 +32,32 @@ const AddDrug = () => {
   });
   const [hover, setHover] = createSignal(false);
   const [open, setOpen] = createSignal(false);
-  const isRequired = true;
+  const [drugExist, setDrugExist] = createSignal(false);
+  const isRequired = false;
 
   function handelSubmit(event) {
     const storageRef = ref(storage, `drug-images/${newDrug.img.name}`);
     event.preventDefault();
-    uploadBytes(storageRef, newDrug.img).then((snapshot) => {
-      getDownloadURL(snapshot.ref).then((downloadUrl) => {
-        saveDrug({
-          name: newDrug.name,
-          type: newDrug.type,
-          category: newDrug.category,
-          family: newDrug.family,
-          origin: newDrug.origin,
-          ingredients: newDrug.ingredients,
-          treatment: newDrug.treatment,
-          use: newDrug.use,
-          note: newDrug.note,
-          img: downloadUrl,
-          highlight: newDrug.highlight,
-        });
-      });
-    });
+    // uploadBytes(storageRef, newDrug.img).then((snapshot) => {
+    //   getDownloadURL(snapshot.ref).then((downloadUrl) => {
+    //     saveDrug({
+    //       name: newDrug.name,
+    //       type: newDrug.type,
+    //       category: newDrug.category,
+    //       family: newDrug.family,
+    //       origin: newDrug.origin,
+    //       ingredients: newDrug.ingredients,
+    //       treatment: newDrug.treatment,
+    //       use: newDrug.use,
+    //       note: newDrug.note,
+    //       img: downloadUrl,
+    //       highlight: newDrug.highlight,
+    //     });
+    //   });
+    // });
+
     showToast();
+
     // console.log(newDrug.highlight);
   }
 
@@ -149,7 +152,30 @@ const AddDrug = () => {
   createEffect(() => {
     setNewDrug(["ingredients"], countIngredient());
     setNewDrug(["use"], countUse());
+    if (checkIfDrugNameIsInDb() === true) {
+      setDrugExist(true);
+    } else {
+      setDrugExist(false);
+    }
   });
+
+  const checkIfDrugNameIsInDb = () => {
+    let tester = false;
+    if (data()) {
+      for (let i = 0; i < data().allDrugs.length; i++) {
+        if (
+          newDrug.name.toLowerCase() === data().allDrugs[i].name.toLowerCase()
+        ) {
+          tester = true;
+        }
+      }
+      if (tester === true) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  };
 
   const InputButton = (props) => {
     return (
@@ -181,7 +207,9 @@ const AddDrug = () => {
         </button>
         <form onSubmit={handelSubmit} className="grid-container">
           <div className="grid-item">
-            <label for="name">Name</label>
+            <label classList={{ error: drugExist() }} for="name">
+              {drugExist() ? "Droge schon vorhanden " : "Name"}
+            </label>
             <input
               autofocus
               required={isRequired}
@@ -189,6 +217,7 @@ const AddDrug = () => {
               type="text"
               value={newDrug.name}
               onInput={onInputChange}
+              classList={{ error: drugExist() }}
             />
             <label for="type">Art</label>
             <input
@@ -418,7 +447,11 @@ const AddDrug = () => {
           </div>
 
           <div className="btn-span grid-item">
-            <button className="btn primary submit-btn" type="submit">
+            <button
+              className="btn primary submit-btn"
+              type="submit"
+              disabled={drugExist()}
+            >
               submit
             </button>
           </div>
