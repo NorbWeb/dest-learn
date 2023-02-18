@@ -31,28 +31,30 @@ const AddDrug = () => {
     highlight: "",
   });
   const [hover, setHover] = createSignal(false);
-  const isRequired = false;
+  const [open, setOpen] = createSignal(false);
+  const isRequired = true;
 
   function handelSubmit(event) {
     const storageRef = ref(storage, `drug-images/${newDrug.img.name}`);
     event.preventDefault();
-    // uploadBytes(storageRef, newDrug.img).then((snapshot) => {
-    //   getDownloadURL(snapshot.ref).then((downloadUrl) => {
-    //     saveDrug({
-    //       name: newDrug.name,
-    //       type: newDrug.type,
-    //       category: newDrug.category,
-    //       family: newDrug.family,
-    //       origin: newDrug.origin,
-    //       ingredients: newDrug.ingredients,
-    //       treatment: newDrug.treatment,
-    //       use: newDrug.use,
-    //       note: newDrug.note,
-    //       img: downloadUrl,
-    //       highlight: newDrug.highlight,
-    //     });
-    //   });
-    // });
+    uploadBytes(storageRef, newDrug.img).then((snapshot) => {
+      getDownloadURL(snapshot.ref).then((downloadUrl) => {
+        saveDrug({
+          name: newDrug.name,
+          type: newDrug.type,
+          category: newDrug.category,
+          family: newDrug.family,
+          origin: newDrug.origin,
+          ingredients: newDrug.ingredients,
+          treatment: newDrug.treatment,
+          use: newDrug.use,
+          note: newDrug.note,
+          img: downloadUrl,
+          highlight: newDrug.highlight,
+        });
+      });
+    });
+    showToast();
     // console.log(newDrug.highlight);
   }
 
@@ -65,7 +67,12 @@ const AddDrug = () => {
     }
   };
 
-  const showToast = () => {};
+  const showToast = () => {
+    setOpen(true);
+    setTimeout(() => {
+      setOpen(false);
+    }, 5000);
+  };
 
   const onInputChange = (e) => {
     e.preventDefault();
@@ -166,7 +173,7 @@ const AddDrug = () => {
   return (
     <>
       <div id="add-drug">
-        <Toast id={"add-drug-taost"} success>
+        <Toast type="success" open={open()}>
           Droge erfolgreich hinzugefügt
         </Toast>
         <button className="btn primary btn-back" onClick={() => history.back()}>

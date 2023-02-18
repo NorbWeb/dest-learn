@@ -1,15 +1,28 @@
 import "./Toast.scss";
 
 const Toast = (props) => {
-  const { id, children, success } = props;
+  const { children, type } = props;
+
   return (
     <>
-      <div className="toast-container hide" id={id}>
-        <div className="toast-message">{children}</div>
+      <div
+        id="toast"
+        className="toast-container hide"
+        classList={{ show: props.open }}
+      >
+        <div
+          className="toast-message"
+          classList={{
+            success: type === "success",
+            warn: type === "warn",
+            info: type === "info",
+          }}
+        >
+          {children}
+        </div>
       </div>
     </>
   );
 };
-
 
 export { Toast };
