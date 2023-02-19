@@ -1,14 +1,24 @@
 import "./AddDrug.scss";
 import { createStore } from "solid-js/store";
-import { createEffect, createSignal, For, Index, Show } from "solid-js";
+import {
+  createEffect,
+  createSignal,
+  For,
+  Index,
+  Match,
+  Show,
+  Switch,
+} from "solid-js";
 import { useDrugData } from "../../../Context/DrugDataContext.jsx";
 import { Toast } from "../../Helper/Toast/Toast";
 import { storage, db } from "../../../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { addDoc, collection } from "firebase/firestore/lite";
+import { useLocation } from "@solidjs/router";
 
 const AddDrug = () => {
   const [data, { getCategories }] = useDrugData();
+  const location = useLocation().pathname.split("/").reverse()[0];
   const [countIngredient, setCountIngredient] = createSignal([
     "",
     "",
@@ -33,11 +43,12 @@ const AddDrug = () => {
   const [hover, setHover] = createSignal(false);
   const [open, setOpen] = createSignal(false);
   const [drugExist, setDrugExist] = createSignal(false);
+  const [editDrug, setEditDrug] = createSignal(false);
   const isRequired = false;
 
   function handelSubmit(event) {
-    const storageRef = ref(storage, `drug-images/${newDrug.img.name}`);
     event.preventDefault();
+    // const storageRef = ref(storage, `drug-images/${newDrug.img.name}`);
     // uploadBytes(storageRef, newDrug.img).then((snapshot) => {
     //   getDownloadURL(snapshot.ref).then((downloadUrl) => {
     //     saveDrug({
@@ -55,7 +66,6 @@ const AddDrug = () => {
     //     });
     //   });
     // });
-
     showToast();
 
     // console.log(newDrug.highlight);
@@ -67,6 +77,15 @@ const AddDrug = () => {
       window.location.reload(false);
     } catch (error) {
       console.debug(error);
+    }
+  };
+
+  const handleEditDrug = (e) => {
+    if (e.target.value != "") {
+      setEditDrug(true);
+      setNewDrug(data().allDrugs.find((f) => f.name === e.target.value));
+    } else {
+      setEditDrug(false);
     }
   };
 
@@ -149,16 +168,6 @@ const AddDrug = () => {
     }
   };
 
-  createEffect(() => {
-    setNewDrug(["ingredients"], countIngredient());
-    setNewDrug(["use"], countUse());
-    if (checkIfDrugNameIsInDb() === true) {
-      setDrugExist(true);
-    } else {
-      setDrugExist(false);
-    }
-  });
-
   const checkIfDrugNameIsInDb = () => {
     let tester = false;
     if (data()) {
@@ -170,9 +179,9 @@ const AddDrug = () => {
         }
       }
       if (tester === true) {
-        return true;
+        setDrugExist(true);
       } else {
-        return false;
+        setDrugExist(false);
       }
     }
   };
@@ -196,19 +205,40 @@ const AddDrug = () => {
     );
   };
 
+  createEffect(() => {
+    setNewDrug(["ingredients"], countIngredient());
+    setNewDrug(["use"], countUse());
+    checkIfDrugNameIsInDb();
+    console.log("newDrug: " + typeof newDrug.img);
+  });
+
   return (
     <>
       <div id="add-drug">
         <Toast type="success" open={open()}>
           Droge erfolgreich hinzugefügt
         </Toast>
-        <button className="btn primary btn-back" onClick={() => history.back()}>
-          Zurück
-        </button>
+        <div className="header-menu">
+          <button
+            className="btn primary btn-back"
+            onClick={() => history.back()}
+          >
+            Zurück
+          </button>
+          <div className="edit-select">
+            <label for="edit">Vorhandene Droge bearbeiten</label>
+            <select id="edit" name="edit" onChange={handleEditDrug}>
+              <option value="" selected></option>
+              <For each={data() ? data().allDrugs : []}>
+                {(drug) => <option value={drug.name}>{drug.name}</option>}
+              </For>
+            </select>
+          </div>
+        </div>
         <form onSubmit={handelSubmit} className="grid-container">
           <div className="grid-item">
-            <label classList={{ error: drugExist() }} for="name">
-              {drugExist() ? "Droge schon vorhanden " : "Name"}
+            <label classList={{ error: drugExist() && !editDrug() }} for="name">
+              {drugExist() && !editDrug() ? "Droge schon vorhanden " : "Name"}
             </label>
             <input
               autofocus
@@ -217,7 +247,7 @@ const AddDrug = () => {
               type="text"
               value={newDrug.name}
               onInput={onInputChange}
-              classList={{ error: drugExist() }}
+              classList={{ error: drugExist() && !editDrug() }}
             />
             <label for="type">Art</label>
             <input
@@ -267,6 +297,7 @@ const AddDrug = () => {
                   id="destillation"
                   name="destillation"
                   value="Destillation"
+                  checked={newDrug.treatment.includes("Destillation")}
                 />
                 <label id="destillation-label" for="destillation">
                   Destillation
@@ -278,6 +309,11 @@ const AddDrug = () => {
                   id="dampf"
                   name="dampf"
                   value="Wasserdampf-Destillation"
+                  checked={
+                    newDrug.treatment.includes("Wasserdampf-Destillation")
+                      ? true
+                      : false
+                  }
                 />
                 <label id="wasserdampf-destillation-label" for="dampf">
                   Wasserdampf-Destillation
@@ -289,6 +325,7 @@ const AddDrug = () => {
                   id="extraktion"
                   name="extraktion"
                   value="Extraktionsverfahren"
+                  checked={newDrug.treatment.includes("Extraktionsverfahren")}
                 />
                 <label id="extraktionsverfahren-label" for="extraktion">
                   Extraktionsverfahren (alle)
@@ -300,6 +337,7 @@ const AddDrug = () => {
                   id="mazeration"
                   name="mazeration"
                   value="Mazeration"
+                  checked={newDrug.treatment.includes("Mazeration")}
                 />
                 <label id="mazeration-label" for="mazeration">
                   Mazeration
@@ -311,6 +349,7 @@ const AddDrug = () => {
                   id="perkulation"
                   name="perkulation"
                   value="Perkulation"
+                  checked={newDrug.treatment.includes("Perkulation")}
                 />
                 <label id="perkulation-label" for="perkulation">
                   Perkulation
@@ -322,6 +361,7 @@ const AddDrug = () => {
                   id="digestion"
                   name="digestion"
                   value="Digestion"
+                  checked={newDrug.treatment.includes("Digestion")}
                 />
                 <label id="digestion-label" for="digestion">
                   Digestion
@@ -436,14 +476,29 @@ const AddDrug = () => {
               files={newDrug.img}
               onChange={onInputChangeFile}
             />
-            <img
+            <Switch
+              fallback={<img className="preview" src="/placeholder.svg" />}
+            >
+              <Match when={editDrug() && typeof newDrug.img === "string"}>
+                <img className="preview" src={newDrug.img} />
+              </Match>
+              <Match when={!editDrug() && typeof newDrug.img === "object"}>
+                <img
+                  className="preview"
+                  src={URL.createObjectURL(newDrug.img)}
+                />
+              </Match>
+            </Switch>
+            {/* <img
               className="preview"
               src={
-                newDrug.img
-                  ? URL.createObjectURL(newDrug.img)
-                  : "/placeholder.svg"
+                  editDrug() && typeof newDrug.img === "string"
+                    ? newDrug.img
+                    : newDrug.img
+                    ? URL.createObjectURL(newDrug.img)
+                     "/placeholder.svg"
               }
-            />
+            /> */}
           </div>
 
           <div className="btn-span grid-item">

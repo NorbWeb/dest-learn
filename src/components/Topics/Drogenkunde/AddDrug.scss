@@ -6,7 +6,6 @@
   .grid-item {
     display: flex;
     flex-direction: column;
-   
   }
 
   .grid-container {
@@ -71,6 +70,20 @@
     }
   }
 
+  .header-menu {
+    display: flex;
+    justify-content: space-between;
+
+    .edit-select {
+      width: fit-content;
+      display: flex;
+      flex-direction: column;
+
+      label {
+        margin-bottom: 0.5rem;
+      }
+    }
+  }
   form {
     label {
       margin-bottom: 0.25rem;

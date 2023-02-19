@@ -10,10 +10,11 @@ const Routes = () => {
       <Route path="login" component={LogInForm} />
       <Route path="dashboard" component={UserDashboard} />
       <Route path="add-drug" component={AddDrug} />
-      <Route
+      <Route path="edit-drug" component={AddDrug} />
+      {/* <Route
         path="edit-drug"
         component={<DefaultComponent name={"Droge bearbeiten"} back />}
-      />
+      /> */}
     </>
   );
 };
