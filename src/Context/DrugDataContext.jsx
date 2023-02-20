@@ -99,6 +99,10 @@ export function DrugDataProvider(props) {
             return data().allDrugs.filter((drug) => drug.id === item);
           }
         },
+
+        reload() {
+          getDrugs();
+        },
       },
     ];
 

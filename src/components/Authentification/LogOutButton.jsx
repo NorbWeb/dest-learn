@@ -13,7 +13,7 @@ const LogOutButton = () => {
   return (
     <>
       {/* <button onClick={signInWithGoogle}>Sign in with google</button> */}
-      <Show when={user()}>
+      <Show when={sessionStorage.getItem("logedInUser")}>
         <div className="nav-menu-rigth btn-group">
           {/* <button className="avatar-btn">
             <i class="bi bi-person-circle"></i>

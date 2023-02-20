@@ -59,7 +59,9 @@ const LogInForm = () => {
           onInput={(e) => setPassword(e.currentTarget.value)}
           value={password()}
         />
-        <button type="submit" className='btn primary'>Los geht's!</button>
+        <button type="submit" className="btn primary">
+          Los geht's!
+        </button>
       </form>
       <div id="logInError" className="validation error"></div>
     </div>

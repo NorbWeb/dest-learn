@@ -67,7 +67,7 @@ const DrugDetail = () => {
                   <span className="bold">Verarbeitung: </span>
                 </label>
                 <ul name="list-treatments">
-                  <For each={drug().treatment}>
+                  <For each={drug().treatment.filter((f) => f != "")}>
                     {(treatment) => (
                       <li classList={{ highlight: drug().highlight != "" }}>
                         {treatment}

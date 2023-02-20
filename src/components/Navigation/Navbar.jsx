@@ -14,7 +14,7 @@ const Navbar = () => {
 
     {
       name: "User",
-      href: "/user",
+      href: "/user/login",
     },
 
     { name: "Admin", href: "/admin" },

@@ -9,6 +9,9 @@ const UserDashboard = () => {
     { route: "add-drug", title: "Droge anlegen" , foto: '/spices.jpg', color: 1},
     { route: "edit-drug", title: "Droge bearbeiten" , foto: '/spices2.jpg', color: 2},
   ];
+
+
+  
   return (
     <>
       <h3 className="title">

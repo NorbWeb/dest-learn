@@ -42,6 +42,10 @@
     ul {
       margin-top: 0;
       padding-left: 20px;
+
+      li{
+        max-width: 20rem;
+      }
     }
 
     .highlight {

@@ -11,8 +11,12 @@ import { Home } from "../components/Home/Home";
 import { About } from "../components/About/About";
 import { LoadingSpinner } from "../components/Helper/LoadingSpinner/LoadingSpinner";
 import { Routes_User } from "./R_User";
+import { Match, Show, Switch } from "solid-js";
+import { useAuth } from "../Context/AuthContext";
 
 const AppRoutes = () => {
+  const [user] = useAuth();
+
   return (
     <Route path="/" component={Layout}>
       <Route path="/" component={Home} />
@@ -35,12 +39,18 @@ const AppRoutes = () => {
         </Route>
         <Route path="*" component={NotFound} />
       </Route>
-      <Route path="/user" element={<Navigate href="/user/dashboard" />} />
       <Route path="user" component={User}>
         <Routes_User />
       </Route>
       <Route path="about" component={About} />
-      <Route path="*" component={NotFound} />
+      <Route
+        path="*"
+        component={
+          <Show when={!sessionStorage.getItem('logedInUser')} fallback={<LoadingSpinner />}>
+            <NotFound />
+          </Show>
+        }
+      />
     </Route>
   );
 };
