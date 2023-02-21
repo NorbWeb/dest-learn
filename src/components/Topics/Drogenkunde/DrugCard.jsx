@@ -27,7 +27,7 @@ const DrugCard = (props) => {
             <A href={drug.id}>
               <img
                 className="card-img"
-                src={drug.img ? drug.img : "/placeholder.svg"}
+                src={drug.img.url ? drug.img.url : "/placeholder.svg"}
                 alt={drug.name}
               />
               <div className="card-body">
@@ -46,7 +46,7 @@ const DrugCard = (props) => {
         >
           <img
             className="card-img"
-            src={drug.img ? drug.img : "/placeholder.svg"}
+            src={drug.img.url ? drug.img.url : "/placeholder.svg"}
             alt={drug.name}
           />
           <Show when={!show()}>

@@ -20,60 +20,58 @@ const AddDrug = () => {
     treatment: ["", "", "", "", "", ""],
     use: ["", "", "", "", ""],
     note: "",
-    img: "",
+    img: { name: "", url: "" },
     highlight: "",
     create: "",
     change: "",
   });
   const [hover, setHover] = createSignal(false);
-  const [open, setOpen] = createSignal(false);
+  const [openToast, setOpenToast] = createSignal(false);
+  const [toastMessage, setToastMessage] = createSignal();
   const [drugExist, setDrugExist] = createSignal(false);
   const [editDrug, setEditDrug] = createSignal(false);
   const [drugId, setDrugId] = createSignal("");
   const isRequired = false;
 
+  function clearDrugStore() {
+    setDrug({
+      name: "",
+      type: "",
+      category: "",
+      family: "",
+      origin: "",
+      ingredients: ["", "", "", "", ""],
+      treatment: ["", "", "", "", "", ""],
+      use: ["", "", "", "", ""],
+      note: "",
+      img: { name: "", url: "" },
+      highlight: "",
+      create: "",
+      change: "",
+    });
+  }
+
   function handelSubmit(event) {
     if (editDrug() === false) {
+      setToastMessage("Droge erfolgreich erstellt");
       event.preventDefault();
-      if (drug.img != "") {
-        const storageRef = ref(storage, `drug-images/${drug.img.name}`);
-        uploadBytes(storageRef, drug.img).then((snapshot) => {
-          getDownloadURL(snapshot.ref).then((downloadUrl) => {
-            saveNewDrug({
-              name: drug.name,
-              type: drug.type,
-              category: drug.category,
-              family: drug.family,
-              origin: drug.origin,
-              ingredients: drug.ingredients,
-              treatment: drug.treatment,
-              use: drug.use,
-              note: drug.note,
-              img: downloadUrl,
-              highlight: drug.highlight,
-              create: new Date(),
-              change: drug.change,
-            });
-          });
-        });
-      } else {
-        saveNewDrug({
-          name: drug.name,
-          type: drug.type,
-          category: drug.category,
-          family: drug.family,
-          origin: drug.origin,
-          ingredients: drug.ingredients,
-          treatment: drug.treatment,
-          use: drug.use,
-          note: drug.note,
-          img: drug.img,
-          highlight: drug.highlight,
-          create: new Date(),
-          change: drug.change,
-        });
-      }
+      saveNewDrug({
+        name: drug.name,
+        type: drug.type,
+        category: drug.category,
+        family: drug.family,
+        origin: drug.origin,
+        ingredients: drug.ingredients,
+        treatment: drug.treatment,
+        use: drug.use,
+        note: drug.note,
+        img: { name: drug.img.name, url: drug.img.url },
+        highlight: drug.highlight,
+        create: new Date(),
+        change: drug.change,
+      });
     } else if (editDrug() === true) {
+      setToastMessage("Droge erfolgreich bearbeitet");
       event.preventDefault();
       saveEditDrug({
         name: drug.name,
@@ -85,33 +83,19 @@ const AddDrug = () => {
         treatment: drug.treatment,
         use: drug.use,
         note: drug.note,
-        img: drug.img,
+        img: { name: drug.img.name, url: drug.img.url },
         highlight: drug.highlight,
         change: new Date(),
       });
     }
     showToast();
-
-    // console.log(drug.treatment);
   }
 
   const saveNewDrug = async (drug) => {
     try {
       await addDoc(collection(db, "drugs"), drug);
       reload();
-      setDrug({
-        name: "",
-        type: "",
-        category: "",
-        family: "",
-        origin: "",
-        ingredients: ["", "", "", "", ""],
-        treatment: ["", "", "", "", "", ""],
-        use: ["", "", "", "", ""],
-        note: "",
-        img: "",
-        highlight: "",
-      });
+      clearDrugStore();
     } catch (error) {
       console.debug(error);
     }
@@ -122,64 +106,41 @@ const AddDrug = () => {
     try {
       await updateDoc(docRef, drug);
       reload();
-      setDrug({
-        name: "",
-        type: "",
-        category: "",
-        family: "",
-        origin: "",
-        ingredients: ["", "", "", "", ""],
-        treatment: ["", "", "", "", "", ""],
-        use: ["", "", "", "", ""],
-        note: "",
-        img: "",
-        highlight: "",
-      });
+      clearDrugStore();
     } catch (error) {
       console.debug(error);
     }
   };
 
   const handleEditDrug = (e) => {
-    if (e.target.value != "") {
-      setEditDrug(true);
-      const drug = data().allDrugs.find((f) => f.name === e.target.value);
-      setDrug(drug);
-      setDrugId(drug.id);
-    } else {
-      setEditDrug(false);
-      setDrugId("");
-      setDrug({
-        name: "",
-        type: "",
-        category: "",
-        family: "",
-        origin: "",
-        ingredients: ["", "", "", "", ""],
-        treatment: ["", "", "", "", "", ""],
-        use: ["", "", "", "", ""],
-        note: "",
-        img: "",
-        highlight: "",
-      });
+    const drugList = [];
+    if (data()) {
+      for (let i = 0; i < data().allDrugs.length; i++) {
+        drugList.push(data().allDrugs[i].name);
+      }
+      if (e.target.value != "" && drugList.includes(e.target.value)) {
+        setEditDrug(true);
+        const drug = data().allDrugs.find((f) => f.name === e.target.value);
+        setDrug(drug);
+        setDrugId(drug.id);
+      } else {
+        setEditDrug(false);
+        setDrugId("");
+        clearDrugStore();
+      }
     }
   };
 
   const showToast = () => {
-    setOpen(true);
+    setOpenToast(true);
     setTimeout(() => {
-      setOpen(false);
+      setOpenToast(false);
     }, 5000);
   };
 
   const onInputChange = (e) => {
     e.preventDefault();
     setDrug([e.target.name], e.currentTarget.value);
-  };
-
-  const onInputChangeFile = (e) => {
-    e.preventDefault();
-    setDrug([e.target.name], e.currentTarget.files[0]);
   };
 
   // Methods for handling ingredients
@@ -286,17 +247,13 @@ const AddDrug = () => {
 
   createEffect(() => {
     checkIfDrugNameIsInDb();
-    // console.log(drugExist());
+    // console.log(drug);
   });
 
   return (
     <>
       <div id="add-drug">
-        <Toast type="success" open={open()}>
-          {editDrug()
-            ? "Droge erfolgreich beareitet"
-            : "Droge erfolgreich hinzugefügt"}
-        </Toast>
+        <Toast type="success" open={openToast()} message={toastMessage()} />
         <div className="header-menu">
           <button
             className="btn primary btn-back"
@@ -306,12 +263,19 @@ const AddDrug = () => {
           </button>
           <div className="edit-select">
             <label for="edit">Vorhandene Droge bearbeiten</label>
-            <select id="edit" name="edit" onChange={handleEditDrug}>
-              <option value="" selected></option>
+           
+            <input
+              type="text"
+              name="edit"
+              // value={drug.name ? drug.name : ''}
+              onInput={handleEditDrug}
+              list="drug"
+            />
+            <datalist id="drug">
               <For each={data() ? data().allDrugs : []}>
                 {(drug) => <option value={drug.name}>{drug.name}</option>}
               </For>
-            </select>
+            </datalist>
           </div>
         </div>
         <form onSubmit={handelSubmit} className="grid-container">
@@ -543,28 +507,7 @@ const AddDrug = () => {
             />
           </div>
           <div className="grid-item">
-            {/* <label for="type">Bild</label>
-            <input
-              className="image"
-              name="img"
-              type="file"
-              files={drug.img}
-              onChange={onInputChangeFile}
-            />
-            <Switch
-              fallback={<img className="preview" src="/placeholder.svg" />}
-            >
-              <Match when={editDrug() && typeof drug.img === "string"}>
-                <img
-                  className="preview"
-                  src={drug.img === "" ? "/placeholder.svg" : drug.img}
-                />
-              </Match>
-              <Match when={!editDrug() && typeof drug.img === "object"}>
-                <img className="preview" src={URL.createObjectURL(drug.img)} />
-              </Match>
-            </Switch> */}
-            <DrugImage />
+            <DrugImage setDrug={setDrug} drug={drug} editDrug={editDrug} />
           </div>
 
           <div className="btn-span grid-item">

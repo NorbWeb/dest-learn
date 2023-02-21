@@ -118,7 +118,7 @@ body {
   }
 
   &.aligne-base {
-    align-items:baseline;
+    align-items: baseline;
   }
 
   &.aligne-center {
@@ -180,4 +180,8 @@ body {
 
 .default-component {
   text-align: center;
+}
+
+.hover-info {
+  @include mixins.hover-info();
 }

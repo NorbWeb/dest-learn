@@ -18,7 +18,7 @@ const Toast = (props) => {
             info: type === "info",
           }}
         >
-          {children}
+          {props.message ? props.message : children}
         </div>
       </div>
     </>

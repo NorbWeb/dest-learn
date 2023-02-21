@@ -5,111 +5,196 @@ import {
   listAll,
   getDownloadURL,
   uploadBytes,
+  deleteObject,
 } from "firebase/storage";
-import { createEffect, createSignal, For } from "solid-js";
-import { createStore } from "solid-js/store";
+import { createEffect, createSignal, For, Show } from "solid-js";
 import { Toast } from "../../Helper/Toast/Toast";
 
-const DrugImage = () => {
+const DrugImage = (props) => {
   const storage = getStorage();
-  const [open, setOpen] = createSignal(false);
-  const [images, setImages] = createSignal([]);
-  const [file, setFile] = createSignal("");
-  const [selected, setSelected] = createStore({
-    name: "",
-    url: "",
-  });
 
-  const listRef = ref(storage, "drug-images");
-  listAll(listRef)
-    .then((res) => {
-      res.prefixes.forEach((folderRef) => {});
-      setImages(res.items);
-      res.items.forEach((itemRef) => {});
-    })
-    .catch((error) => {});
+  //  ############## Signals for Toast logic ##############
+  const [toastMessage, setToastMessage] = createSignal();
+  const [openToast, setOpenToast] = createSignal(false);
+  const [openWarn, setOpenWarn] = createSignal(false);
+  //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  const [imageList, setImageList] = createSignal();
+
+  function getList() {
+    const listRef = ref(storage, "drug-images");
+    listAll(listRef)
+      .then((res) => {
+        res.prefixes.forEach((folderRef) => {});
+        setImageList(res.items);
+        res.items.forEach((itemRef) => {});
+      })
+      .catch((error) => {});
+  }
 
   const onInputChange = (e) => {
     e.preventDefault();
-    setSelected({ name: e.currentTarget.value });
-    if (selected.name) {
-      getUrl();
-    } else {
-      setSelected({ url: "" });
+    if (e.target.value) {
+      const storageRef = ref(storage, `drug-images/${e.target.value}`);
+      getDownloadURL(storageRef).then((downloadUrl) => {
+        props.setDrug({ img: { name: e.target.value, url: downloadUrl } });
+      });
     }
   };
+
+  //   ###################### Logic for uplooad files ######################
+  const [file, setFile] = createSignal();
+  const [nameExist, setNameExist] = createSignal(false);
 
   const onInputChangeFile = (e) => {
     e.preventDefault();
     setFile(e.currentTarget.files[0]);
+    checkIfUploadImgNameIsInDb();
   };
 
-  function getUrl() {
-    const storageRef = ref(storage, `drug-images/${selected.name}`);
-    getDownloadURL(storageRef).then((downloadUrl) => {
-      setSelected({ url: downloadUrl });
-    });
+  function checkIfUploadImgNameIsInDb() {
+    let tester = false;
+    if (file()) {
+      imageList().map((e) => (e.name === file().name ? (tester = true) : null));
+    }
+    if (tester) {
+      setNameExist(true);
+    } else {
+      setNameExist(false);
+    }
   }
 
   function uploadImage() {
     const storageRef = ref(storage, `drug-images/${file().name}`);
-    uploadBytes(storageRef, file());
-    setFile("");
-    showToast();
+    uploadBytes(storageRef, file()).then((res) => {
+      if (res) {
+        setToastMessage("Bild erfolgreich hochgeladen");
+        getList();
+        showToast();
+      }
+    });
+  }
+  //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  function deleteImage() {
+    const storageRef = ref(storage, `drug-images/${props.drug.img.name}`);
+    deleteObject(storageRef)
+      .then(() => {
+        setOpenWarn(false);
+        props.setDrug({ img: { name: "", url: "" } });
+        setToastMessage("Bild erfolgreich gelöscht");
+        getList();
+      })
+      .then(() => {
+        showToast();
+      })
+      .catch((error) => {});
   }
 
   const showToast = () => {
-    setOpen(true);
+    setOpenToast(true);
     setTimeout(() => {
-      setOpen(false);
+      setOpenToast(false);
     }, 5000);
   };
 
+  getList();
+
   createEffect(() => {
+    // console.log(imageList());
+    // console.log(selected.name);
+    // console.log(selected.url);
   });
+
   return (
     <>
-      <Toast type="success" open={open()}>
-        Bild erfolgreich hochgeladen!
-      </Toast>
+      <Toast
+        id="message"
+        type="success"
+        open={openToast()}
+        message={toastMessage()}
+      />
       <div className="drug-image-container">
-        <label for="type">Bild hochladen</label>
-        <input
-          className="image"
-          name="img"
-          type="file"
-          files={file()}
-          onChange={onInputChangeFile}
-        />
+        {/* ##################### File upload ##################### */}
+        <label for="type" classList={{ error: nameExist() }}>
+          {nameExist() ? "Dateiname schon vorhanden!" : "Bild hochladen"}
+        </label>
         <div className="wrapper gap-1">
-          <button type="button" className="btn primary" onClick={uploadImage}>
-            OK
-          </button>
-        </div>
-        <input
-          type="text"
-          name="image-list"
-          value={selected.name}
-          onChange={onInputChange}
-          list="images"
-        />
-        <datalist id="images">
-          <For each={images()}>
-            {(img) => <option value={img.name}>{img.name}</option>}
-          </For>
-        </datalist>
-        <div className="wrapper gap-1">
-          <img
-            src={selected.url != "" ? selected.url : "/placeholder.svg"}
-            alt=""
+          <input
+            id="input-file"
+            className="image"
+            name="img"
+            type="file"
+            files={file()}
+            onChange={onInputChangeFile}
           />
           <button
             type="button"
-            onClick={() => setSelected({ name: "", url: "" })}
-            className="btn icon-btn warn"
+            className="btn primary icon-btn btn-sm"
+            onClick={uploadImage}
+            disabled={!file() || nameExist()}
+          >
+            <i class="bi bi-file-arrow-up"></i>Upload
+          </button>
+        </div>
+        {/* #################### Image preview #################### */}
+        <div className="wrapper gap-1">
+          <img
+            src={
+              props.drug.img.url != "" ? props.drug.img.url : "/placeholder.svg"
+            }
+            alt=""
+          />
+          <Show when={props.drug.img.name != ""}>
+            <div
+              onClick={() => props.setDrug({ img: { name: "", url: "" } })}
+              className="delete-selection"
+            >
+              <i class="bi bi-x-square"></i>
+            </div>
+          </Show>
+        </div>
+        {/* ###################### Datalist ###################### */}
+        <div className="group">
+          <input
+            type="text"
+            name="image-list"
+            value={props.drug.img.name}
+            onInput={onInputChange}
+            list="images"
+          />
+          <datalist id="images">
+            <For each={imageList()}>
+              {(img) => <option value={img.name}>{img.name}</option>}
+            </For>
+          </datalist>
+          <button
+            type="button"
+            onClick={() => setOpenWarn(true)}
+            className="warn btn icon-btn"
+            disabled={props.drug.img.name === ""}
           >
             <i class="bi bi-trash"></i>
           </button>
+          <Toast type="warn" open={openWarn() === true}>
+            <div className="warn toast-title">Bild wirklich löschen?</div>
+            <div className="wrapper gap-1 justify-center">
+              <button
+                type="button"
+                className="btn secondary"
+                onClick={() => deleteImage()}
+              >
+                Ja
+              </button>
+              <button
+                type="button"
+                className="btn secondary"
+                onClick={() => setOpenWarn(false)}
+              >
+                Nein
+              </button>
+            </div>
+          </Toast>
         </div>
       </div>
     </>
