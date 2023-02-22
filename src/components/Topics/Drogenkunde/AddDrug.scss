@@ -1,8 +1,4 @@
 #add-drug {
-  .btn-back {
-    margin-bottom: 1rem;
-  }
-
   .grid-item {
     display: flex;
     flex-direction: column;
@@ -70,14 +66,33 @@
     }
   }
 
-  .header-menu {
-    display: flex;
-    justify-content: space-between;
+  .drug-title {
+    margin: 0;
+  }
+  .divider {
+    margin: 1rem 0;
+  }
 
-    .edit-select {
-      width: fit-content;
+  .header-menu {
+    width: 100%;
+    margin-bottom: 1rem;
+
+    #edit-select-form {
+      width: 100%;
       display: flex;
-      flex-direction: column;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+
+      .buttons {
+        margin: auto 0;
+        button:first-child {
+          margin-right: 1rem;
+        }
+      }
+
+      .edit-input {
+        margin: 0 auto 0 1rem;
+      }
 
       label {
         margin-bottom: 0.5rem;
@@ -111,7 +126,7 @@
       }
     }
 
-    fieldset {
+    .treatment-fieldset {
       width: 25rem;
       border-radius: 0.5rem;
       margin-bottom: 0.5rem;
@@ -199,7 +214,6 @@
 
     .btn-span {
       width: 100%;
-      margin-top: 1rem;
       .submit-btn {
         height: fit-content;
         width: fit-content;

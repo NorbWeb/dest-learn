@@ -3,10 +3,9 @@ import { createStore } from "solid-js/store";
 import { createEffect, createSignal, For, Match, Show, Switch } from "solid-js";
 import { useDrugData } from "../../../Context/DrugDataContext.jsx";
 import { Toast } from "../../Helper/Toast/Toast";
-import { storage, db } from "../../../firebase";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { db } from "../../../firebase";
 import { addDoc, collection, doc, updateDoc } from "firebase/firestore/lite";
-import { DrugImage } from "./DrugImage";
+import { DrugImage, DrugImageUpload } from "./DrugImage";
 
 const AddDrug = () => {
   const [data, { getCategories, reload }] = useDrugData();
@@ -31,7 +30,7 @@ const AddDrug = () => {
   const [drugExist, setDrugExist] = createSignal(false);
   const [editDrug, setEditDrug] = createSignal(false);
   const [drugId, setDrugId] = createSignal("");
-  const isRequired = false;
+  const isRequired = true;
 
   function clearDrugStore() {
     setDrug({
@@ -96,6 +95,7 @@ const AddDrug = () => {
       await addDoc(collection(db, "drugs"), drug);
       reload();
       clearDrugStore();
+      resetEditDrugInput();
     } catch (error) {
       console.debug(error);
     }
@@ -107,6 +107,7 @@ const AddDrug = () => {
       await updateDoc(docRef, drug);
       reload();
       clearDrugStore();
+      resetEditDrugInput();
     } catch (error) {
       console.debug(error);
     }
@@ -245,38 +246,64 @@ const AddDrug = () => {
     );
   };
 
+  function resetEditDrugInput() {
+    document.getElementById("edit-select-form").reset();
+  }
+
+  function handleReset() {
+    resetEditDrugInput();
+    clearDrugStore();
+    setEditDrug(false);
+  }
+
   createEffect(() => {
     checkIfDrugNameIsInDb();
-    // console.log(drug);
+    // if (tester) {
+    //   console.log(tester);
+    // }
   });
 
   return (
     <>
       <div id="add-drug">
         <Toast type="success" open={openToast()} message={toastMessage()} />
+        <h1 className="drug-title">Drogenlabor</h1>
+        <p>Hier kannst du neue Drogen anlegen oder vorhandene bearbeiten</p>
+        <div className="divider" />
         <div className="header-menu">
-          <button
-            className="btn primary btn-back"
-            onClick={() => history.back()}
-          >
-            Zurück
-          </button>
-          <div className="edit-select">
-            <label for="edit">Vorhandene Droge bearbeiten</label>
-           
-            <input
-              type="text"
-              name="edit"
-              // value={drug.name ? drug.name : ''}
-              onInput={handleEditDrug}
-              list="drug"
-            />
-            <datalist id="drug">
-              <For each={data() ? data().allDrugs : []}>
-                {(drug) => <option value={drug.name}>{drug.name}</option>}
-              </For>
-            </datalist>
-          </div>
+          <form id="edit-select-form" method="dialog">
+            <div className="buttons">
+              <button
+                type="button"
+                className="btn primary btn-back"
+                onClick={() => history.back()}
+              >
+                Zurück
+              </button>
+              <button
+                className="btn primary"
+                type="button"
+                onClick={() => handleReset()}
+              >
+                Reset
+              </button>
+            </div>
+            <div className="wrapper col edit-input">
+              <label for="edit">Vorhandene Droge bearbeiten</label>
+              <input
+                type="text"
+                name="edit"
+                onChange={handleEditDrug}
+                list="drug"
+              />
+              <datalist id="drug">
+                <For each={data() ? data().allDrugs : []}>
+                  {(drug) => <option value={drug.name}>{drug.name}</option>}
+                </For>
+              </datalist>
+            </div>
+            <DrugImageUpload />
+          </form>
         </div>
         <form onSubmit={handelSubmit} className="grid-container">
           <div className="grid-item">
@@ -332,7 +359,7 @@ const AddDrug = () => {
             />
           </div>
           <div className="grid-item">
-            <fieldset onChange={onInputChangeTreatment}>
+            <fieldset onChange={onInputChangeTreatment} className='treatment-fieldset'>
               <legend>Verarbeitung</legend>
               <div>
                 <input
@@ -516,7 +543,7 @@ const AddDrug = () => {
               type="submit"
               disabled={drugExist() && !editDrug()}
             >
-              submit
+              {editDrug() ? "Änderungen speichern" : "Speichern"}
             </button>
           </div>
         </form>

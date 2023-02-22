@@ -10,28 +10,32 @@ import {
 import { createEffect, createSignal, For, Show } from "solid-js";
 import { Toast } from "../../Helper/Toast/Toast";
 
+const [toastMessage, setToastMessage] = createSignal();
+const [imageList, setImageList] = createSignal();
+const [openToast, setOpenToast] = createSignal(false);
+const [openWarn, setOpenWarn] = createSignal(false);
+
+const storage = getStorage();
+
+function getList() {
+  const listRef = ref(storage, "drug-images");
+  listAll(listRef)
+    .then((res) => {
+      res.prefixes.forEach((folderRef) => {});
+      setImageList(res.items);
+      res.items.forEach((itemRef) => {});
+    })
+    .catch((error) => {});
+}
+
+const showToast = () => {
+  setOpenToast(true);
+  setTimeout(() => {
+    setOpenToast(false);
+  }, 5000);
+};
+
 const DrugImage = (props) => {
-  const storage = getStorage();
-
-  //  ############## Signals for Toast logic ##############
-  const [toastMessage, setToastMessage] = createSignal();
-  const [openToast, setOpenToast] = createSignal(false);
-  const [openWarn, setOpenWarn] = createSignal(false);
-  //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-  const [imageList, setImageList] = createSignal();
-
-  function getList() {
-    const listRef = ref(storage, "drug-images");
-    listAll(listRef)
-      .then((res) => {
-        res.prefixes.forEach((folderRef) => {});
-        setImageList(res.items);
-        res.items.forEach((itemRef) => {});
-      })
-      .catch((error) => {});
-  }
-
   const onInputChange = (e) => {
     e.preventDefault();
     if (e.target.value) {
@@ -42,47 +46,13 @@ const DrugImage = (props) => {
     }
   };
 
-  //   ###################### Logic for uplooad files ######################
-  const [file, setFile] = createSignal();
-  const [nameExist, setNameExist] = createSignal(false);
-
-  const onInputChangeFile = (e) => {
-    e.preventDefault();
-    setFile(e.currentTarget.files[0]);
-    checkIfUploadImgNameIsInDb();
-  };
-
-  function checkIfUploadImgNameIsInDb() {
-    let tester = false;
-    if (file()) {
-      imageList().map((e) => (e.name === file().name ? (tester = true) : null));
-    }
-    if (tester) {
-      setNameExist(true);
-    } else {
-      setNameExist(false);
-    }
-  }
-
-  function uploadImage() {
-    const storageRef = ref(storage, `drug-images/${file().name}`);
-    uploadBytes(storageRef, file()).then((res) => {
-      if (res) {
-        setToastMessage("Bild erfolgreich hochgeladen");
-        getList();
-        showToast();
-      }
-    });
-  }
-  //   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
   function deleteImage() {
     const storageRef = ref(storage, `drug-images/${props.drug.img.name}`);
     deleteObject(storageRef)
       .then(() => {
         setOpenWarn(false);
+        setToastMessage(`Bild "${props.drug.img.name}" erfolgreich gelöscht`);
         props.setDrug({ img: { name: "", url: "" } });
-        setToastMessage("Bild erfolgreich gelöscht");
         getList();
       })
       .then(() => {
@@ -90,13 +60,6 @@ const DrugImage = (props) => {
       })
       .catch((error) => {});
   }
-
-  const showToast = () => {
-    setOpenToast(true);
-    setTimeout(() => {
-      setOpenToast(false);
-    }, 5000);
-  };
 
   getList();
 
@@ -115,28 +78,6 @@ const DrugImage = (props) => {
         message={toastMessage()}
       />
       <div className="drug-image-container">
-        {/* ##################### File upload ##################### */}
-        <label for="type" classList={{ error: nameExist() }}>
-          {nameExist() ? "Dateiname schon vorhanden!" : "Bild hochladen"}
-        </label>
-        <div className="wrapper gap-1">
-          <input
-            id="input-file"
-            className="image"
-            name="img"
-            type="file"
-            files={file()}
-            onChange={onInputChangeFile}
-          />
-          <button
-            type="button"
-            className="btn primary icon-btn btn-sm"
-            onClick={uploadImage}
-            disabled={!file() || nameExist()}
-          >
-            <i class="bi bi-file-arrow-up"></i>Upload
-          </button>
-        </div>
         {/* #################### Image preview #################### */}
         <div className="wrapper gap-1">
           <img
@@ -201,4 +142,78 @@ const DrugImage = (props) => {
   );
 };
 
-export { DrugImage };
+const DrugImageUpload = () => {
+  const [file, setFile] = createSignal();
+  const [nameExist, setNameExist] = createSignal(false);
+
+  const onInputChangeFile = (e) => {
+    e.preventDefault();
+    setFile(e.currentTarget.files[0]);
+    checkIfUploadImgNameIsInDb();
+  };
+
+  function checkIfUploadImgNameIsInDb() {
+    let tester = false;
+    if (file()) {
+      imageList().map((e) => (e.name === file().name ? (tester = true) : null));
+    }
+    if (tester) {
+      setNameExist(true);
+    } else {
+      setNameExist(false);
+    }
+  }
+
+  function resetFileUpload() {
+    document.getElementById("file-upload").reset();
+  }
+
+  function uploadImage() {
+    const storageRef = ref(storage, `drug-images/${file().name}`);
+    uploadBytes(storageRef, file()).then((res) => {
+      if (res) {
+        setToastMessage(`Bild "${file().name}" erfolgreich hochgeladen`);
+        getList();
+        showToast();
+        resetFileUpload();
+        setFile();
+      }
+    });
+  }
+
+  createEffect(() => {
+    // console.log(file())
+  });
+
+  return (
+    <div className="drug-image-upload">
+      <fieldset>
+        <legend for="type" classList={{ error: nameExist() }}>
+          {nameExist() ? "Dateiname schon vorhanden!" : "Bild hochladen"}
+        </legend>
+        <form id="file-upload" method="dialog">
+          <div className="wrapper gap-1">
+            <input
+              id="input-file"
+              className="image"
+              name="img"
+              type="file"
+              files={file()}
+              onChange={onInputChangeFile}
+            />
+            <button
+              type="button"
+              className="btn primary icon-btn btn-sm"
+              onClick={uploadImage}
+              disabled={!file() || nameExist()}
+            >
+              <i class="bi bi-file-arrow-up"></i>Upload
+            </button>
+          </div>
+        </form>
+      </fieldset>
+    </div>
+  );
+};
+
+export { DrugImage, DrugImageUpload };

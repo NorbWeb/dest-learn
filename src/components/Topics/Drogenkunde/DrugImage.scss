@@ -1,12 +1,5 @@
 .drug-image-container {
-  //   width: 250px;
-  //   height: 250px;
-  //   background-color: azure;
-
-  #input-file {
-    font-size: 0.875rem;
-  }
-
+    margin: auto;
   .group {
     display: flex;
     width: 100%;
@@ -49,5 +42,19 @@
   }
   .toast-title {
     margin-bottom: 1rem;
+  }
+}
+
+.drug-image-upload {
+  width: fit-content;
+
+  fieldset {
+    // margin: 0rem;
+    border: 0.1rem solid grey;
+    border-radius: 0.5rem;
+  }
+
+  #input-file {
+    font-size: 0.875rem;
   }
 }
