@@ -8,7 +8,14 @@ const DrugDetail = () => {
   const params = useParams().id;
   const [data, { drugById }] = useDrugData();
   const [drug, setDrug] = createSignal("");
-
+  const treatmentsSortBy = [
+    "Destillation",
+    "Wasserdampf-Destillation",
+    "Extraktionsverfahren",
+    "Mazeration",
+    "Perkulation",
+    "Digestion",
+  ];
   function handlePrint() {
     document.title = `Steckbrief ${drug.name}`;
     window.print();
@@ -67,9 +74,19 @@ const DrugDetail = () => {
                   <span className="bold">Verarbeitung: </span>
                 </label>
                 <ul name="list-treatments">
-                  <For each={drug().treatment.filter((f) => f != "")}>
+                  <For
+                    each={drug().treatment.sort(
+                      (a, b) =>
+                        treatmentsSortBy.indexOf(a) -
+                        treatmentsSortBy.indexOf(b)
+                    )}
+                  >
                     {(treatment) => (
-                      <li classList={{ highlight: drug().highlight != "" }}>
+                      <li
+                        classList={{
+                          highlight: drug().highlight === treatment,
+                        }}
+                      >
                         {treatment}
                       </li>
                     )}

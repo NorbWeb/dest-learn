@@ -128,9 +128,11 @@
 
     .treatment-fieldset {
       width: 25rem;
-      border-radius: 0.5rem;
-      margin-bottom: 0.5rem;
-      border: 0.1rem solid grey;
+      border-radius: 0.5rem 0.5rem 0 0;
+      border-style: solid;
+      border-color: grey;
+      border-width: 0.1rem 0.1rem 0 0.1rem;
+      padding-bottom: 0;
 
       input[type="checkbox"] {
         width: fit-content;
@@ -143,8 +145,19 @@
           font-weight: bold;
         }
       }
+    }
 
-      label[for="highlight"] {
+    .highlight-container {
+      display: flex;
+      align-items: center;
+      padding: 0 0.75rem;
+      margin: 0 2px;
+      border-style: solid;
+      border-color: grey;
+      border-width: 0 0.1rem 0.1rem 0.1rem;
+      border-radius: 0 0 0.5rem 0.5rem;
+
+      label {
         margin-right: 0.5rem;
         margin-left: 0;
       }

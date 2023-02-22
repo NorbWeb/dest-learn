@@ -16,7 +16,7 @@ const AddDrug = () => {
     family: "",
     origin: "",
     ingredients: ["", "", "", "", ""],
-    treatment: ["", "", "", "", "", ""],
+    treatment: [],
     use: ["", "", "", "", ""],
     note: "",
     img: { name: "", url: "" },
@@ -40,7 +40,7 @@ const AddDrug = () => {
       family: "",
       origin: "",
       ingredients: ["", "", "", "", ""],
-      treatment: ["", "", "", "", "", ""],
+      treatment: [],
       use: ["", "", "", "", ""],
       note: "",
       img: { name: "", url: "" },
@@ -87,7 +87,6 @@ const AddDrug = () => {
         change: new Date(),
       });
     }
-    showToast();
   }
 
   const saveNewDrug = async (drug) => {
@@ -96,6 +95,8 @@ const AddDrug = () => {
       reload();
       clearDrugStore();
       resetEditDrugInput();
+      clearHighlight();
+      showToast();
     } catch (error) {
       console.debug(error);
     }
@@ -108,6 +109,8 @@ const AddDrug = () => {
       reload();
       clearDrugStore();
       resetEditDrugInput();
+      clearHighlight();
+      showToast();
     } catch (error) {
       console.debug(error);
     }
@@ -181,26 +184,25 @@ const AddDrug = () => {
   };
 
   const onInputChangeTreatment = (e) => {
-    const alltreatments = [
-      "Destillation",
-      "Wasserdampf-Destillation",
-      "Extraktionsverfahren",
-      "Mazeration",
-      "Perkulation",
-      "Digestion",
-    ];
     if (e.target.checked) {
-      setDrug("treatment", e.target.value, alltreatments[e.target.value]);
+      setDrug("treatment", [...drug.treatment, e.target.value]);
     } else if (!e.target.checked) {
-      setDrug("treatment", e.target.value, 0);
+      let arr = [...drug.treatment];
+      let index = arr.indexOf(e.target.value);
+      arr.splice(index, 1);
+      setDrug("treatment", arr);
     }
   };
 
-  const onInputChangeHighlight = (e) => {
-    let test = document.getElementsByClassName("highlight");
-    for (let i = 0; i < test.length; i++) {
-      test[i].classList.remove("highlight");
+  function clearHighlight() {
+    let clear = document.getElementsByClassName("highlight");
+    for (let i = 0; i < clear.length; i++) {
+      clear[i].classList.remove("highlight");
     }
+  }
+
+  const onInputChangeHighlight = (e) => {
+    clearHighlight();
     let selected = e.target.value.toLowerCase() + "-label";
     let label = document.getElementById(selected);
     if (selected != "-label") {
@@ -254,12 +256,13 @@ const AddDrug = () => {
     resetEditDrugInput();
     clearDrugStore();
     setEditDrug(false);
+    clearHighlight();
   }
 
   createEffect(() => {
     checkIfDrugNameIsInDb();
     // if (tester) {
-    //   console.log(tester);
+    // console.log(drug.treatment);
     // }
   });
 
@@ -359,15 +362,18 @@ const AddDrug = () => {
             />
           </div>
           <div className="grid-item">
-            <fieldset onChange={onInputChangeTreatment} className='treatment-fieldset'>
+            <fieldset
+              onChange={onInputChangeTreatment}
+              className="treatment-fieldset"
+            >
               <legend>Verarbeitung</legend>
               <div>
                 <input
                   type="checkbox"
                   id="destillation"
                   name="destillation"
-                  value="0"
-                  checked={drug.treatment[0]}
+                  value="Destillation"
+                  checked={drug.treatment.includes("Destillation")}
                 />
                 <label id="destillation-label" for="destillation">
                   Destillation
@@ -378,8 +384,8 @@ const AddDrug = () => {
                   type="checkbox"
                   id="dampf"
                   name="dampf"
-                  value="1"
-                  checked={drug.treatment[1] ? true : false}
+                  value="Wasserdampf-Destillation"
+                  checked={drug.treatment.includes("Wasserdampf-Destillation")}
                 />
                 <label id="wasserdampf-destillation-label" for="dampf">
                   Wasserdampf-Destillation
@@ -390,8 +396,8 @@ const AddDrug = () => {
                   type="checkbox"
                   id="extraktion"
                   name="extraktion"
-                  value="2"
-                  checked={drug.treatment[2]}
+                  value="Extraktionsverfahren"
+                  checked={drug.treatment.includes("Extraktionsverfahren")}
                 />
                 <label id="extraktionsverfahren-label" for="extraktion">
                   Extraktionsverfahren (alle)
@@ -402,8 +408,8 @@ const AddDrug = () => {
                   type="checkbox"
                   id="mazeration"
                   name="mazeration"
-                  value="3"
-                  checked={drug.treatment[3]}
+                  value="Mazeration"
+                  checked={drug.treatment.includes("Mazeration")}
                 />
                 <label id="mazeration-label" for="mazeration">
                   Mazeration
@@ -414,8 +420,8 @@ const AddDrug = () => {
                   type="checkbox"
                   id="perkulation"
                   name="perkulation"
-                  value="4"
-                  checked={drug.treatment[4]}
+                  value="Perkulation"
+                  checked={drug.treatment.includes("Perkulation")}
                 />
                 <label id="perkulation-label" for="perkulation">
                   Perkulation
@@ -426,50 +432,51 @@ const AddDrug = () => {
                   type="checkbox"
                   id="digestion"
                   name="digestion"
-                  value="5"
-                  checked={drug.treatment[5]}
+                  value="Digestion"
+                  checked={drug.treatment.includes("Digestion")}
                 />
                 <label id="digestion-label" for="digestion">
                   Digestion
                 </label>
               </div>
-              <div className="wrapper aligne-center">
-                <label for="highlight">Bevorzugt</label>
-                <select
-                  id="highlight"
-                  name="highlight"
-                  onChange={onInputChangeHighlight}
-                >
-                  <option value="" selected></option>
-                  <option value="Destillation">Destillation</option>
-                  <option value="Wasserdampf-Destillation">
-                    Wasserdampf-Destil.
-                  </option>
-                  <option value="Extraktionsverfahren">
-                    Extraktionsverfahren
-                  </option>
-                  <option value="Mazeration">Mazeration</option>
-                  <option value="Perkulation">Perkulation</option>
-                  <option value="Digestion">Digestion</option>
-                </select>
-
-                <div
-                  className="highlight-info"
-                  onMouseOver={() => setHover(() => true)}
-                  onMouseLeave={() => setHover(() => false)}
-                >
-                  <i class="bi bi-info-circle"></i>
-                </div>
-                <div
-                  className="highlight-info-text"
-                  classList={{ show: hover() }}
-                >
-                  Wähle ein bevorzugtes Verfahren, um zu verdeutlichen, dass es
-                  hauptsächlich verwendet wird, bzw. die besten Ergebnisse
-                  liefert.
-                </div>
-              </div>
             </fieldset>
+            <div className="highlight-container">
+              <label for="highlight">Bevorzugt</label>
+              <select
+                id="highlight"
+                name="highlight"
+                onChange={onInputChangeHighlight}
+                value={drug.highlight}
+              >
+                <option value="" selected></option>
+                <option value="Destillation">Destillation</option>
+                <option value="Wasserdampf-Destillation">
+                  Wasserdampf-Destillation
+                </option>
+                <option value="Extraktionsverfahren">
+                  Extraktionsverfahren
+                </option>
+                <option value="Mazeration">Mazeration</option>
+                <option value="Perkulation">Perkulation</option>
+                <option value="Digestion">Digestion</option>
+              </select>
+
+              <div
+                className="highlight-info"
+                onMouseOver={() => setHover(() => true)}
+                onMouseLeave={() => setHover(() => false)}
+              >
+                <i class="bi bi-info-circle"></i>
+              </div>
+              <div
+                className="highlight-info-text"
+                classList={{ show: hover() }}
+              >
+                Wähle ein bevorzugtes Verfahren, um zu verdeutlichen, dass es
+                hauptsächlich verwendet wird, bzw. die besten Ergebnisse
+                liefert.
+              </div>
+            </div>
           </div>
           <div className="multi-input grid-item">
             <label for="ingredients-list">Inhaltsstoffe</label>
