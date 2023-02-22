@@ -6,7 +6,7 @@ import "./UserDashboard.scss";
 const UserDashboard = () => {
   const [user] = useAuth();
   const props = [
-    { route: "add-drug", title: "Drogenlabor" , foto: '/spices.jpg', color: 1},
+    { route: "drug-kitchen", title: "Drogenlabor" , foto: '/spices.jpg', color: 1},
   ];
 
 

@@ -1,9 +1,8 @@
 import { Route } from "@solidjs/router";
 import { LogInForm } from "../components/Authentification/LogInForm";
-import { AddDrug } from "../components/Topics/Drogenkunde/AddDrug";
+import { DrugKitchen } from "../components/Topics/Drogenkunde/DrugKitchen";
 import { UserDashboard } from "../components/User/Content/UserDashboard";
 import { useAuth } from "../Context/AuthContext";
-import { DefaultComponent } from "./AppRoutes";
 
 const Routes = () => {
   const [user] = useAuth();
@@ -11,7 +10,7 @@ const Routes = () => {
     <>
       <Route path="login" component={LogInForm} />
       <Route path="dashboard" component={UserDashboard} />
-      <Route path="add-drug" component={AddDrug} />
+      <Route path="drug-kitchen" component={DrugKitchen} />
     </>
   );
 };

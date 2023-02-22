@@ -1,4 +1,4 @@
-import "./AddDrug.scss";
+import "./DrugKitchen.scss";
 import { createStore } from "solid-js/store";
 import { createEffect, createSignal, For, Match, Show, Switch } from "solid-js";
 import { useDrugData } from "../../../Context/DrugDataContext.jsx";
@@ -7,7 +7,7 @@ import { db } from "../../../firebase";
 import { addDoc, collection, doc, updateDoc } from "firebase/firestore/lite";
 import { DrugImage, DrugImageUpload } from "./DrugImage";
 
-const AddDrug = () => {
+const DrugKitchen = () => {
   const [data, { getCategories, reload }] = useDrugData();
   const [drug, setDrug] = createStore({
     name: "",
@@ -268,7 +268,7 @@ const AddDrug = () => {
 
   return (
     <>
-      <div id="add-drug">
+      <div id="drug-kitchen">
         <Toast type="success" open={openToast()} message={toastMessage()} />
         <h1 className="drug-title">Drogenlabor</h1>
         <p>Hier kannst du neue Drogen anlegen oder vorhandene bearbeiten</p>
@@ -559,4 +559,4 @@ const AddDrug = () => {
   );
 };
 
-export { AddDrug };
+export { DrugKitchen };
