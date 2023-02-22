@@ -13,16 +13,16 @@ const LogOutButton = () => {
   return (
     <>
       {/* <button onClick={signInWithGoogle}>Sign in with google</button> */}
-      <Show when={sessionStorage.getItem("logedInUser")}>
-        <div className="nav-menu-rigth btn-group">
+      <div className="nav-menu-rigth btn-group">
+        <Show when={user()} fallback={<div></div>}>
           {/* <button className="avatar-btn">
             <i class="bi bi-person-circle"></i>
           </button> */}
           <button className="btn secondary log-out-btn" onClick={handleClick}>
             Abmelden
           </button>
-        </div>
-      </Show>
+        </Show>
+      </div>
     </>
   );
 };
