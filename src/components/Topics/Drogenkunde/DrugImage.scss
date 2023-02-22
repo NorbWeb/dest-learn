@@ -1,0 +1,60 @@
+.drug-image-container {
+    margin: auto;
+  .group {
+    display: flex;
+    width: 100%;
+    gap: 1rem;
+
+    input {
+      border-right: 0;
+      max-width: 22rem;
+    }
+
+    button {
+      margin-bottom: 0.5rem;
+      padding: 0rem 0.5rem;
+    }
+  }
+
+  img {
+    width: 12.5rem;
+    height: 12.5rem;
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .delete-selection {
+    width: 2.5rem;
+    height: 2.5rem;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 10rem;
+
+    &:hover {
+      color: red;
+    }
+
+    i {
+      font-size: 1.5rem;
+      color: inherit;
+    }
+  }
+  .toast-title {
+    margin-bottom: 1rem;
+  }
+}
+
+.drug-image-upload {
+  width: fit-content;
+
+  fieldset {
+    // margin: 0rem;
+    border: 0.1rem solid grey;
+    border-radius: 0.5rem;
+  }
+
+  #input-file {
+    font-size: 0.875rem;
+  }
+}

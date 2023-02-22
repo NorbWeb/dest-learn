@@ -1,0 +1,26 @@
+#drug-content {
+  padding-bottom: 1.5rem;
+
+  .category-box {
+    &:not(:first-of-type) {
+      margin-top: 1rem;
+    }
+    .drug-content-tile {
+      display: flex;
+      align-content: flex-start;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+  }
+
+  ul {
+    margin-top: 0;
+    z-index: 1;
+  }
+  .list a {
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

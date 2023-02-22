@@ -1,13 +1,28 @@
-import { A } from "@solidjs/router";
+import { Outlet, useNavigate } from "@solidjs/router";
+import { createEffect } from "solid-js";
 import { useAuth } from "../../Context/AuthContext";
 import "./User.scss";
+
 const User = () => {
-  const [loggedIn, { logIn, logOut }] = useAuth();
+  const [user] = useAuth();
+  const navigate = useNavigate();
+
+  function redirect() {
+    if (!user()) {
+      if (!sessionStorage.getItem("logedInUser")) {
+        navigate("/user/login");
+      }
+    }
+  }
+
+  createEffect(() => {
+    redirect();
+  });
 
   return (
     <>
       <div id="user" className="container">
-        User
+        <Outlet />
       </div>
     </>
   );

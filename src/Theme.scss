@@ -5,7 +5,7 @@ $secondary: rgb(207, 211, 214);
 $bg: #fff;
 $info: #f0ec27;
 $warn: #db1717;
-$success: #36c729;
+$success: #13b604;
 $text: #2b2b2b;
 $text-light: #d4d4d4;
 $border: #0000002d;
@@ -129,6 +129,26 @@ body {
     justify-content: space-between;
   }
 
+  &.justify-around {
+    justify-content: space-around;
+  }
+
+  &.justify-evenly {
+    justify-content: space-evenly;
+  }
+
+  &.justify-center {
+    justify-content: center;
+  }
+
+  &.justify-start {
+    justify-content: flex-start;
+  }
+
+  &.justify-end {
+    justify-content: flex-end;
+  }
+
   &.gap-1 {
     gap: 1rem;
   }
@@ -148,4 +168,20 @@ body {
 
 .mb-1 {
   margin-bottom: 1rem;
+}
+
+.error {
+  color: $warn;
+}
+
+.hover-bigger {
+  @include mixins.hover-bigger();
+}
+
+.default-component {
+  text-align: center;
+}
+
+.hover-info {
+  @include mixins.hover-info();
 }

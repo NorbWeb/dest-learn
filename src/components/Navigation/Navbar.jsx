@@ -1,24 +1,24 @@
-import { A } from "@solidjs/router";
-import { createSignal, For, Show } from "solid-js";
 import "./Navbar.scss";
+import { A } from "@solidjs/router";
+import { For } from "solid-js";
 import Logo from "../../assets/whisky-logo-96.png";
-import { useAuth } from "../../Context/AuthContext";
-import { LogInButton } from "../Authentification/LogInButton";
+import { LogOutButton } from "../Authentification/LogOutButton";
 
 const Navbar = () => {
-  const [navItem, setNavItem] = createSignal([
+  const navItem = [
     {
       name: "Dokumentation",
       href: "/dokumentation",
-
-      auth: false,
     },
-    { name: "Über uns", href: "/about", auth: false },
-    { name: "User", href: "/user", auth: true },
-    { name: "Admin", href: "/admin", auth: true },
-  ]);
+    { name: "Über uns", href: "/about" },
 
-  const [loggedIn, { logOut }] = useAuth();
+    {
+      name: "User",
+      href: "/user/login",
+    },
+
+    { name: "Admin", href: "/admin" },
+  ];
 
   return (
     <>
@@ -27,30 +27,17 @@ const Navbar = () => {
           <img src={Logo} alt="Logo" id="logo" />
         </A>
         <ul>
-          <For each={navItem()}>
+          <For each={navItem}>
             {(item) => (
-              <Show
-                when={loggedIn()}
-                fallback={
-                  <Show when={!item.auth}>
-                    <li>
-                      <A href={item.href} end={false}>
-                        {item.name}
-                      </A>
-                    </li>
-                  </Show>
-                }
-              >
-                <li>
-                  <A href={item.href} end={false}>
-                    {item.name}
-                  </A>
-                </li>
-              </Show>
+              <li>
+                <A href={item.href} end={false}>
+                  {item.name}
+                </A>
+              </li>
             )}
           </For>
         </ul>
-        <LogInButton />
+        <LogOutButton />
       </nav>
     </>
   );

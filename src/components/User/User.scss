@@ -1,0 +1,26 @@
+#user {
+  min-height: calc(100vh - 9rem);
+  padding: 1rem;
+
+  .title {
+    text-align: center;
+    margin: 0 0 1rem 0;
+  }
+
+  .box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+
+    .placeholder-box {
+      width: 15rem;
+      height: 15rem;
+      background-color: lightblue;
+
+      &::before {
+        content: "Some content";
+      }
+    }
+  }
+}
