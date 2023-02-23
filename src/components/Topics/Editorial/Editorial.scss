@@ -1,0 +1,109 @@
+#editorial {
+  .editorial-title {
+    margin: 0;
+  }
+
+  label {
+    margin-bottom: 0.5rem;
+  }
+  .divider {
+    margin-bottom: 1rem;
+  }
+  .header-menu {
+    width: 100%;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+
+    .buttons {
+      margin: auto 0;
+
+      button:first-child {
+        margin-right: 1rem;
+      }
+    }
+
+    .submit-btn {
+      margin-left: auto;
+    }
+  }
+
+  input,
+  textarea,
+  select {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border: 0.1rem solid grey;
+    border-radius: 0.5rem;
+    min-width: 12.5rem;
+  }
+
+  input {
+    width: 12.5rem;
+  }
+
+  .editorial-content {
+    display: flex;
+    flex-direction: column;
+
+    .headline-body {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+
+      gap: 1rem;
+      width: 100%;
+      margin-bottom: 1rem;
+      border: 0.1rem solid grey;
+      border-radius: 0.5rem;
+
+      legend {
+        font-weight: 500;
+        font-size: 1.25rem;
+        color: grey;
+        font-style: italic;
+      }
+
+      .field {
+        margin-bottom: 0.5rem;
+      }
+
+      .input-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        &.hide {
+          display: none;
+        }
+      }
+
+      .content-wrapper {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        &.hide {
+          display: none;
+        }
+
+        .area {
+          height: 100%;
+          width: 100%;
+          min-height: 5rem;
+
+          &.big {
+            min-height: 10rem;
+          }
+        }
+      }
+
+      .view-button {
+        // position: absolute;
+        // top: 0;
+        // right: 0;
+        height: 2rem;
+      }
+    }
+  }
+}

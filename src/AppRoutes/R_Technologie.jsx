@@ -1,19 +1,17 @@
 import { Route } from "@solidjs/router";
-import { Show } from "solid-js";
+import { Show, Suspense } from "solid-js";
 import { LoadingSpinner } from "../components/Helper/LoadingSpinner/LoadingSpinner";
 import { DocLayout } from "../components/Info/DocLayout";
 import { useContent } from "../Context/ContentContext";
 
 const Routes = () => {
-  const [data] = useContent();
+  const [data, { getArticle }] = useContent();
 
   const Destillation = () => {
     return (
-      <>
-        <Show when={data()} fallback={<LoadingSpinner />}>
-          <DocLayout {...data()[0]} />
-        </Show>
-      </>
+      <Show when={data().technologie} fallback={<LoadingSpinner />}>
+        <DocLayout {...getArticle("technologie", "Destillation")} />
+      </Show>
     );
   };
 

@@ -8,7 +8,7 @@ const Routes = () => {
   // const [data] = useContent();
   const data = {
     title: "Verordnung",
-    subtitle:
+    description:
       "Hier lernst du alles rund ums Destillieren. Wir gehen auf das Prinzip, die Wirkmechanismen und den grundlegenden Aufbau einer Destillieranlage ein.",
     headline: [
       {

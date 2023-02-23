@@ -46,7 +46,10 @@ const AppRoutes = () => {
       <Route
         path="*"
         component={
-          <Show when={!sessionStorage.getItem('logedInUser')} fallback={<LoadingSpinner />}>
+          <Show
+            when={!sessionStorage.getItem("logedInUser")}
+            fallback={<LoadingSpinner />}
+          >
             <NotFound />
           </Show>
         }
@@ -57,9 +60,16 @@ const AppRoutes = () => {
 
 // Empty helper component
 const DefaultComponent = (props) => {
+  const style = {
+    width: "15rem",
+    height: "15rem",
+    'object-fit': "cover",
+    'border-radius': '2rem'
+  };
   return (
-    <div id={props.name.toLowerCase()} className="container default-component">
+    <div id={props.name} className="container default-component">
       <h2>{props.name}</h2>
+      <img style={ style } src={props.img ? props.img : "/placeholder.svg"} />
       {props.loading ? <LoadingSpinner /> : ""}
       {props.back ? (
         <>

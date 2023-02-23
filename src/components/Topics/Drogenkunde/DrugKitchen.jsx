@@ -6,9 +6,11 @@ import { Toast } from "../../Helper/Toast/Toast";
 import { db } from "../../../firebase";
 import { addDoc, collection, doc, updateDoc } from "firebase/firestore/lite";
 import { DrugImage, DrugImageUpload } from "./DrugImage";
+import { useAuth } from "../../../Context/AuthContext";
 
 const DrugKitchen = () => {
   const [data, { getCategories, reload }] = useDrugData();
+  const [user] = useAuth();
   const [drug, setDrug] = createStore({
     name: "",
     type: "",
@@ -21,8 +23,8 @@ const DrugKitchen = () => {
     note: "",
     img: { name: "", url: "" },
     highlight: "",
-    create: "",
-    change: "",
+    create: { editor: { id: "", name: "" }, date: "" },
+    change: { editor: { id: "", name: "" }, date: "" },
   });
   const [hover, setHover] = createSignal(false);
   const [openToast, setOpenToast] = createSignal(false);
@@ -45,8 +47,8 @@ const DrugKitchen = () => {
       note: "",
       img: { name: "", url: "" },
       highlight: "",
-      create: "",
-      change: "",
+      create: { editor: { id: "", name: "" }, date: "" },
+      change: { editor: { id: "", name: "" }, date: "" },
     });
   }
 
@@ -66,8 +68,14 @@ const DrugKitchen = () => {
         note: drug.note,
         img: { name: drug.img.name, url: drug.img.url },
         highlight: drug.highlight,
-        create: new Date(),
-        change: drug.change,
+        create: {
+          editor: { id: user().uid, name: user().displayName },
+          date: new Date(),
+        },
+        change: {
+          editor: { id: drug.change.editor.id, name: drug.change.editor.name },
+          date: drug.change,
+        },
       });
     } else if (editDrug() === true) {
       setToastMessage("Droge erfolgreich bearbeitet");
@@ -84,7 +92,10 @@ const DrugKitchen = () => {
         note: drug.note,
         img: { name: drug.img.name, url: drug.img.url },
         highlight: drug.highlight,
-        change: new Date(),
+        change: {
+          editor: { id: user().uid, name: user().displayName },
+          date: new Date(),
+        },
       });
     }
   }
