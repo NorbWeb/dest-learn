@@ -1,5 +1,8 @@
+import { onMount } from "solid-js";
+
 const DocLayout = (props) => {
   let item = props;
+
   return (
     <>
       <div className="intro">
@@ -11,23 +14,23 @@ const DocLayout = (props) => {
         <For each={item.headline}>
           {(headline) =>
             // ################ text ################ //
-            headline.type.value === "text" ? (
+            headline.type.code === "text" ? (
               <div>
                 <h2 className="headline" id={headline.name}>
                   {headline.name}
                 </h2>
-                <p>{headline.content}</p>
+                <div>{headline.content}</div>
                 <br />
               </div>
             ) : // ################ math ################ //
 
-            headline.type.value === "math" ? (
+            headline.type.code === "math" ? (
               <div>
                 <h2 className="headline" id={headline.name}>
                   {headline.name}
                 </h2>
                 <code>{headline.formula}</code>
-                <p>{headline.content}</p>
+                <div>{headline.content}</div>
                 <br />
               </div>
             ) : null

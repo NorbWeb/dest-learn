@@ -1,4 +1,4 @@
-import { addDoc, collection, doc } from "firebase/firestore/lite";
+import { addDoc, collection, doc, updateDoc } from "firebase/firestore/lite";
 import { createEffect, createSignal, For, Show } from "solid-js";
 import { createStore } from "solid-js/store";
 import { useContent } from "../../../Context/ContentContext";
@@ -14,10 +14,6 @@ const Editorial = () => {
     description: "",
     headline: "",
   });
-  const type = [
-    { name: "Text", value: "text" },
-    { name: "Formel", value: "math" },
-  ];
 
   function selectTopic(e) {
     let selected = e.target.value.toLowerCase();
@@ -56,25 +52,9 @@ const Editorial = () => {
     }
   }
 
-  function onInputChangeType(e, index) {
-    let value = e.target.value;
-    if (value != "text") {
-      setArticle("headline", (index) => [...index, { formula: undefined }]);
-    }
-    let selected = type.filter((f) => f.value === value);
-    setArticle("headline", (index) => [
-      ...index,
-      {
-        type: { name: selected[0].name, value: value },
-      },
-    ]);
-  }
-
   function onInputChangeField(e, index, field) {
     let value = e.target.value;
-    console.log(field);
-    setArticle("headline", (index) => [...index, { field: value }]);
-    console.log(article);
+    setArticle("headline", index, field, value);
   }
 
   function toggleView(name) {
@@ -95,6 +75,11 @@ const Editorial = () => {
     }
   }
 
+  function addContent(type) {
+    let typeArr = ["text", "formula", "img"];
+    let arr = article[index];
+  }
+
   const saveNewTopic = async (topic) => {
     try {
       await addDoc(collection(db, topic));
@@ -106,8 +91,7 @@ const Editorial = () => {
   const saveEditTopic = async (item) => {
     let topic = document.getElementById("topic").value;
     let id = article.id;
-    console.log(topic, article);
-    const docRef = doc(db, `${topic}`, id);
+    const docRef = doc(db, topic, id);
     try {
       await updateDoc(docRef, item);
     } catch (error) {
@@ -116,16 +100,16 @@ const Editorial = () => {
   };
 
   function handleSubmit() {
-    // saveEditTopic({
-    //   title: article.title,
-    //   description: article.description,
-    //   headline: article.headline,
-    // });
+    saveEditTopic({
+      title: article.title,
+      description: article.description,
+      headline: article.headline,
+    });
     // console.log(article.headline)
   }
 
   createEffect(() => {
-    // console.log(article);
+    // console.log(data().technologie[1].headline[0].content);
   });
 
   return (
@@ -218,40 +202,33 @@ const Editorial = () => {
                   value={headline.name}
                   onChange={(e) => onInputChangeField(e, index(), "name")}
                 />
-                <label htmlFor="type">Art</label>
-                <select
-                  name="type"
-                  id="type"
-                  value={headline.type.value}
-                  onChange={(e) => onInputChangeType(e, index())}
-                >
-                  <For each={type}>
-                    {(item) => <option value={item.value}>{item.name}</option>}
-                  </For>
-                </select>
               </div>
               <div
                 className="content-wrapper show"
                 id={`${headline.name}-content`}
               >
                 <label htmlFor="content">Inhalt</label>
-                <textarea
-                  className="area big"
-                  id="content"
-                  name="content"
-                  value={headline.content}
-                  onChange={(e) => onInputChangeField(e, index(), "content")}
-                />
-                <Show when={headline.type.value === "math"}>
-                  <label htmlFor="formula">Formel</label>
-                  <textarea
-                    className="area"
-                    id="formula"
-                    name="formula"
-                    value={headline.formula ? headline.formula : ""}
-                    onChange={(e) => onInputChangeField(e, index(), "formula")}
-                  />
-                </Show>
+                <div>
+                  <button>Text</button>
+                  <button>Formel</button>
+                  <button>Bild</button>
+                </div>
+                <For each={headline.content}>{(item)=>
+                  <div className="input-button-group">
+                    <textarea
+                      className="area big"
+                      id="content"
+                      name="content"
+                      value={item.value}
+                      onChange={(e) =>
+                        onInputChangeField(e, index(), "content")
+                      }
+                    />
+                    <button>
+                      <i class="bi bi-x-square"></i>
+                    </button>
+                  </div>}
+                </For>
               </div>
               <button
                 className="btn secondary icon-btn view-button"
