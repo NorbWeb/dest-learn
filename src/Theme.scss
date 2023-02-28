@@ -125,6 +125,14 @@ body {
     align-items: center;
   }
 
+  &.aligne-end {
+    align-items: flex-end;
+  }
+
+  &.aligne-start {
+    align-items: flex-start;
+  }
+
   &.justify-between {
     justify-content: space-between;
   }

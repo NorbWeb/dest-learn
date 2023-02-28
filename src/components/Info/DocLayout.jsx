@@ -1,4 +1,4 @@
-import { onMount } from "solid-js";
+import { Match, Switch } from "solid-js";
 
 const DocLayout = (props) => {
   let item = props;
@@ -12,29 +12,34 @@ const DocLayout = (props) => {
       <br />
       <div className="content">
         <For each={item.headline}>
-          {(headline) =>
-            // ################ text ################ //
-            headline.type.code === "text" ? (
-              <div>
-                <h2 className="headline" id={headline.name}>
-                  {headline.name}
-                </h2>
-                <div>{headline.content}</div>
-                <br />
-              </div>
-            ) : // ################ math ################ //
-
-            headline.type.code === "math" ? (
-              <div>
-                <h2 className="headline" id={headline.name}>
-                  {headline.name}
-                </h2>
-                <code>{headline.formula}</code>
-                <div>{headline.content}</div>
-                <br />
-              </div>
-            ) : null
-          }
+          {(headline) => (
+            <div className='headline-box'>
+              <h2 className="headline" id={headline.name}>
+                {headline.name}
+              </h2>
+              <For each={headline.content}>
+                {(content) => (
+                  <Switch>
+                    <Match when={content.type === "text"}>
+                      <div className='text-box'>{content.value}</div>
+                      <br />
+                    </Match>
+                    <Match when={content.type === "formula"}>
+                      <pre className="code-box">
+                        <code>{content.value}</code>
+                      </pre>
+                      <br />
+                    </Match>
+                    <Match when={content.type === 'img'}>
+                      <div className='img-box'>
+                        <img src="/placeholder.svg" alt="" />
+                      </div>
+                    </Match>
+                  </Switch>
+                )}
+              </For>
+            </div>
+          )}
         </For>
       </div>
       <div className="toc">
@@ -57,3 +62,18 @@ const DocLayout = (props) => {
 };
 
 export { DocLayout };
+
+{
+  /* content.value === "text" ? (
+                    <div>{headline.content}</div>
+                    <br />
+
+                content.value === "formula" ? (
+                  <div>
+                    <h2 className="headline" id={headline.name}>
+                      {headline.name}
+                    </h2>
+                    <code>{headline.formula}</code>
+                    <div>{headline.content}</div>
+                    <br /> */
+}

@@ -31,6 +31,31 @@
   .content {
     grid-area: content;
     padding-left: 0.5rem;
+
+    .headline-box {
+      margin-bottom: 1.5rem;
+    }
+
+    .text-box {
+    }
+
+    .code-box {
+      $color: #fcda43;
+      background-color: lighten($color, 30%);
+      border: $color 1px solid;
+      margin: 0;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      width: 100%;
+    }
+
+    .img-box {
+      img {
+        width: 100%;
+        max-height: 20rem;
+        object-fit: contain;
+      }
+    }
   }
 
   .headline {

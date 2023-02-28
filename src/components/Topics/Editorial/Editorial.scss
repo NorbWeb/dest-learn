@@ -43,11 +43,34 @@
     width: 12.5rem;
   }
 
-  .input-button-group{
-display: flex;
-align-items: flex-start;
+  .input-button-group {
+    display: flex;
+    align-items: flex-start;
+
+    input{
+      width: 100%;
+    }
+
+    .content-input {
+      border-top-right-radius: 0;
+    }
+
+    .content-btn {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
   }
 
+  .title-button-wrapper {
+    display: flex;
+    align-items: flex-end;
+    gap: 1rem;
+
+    button {
+      margin-bottom: 1rem;
+    }
+  }
 
   .editorial-content {
     display: flex;
@@ -64,7 +87,7 @@ align-items: flex-start;
       border: 0.1rem solid grey;
       border-radius: 0.5rem;
 
-      legend {
+      .legend-text {
         font-weight: 500;
         font-size: 1.25rem;
         color: grey;
@@ -88,7 +111,11 @@ align-items: flex-start;
         display: flex;
         flex-direction: column;
         width: 100%;
+        gap: 1rem;
 
+        label {
+          margin: 0;
+        }
 
         &.hide {
           display: none;
@@ -97,19 +124,7 @@ align-items: flex-start;
         .area {
           height: 100%;
           width: 100%;
-          min-height: 5rem;
-
-          &.big {
-            min-height: 10rem;
-          }
         }
-      }
-
-      .view-button {
-        // position: absolute;
-        // top: 0;
-        // right: 0;
-        height: 2rem;
       }
     }
   }
