@@ -19,6 +19,11 @@
     border-radius: 0.25rem;
     background-color: #fff;
     box-shadow: 3px 3px 4px grey;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
 
     &.success {
       color: #fff;

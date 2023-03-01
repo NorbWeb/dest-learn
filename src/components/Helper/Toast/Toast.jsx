@@ -1,7 +1,7 @@
 import "./Toast.scss";
 
 const Toast = (props) => {
-  const { children, type } = props;
+  const { children } = props;
 
   return (
     <>
@@ -13,12 +13,15 @@ const Toast = (props) => {
         <div
           className="toast-message"
           classList={{
-            success: type === "success",
-            warn: type === "warn",
-            info: type === "info",
+            success: props.type === "success",
+            warn: props.type === "warn",
+            info: props.type === "info",
           }}
         >
-          {props.message ? props.message : children}
+          {props.message}
+          {children === undefined ? null : (
+            <div className="children">{children}</div>
+          )}
         </div>
       </div>
     </>

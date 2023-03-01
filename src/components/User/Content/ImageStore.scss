@@ -1,0 +1,50 @@
+#image-store {
+  .image-title {
+    margin: 0;
+  }
+
+  .header-menu {
+    width: 100%;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+
+    .buttons {
+      margin: auto 0;
+
+      button:first-child {
+        margin-right: 1rem;
+      }
+    }
+  }
+
+  .divider {
+    margin-bottom: 1rem;
+  }
+
+  li {
+    width: fit-content;
+  }
+
+  .delete-image {
+    width: 1rem;
+  }
+
+  label {
+    margin-bottom: 0.5rem;
+  }
+
+  select {
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: 0.1rem solid grey;
+  }
+
+  .menu {
+    display: flex;
+    align-items: flex-end;
+    gap: 1rem;
+  }
+}

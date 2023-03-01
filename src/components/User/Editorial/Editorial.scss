@@ -43,11 +43,21 @@
     width: 12.5rem;
   }
 
+  .selection-wrapper {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-end;
+
+    button {
+      margin-bottom: 1rem;
+    }
+  }
+
   .input-button-group {
     display: flex;
     align-items: flex-start;
 
-    input{
+    input {
       width: 100%;
     }
 
@@ -59,7 +69,6 @@
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
     }
-
   }
 
   .title-button-wrapper {
@@ -79,7 +88,7 @@
     .headline-body {
       display: flex;
       flex-direction: row;
-      justify-content: flex-end;
+      justify-content: space-between;
 
       gap: 1rem;
       width: 100%;

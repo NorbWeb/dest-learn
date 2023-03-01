@@ -6,7 +6,16 @@ import { LoadingSpinner } from "../../Helper/LoadingSpinner/LoadingSpinner";
 
 const DrugOverview = () => {
   const [view, setView] = createSignal();
-  const viewOptions = ["tile", "small", "list"];
+  const viewOptions = [
+    { label: "Groß", value: "tile" },
+    { label: "Klein", value: "small" },
+    { label: "Liste", value: "list" },
+  ];
+  [
+    { label: "Groß", value: "tile" },
+    { label: "Klein", value: "small" },
+    { label: "Liste", value: "list" },
+  ];
   const propsDrugList = { view, setView, viewOptions };
   const [data, { getCategories }] = useDrugData();
 
@@ -24,13 +33,13 @@ const DrugOverview = () => {
             {(option) => (
               <button
                 classList={{
-                  active: option === view(),
+                  active: option.value === view(),
                   btn: true,
                   primary: true,
                 }}
-                onClick={() => setView(option)}
+                onClick={() => setView(option.value)}
               >
-                {option}
+                {option.label}
               </button>
             )}
           </For>

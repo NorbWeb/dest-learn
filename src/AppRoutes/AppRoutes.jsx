@@ -42,7 +42,12 @@ const AppRoutes = () => {
       <Route path="user" component={User}>
         <Routes_User />
       </Route>
+      <Route
+        path="admin"
+        element={<DefaultComponent name="Admin Dashboard" back />}
+      ></Route>
       <Route path="about" component={About} />
+      {/* switch: Loading Spinner / Not Found */}
       <Route
         path="*"
         component={
@@ -63,13 +68,17 @@ const DefaultComponent = (props) => {
   const style = {
     width: "15rem",
     height: "15rem",
-    'object-fit': "cover",
-    'border-radius': '2rem'
+    "object-fit": "cover",
+    "border-radius": "2rem",
   };
   return (
     <div id={props.name} className="container default-component">
       <h2>{props.name}</h2>
-      <img style={ style } src={props.img ? props.img : "/placeholder.svg"} />
+      {props.img ? (
+        <img style={style} src={props.img ? props.img : "/placeholder.svg"} />
+      ) : (
+        ""
+      )}
       {props.loading ? <LoadingSpinner /> : ""}
       {props.back ? (
         <>

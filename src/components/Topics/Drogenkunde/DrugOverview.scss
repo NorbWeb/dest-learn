@@ -2,10 +2,14 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  align-items: flex-end;
+  align-items: flex-start;
 
-  .drug-intro-title {
-    width: 100%;
+  .intro {
+    display: flex;
+    justify-content: flex-start;
+    .drug-intro-title {
+      width: 100%;
+    }
   }
 
   .button-group {

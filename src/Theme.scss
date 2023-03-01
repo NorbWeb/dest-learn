@@ -193,3 +193,17 @@ body {
 .hover-info {
   @include mixins.hover-info();
 }
+
+.block-quote {
+  padding: 0.5rem 1rem;
+  background-color: lighten($info, 35%);
+  border-radius: 0 0.5rem 0.5rem 0;
+  border-left: 0.25rem solid darken($info, 35%);
+  margin: 1rem;
+
+  .bold {
+    color: darken($info, 35%);
+    font-weight: 700;
+    padding-right: 0.5rem;
+  }
+}

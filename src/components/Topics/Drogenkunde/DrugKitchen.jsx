@@ -5,8 +5,9 @@ import { useDrugData } from "../../../Context/DrugDataContext.jsx";
 import { Toast } from "../../Helper/Toast/Toast";
 import { db } from "../../../firebase";
 import { addDoc, collection, doc, updateDoc } from "firebase/firestore/lite";
-import { DrugImage, DrugImageUpload } from "./DrugImage";
+import { DrugImage } from "./DrugImage";
 import { useAuth } from "../../../Context/AuthContext";
+import { ImageUpload } from "../../Helper/ImageUpload/ImageUpload";
 
 const DrugKitchen = () => {
   const [data, { getCategories, reload }] = useDrugData();
@@ -316,7 +317,8 @@ const DrugKitchen = () => {
                 </For>
               </datalist>
             </div>
-            <DrugImageUpload />
+            {/* <DrugImageUpload /> */}
+            {/* <ImageUpload folder='drug-images'/> */}
           </form>
         </div>
         <form onSubmit={handelSubmit} className="grid-container">

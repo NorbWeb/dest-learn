@@ -40,8 +40,9 @@
     }
 
     .code-box {
-      $color: #fcda43;
-      background-color: lighten($color, 30%);
+      $color: #e7f1ff;
+
+      background-color: $color;
       border: $color 1px solid;
       margin: 0;
       padding: 0.5rem 1rem;
@@ -54,6 +55,14 @@
         width: 100%;
         max-height: 20rem;
         object-fit: contain;
+      }
+    }
+
+    .external-link {
+      $color: #43a9fc;
+      color: $color;
+      &:hover {
+        color: darken($color, 25%);
       }
     }
   }

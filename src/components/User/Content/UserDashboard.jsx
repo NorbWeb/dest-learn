@@ -17,19 +17,25 @@ const UserDashboard = () => {
     {
       route: "drug-kitchen",
       title: "Drogenlabor",
-      foto: "/spices.jpg",
+      foto: "/placeholder.svg",
       color: "#775e1b",
     },
     {
       route: "editorial-office",
       title: "Redaktion",
-      foto: "/editorial.jpg",
+      foto: "/placeholder.svg",
       color: "rgb(27 119 28)",
+    },
+    {
+      route: "image-store",
+      title: "Bilder",
+      foto: "/placeholder.svg",
+      color: "#301b77",
     },
     {
       route: "profile",
       title: "Profil",
-      foto: "/profile.jpg",
+      foto: "/placeholder.svg",
       color: "#99141d",
     },
   ];

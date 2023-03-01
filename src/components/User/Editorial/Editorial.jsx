@@ -1,22 +1,16 @@
-import { addDoc, collection, doc, updateDoc } from "firebase/firestore/lite";
-import { createEffect, createSignal, For, Match, Show, Switch } from "solid-js";
+import { doc, updateDoc } from "firebase/firestore/lite";
+import { createEffect, createSignal, For, Match, Switch } from "solid-js";
 import { createStore } from "solid-js/store";
 import { useContent } from "../../../Context/ContentContext";
 import { db } from "../../../firebase";
-import {
-  getStorage,
-  ref,
-  listAll,
-  getDownloadURL,
-  uploadBytes,
-  deleteObject,
-} from "firebase/storage";
+import { getStorage, ref, listAll, getDownloadURL } from "firebase/storage";
 import { Toast } from "../../Helper/Toast/Toast";
 import "./Editorial.scss";
 
 const Editorial = () => {
   const [data] = useContent();
-  const [openToast, setOpenToast] = createSignal(false);
+  const [openToastDelete, setOpenToastDelete] = createSignal(false);
+  const [openToastSave, setOpenToastSave] = createSignal(false);
   const [topic, setTopic] = createSignal("");
   const [imageList, setImageList] = createSignal();
   const [article, setArticle] = createStore({
@@ -25,6 +19,16 @@ const Editorial = () => {
     description: "",
     headline: "",
   });
+  const storage = getStorage();
+
+  function handleToastDelete() {
+    setOpenToastDelete(true);
+  }
+
+  function handleToastSave() {
+    setOpenToastSave(true);
+    setTimeout(() => setOpenToastSave(false), 5000);
+  }
 
   function selectTopic(e) {
     let selected = e.target.value.toLowerCase();
@@ -64,6 +68,11 @@ const Editorial = () => {
     }
   }
 
+  function onInputChangeDescription(e) {
+    let value = e.target.value;
+    setArticle("description", value);
+  }
+
   function addHeadline() {
     let arr = [...article.headline];
     setArticle({
@@ -75,7 +84,7 @@ const Editorial = () => {
     let arr = [...article.headline];
     arr.splice(index, 1);
     setArticle("headline", [...arr]);
-    setOpenToast(false);
+    setOpenToastDelete(false);
   }
 
   function onInputChangeField(e, index, field) {
@@ -88,6 +97,9 @@ const Editorial = () => {
     setArticle("headline", index, {
       content: [...arr, { type: type, value: "" }],
     });
+    if (type === "img") {
+      getList();
+    }
   }
 
   function editContent(e, indexHeadline, indexContent) {
@@ -101,19 +113,20 @@ const Editorial = () => {
 
   function editContentFile(e, indexHeadline, indexContent) {
     if (e.target.value) {
-      let value = e.target.value;
-      let url = "";
-      const storageRef = ref(storage, `content-images/${value}`);
-      getDownloadURL(storageRef).then((downloadUrl) => {
-        url = downloadUrl;
-      });
-      console.log(url)
+      let name = e.target.value;
       let arr = [...article.headline[indexHeadline].content];
       let type = arr[indexContent].type;
-      arr.splice(indexContent, 1, { type: type, value: url, name: value });
-      setArticle("headline", indexHeadline, { content: [...arr] });
+      name;
+      const storageRef = ref(storage, `content-images/${name}`);
+      getDownloadURL(storageRef).then((downloadUrl) => {
+        arr.splice(indexContent, 1, {
+          type: type,
+          value: downloadUrl,
+          name: name,
+        });
+        setArticle("headline", indexHeadline, { content: [...arr] });
+      });
     }
-    console.log(article.headline[indexHeadline].content[indexContent]);
   }
 
   function removeContent(indexHeadline, indexContent) {
@@ -122,33 +135,23 @@ const Editorial = () => {
     setArticle("headline", indexHeadline, { content: [...arr] });
   }
 
-  const saveNewTopic = async (topic) => {
-    try {
-      await addDoc(collection(db, topic));
-    } catch (error) {
-      console.debug(error);
-    }
-  };
-
   function toggleView(name) {
-    let input = document.getElementById(`${name}-input`);
+    // let input = document.getElementById(`${name}-input`);
     let content = document.getElementById(`${name}-content`);
     let button = document.getElementById(`${name}-button`);
     if (
-      input.classList.contains("hide") ||
+      // input.classList.contains("hide") ||
       content.classList.contains("hide")
     ) {
-      input.classList.remove("hide");
+      // input.classList.remove("hide");
       content.classList.remove("hide");
       button.innerHTML = '<i class="bi bi-caret-up"></i>';
     } else {
-      input.classList.add("hide");
+      // input.classList.add("hide");
       content.classList.add("hide");
       button.innerHTML = '<i class="bi bi-caret-down"></i>';
     }
   }
-
-  const storage = getStorage();
 
   function getList() {
     const listRef = ref(storage, "content-images");
@@ -178,7 +181,7 @@ const Editorial = () => {
       description: article.description,
       headline: article.headline,
     });
-    // console.log(article.headline)
+    handleToastSave();
   }
 
   createEffect(() => {
@@ -202,23 +205,24 @@ const Editorial = () => {
             >
               Zurück
             </button>
-            <button
+            {/* <button
               className="btn primary"
               type="button"
-              // onClick={() => handleReset()}
+              onClick={() => handleReset()}
             >
               Reset
-            </button>
+            </button> */}
           </div>
           <button
             className="btn primary submit-btn"
             type="button"
             onClick={() => handleSubmit()}
+            disabled={article.id != "" ? false : true}
           >
             Speichern
           </button>
         </div>
-        <div className="wrapper gap-1">
+        <div className="selection-wrapper">
           <div className="wrapper col">
             <label htmlFor="topic">Thema</label>
             <select id="topic" name="topic" value={""} onInput={selectTopic}>
@@ -244,19 +248,6 @@ const Editorial = () => {
               </For>
             </select>
           </div>
-        </div>
-      </div>
-      <div className="editorial-content">
-        <div className="title-button-wrapper">
-          <div className="wrapper col">
-            <label htmlFor="title">Titel</label>
-            <input
-              type="text"
-              name="title"
-              className="field"
-              value={article.title}
-            />
-          </div>
           <button
             className="btn secondary"
             onClick={() => addHeadline()}
@@ -265,8 +256,15 @@ const Editorial = () => {
             Neuer Abschnitt
           </button>
         </div>
+      </div>
+      <div className="editorial-content">
         <label htmlFor="description">Beschreibung</label>
-        <textarea type="text" name="description" value={article.description} />
+        <textarea
+          type="text"
+          name="description"
+          value={article.description}
+          onChange={(e) => onInputChangeDescription(e)}
+        />
         <For each={article.headline}>
           {(headline, indexHeadline) => (
             <>
@@ -315,6 +313,12 @@ const Editorial = () => {
                     </button>
                     <button
                       className="btn secondary"
+                      onClick={() => addContent(indexHeadline(), "quote")}
+                    >
+                      Block-Quote
+                    </button>
+                    <button
+                      className="btn secondary"
                       onClick={() => addContent(indexHeadline(), "formula")}
                     >
                       Formel
@@ -325,6 +329,12 @@ const Editorial = () => {
                     >
                       Bild
                     </button>
+                    <button
+                      className="btn secondary"
+                      onClick={() => addContent(indexHeadline(), "link")}
+                    >
+                      Link
+                    </button>
                   </div>
                   <For each={headline.content}>
                     {(item, indexContent) => (
@@ -333,8 +343,7 @@ const Editorial = () => {
                           <div className="input-button-group">
                             <textarea
                               className="area content-input"
-                              id="content"
-                              name="content"
+                              name="text"
                               placeholder="Jede Textbox ist ein Absatz. Absätze innerhalb einer Textbox sind nicht möglich."
                               value={item.value}
                               onChange={(e) =>
@@ -347,7 +356,7 @@ const Editorial = () => {
                                 removeContent(indexHeadline(), indexContent())
                               }
                             >
-                              <i class="bi bi-x-square"></i>
+                              <i class="bi bi-x"></i>
                             </button>
                           </div>
                         </Match>
@@ -355,8 +364,7 @@ const Editorial = () => {
                           <div className="input-button-group">
                             <textarea
                               className="area content-input"
-                              id="content"
-                              name="content"
+                              name="formula"
                               placeholder="Formeln werden später so angezeigt, wie sie hier eingetragen werden."
                               value={item.value}
                               onChange={(e) =>
@@ -369,7 +377,7 @@ const Editorial = () => {
                                 removeContent(indexHeadline(), indexContent())
                               }
                             >
-                              <i class="bi bi-x-square"></i>
+                              <i class="bi bi-x"></i>
                             </button>
                           </div>
                         </Match>
@@ -378,8 +386,8 @@ const Editorial = () => {
                             <input
                               type="text"
                               name="image-list"
-                              value={item.name}
-                              onInput={(e) =>
+                              value={item.name ? item.name : ""}
+                              onChange={(e) =>
                                 editContentFile(
                                   e,
                                   indexHeadline(),
@@ -402,7 +410,49 @@ const Editorial = () => {
                                 removeContent(indexHeadline(), indexContent())
                               }
                             >
-                              <i class="bi bi-x-square"></i>
+                              <i class="bi bi-x"></i>
+                            </button>
+                          </div>
+                        </Match>
+                        <Match when={item.type === "link"}>
+                          <div className="input-button-group">
+                            <textarea
+                              className="area content-input"
+                              name="link-url"
+                              placeholder="Den Link folgendermaßen mit senkrechten Trennstrich eintragen: text|url."
+                              value={item.value}
+                              onChange={(e) =>
+                                editContent(e, indexHeadline(), indexContent())
+                              }
+                            />
+                            <button
+                              className="btn secondary btn-sm content-btn"
+                              onClick={() =>
+                                removeContent(indexHeadline(), indexContent())
+                              }
+                            >
+                              <i class="bi bi-x"></i>
+                            </button>
+                          </div>
+                        </Match>
+                        <Match when={item.type === "quote"}>
+                          <div className="input-button-group">
+                            <textarea
+                              className="area content-input"
+                              name="text"
+                              placeholder="Ein Info-Feld für Anmerkungen oder Hinweise. Um Text auf der linken Seite fett zu machen einen senkrechten Trennstrich benutzen: fett|normal"
+                              value={item.value}
+                              onChange={(e) =>
+                                editContent(e, indexHeadline(), indexContent())
+                              }
+                            />
+                            <button
+                              className="btn secondary btn-sm content-btn"
+                              onClick={() =>
+                                removeContent(indexHeadline(), indexContent())
+                              }
+                            >
+                              <i class="bi bi-x"></i>
                             </button>
                           </div>
                         </Match>
@@ -420,34 +470,40 @@ const Editorial = () => {
                   </button>
                   <button
                     type="button"
-                    onClick={() => setOpenToast(true)}
-                    className="warn btn icon-btn view-button"
+                    onClick={() => handleToastDelete()}
+                    className="secondary btn icon-btn view-button"
                   >
                     <i class="bi bi-trash"></i>
                   </button>
                 </div>
               </fieldset>
-              <Toast open={openToast()} type="warn">
-                <div className="wrapper gap-1 col aligne-center">
-                  <div className="warn ">Abschnitt wirklich löschen?</div>
-                  <div className="wrapper gap-1 justify-center">
-                    <button
-                      type="button"
-                      className="btn secondary"
-                      onClick={() => removeHeadline(indexHeadline())}
-                    >
-                      Ja
-                    </button>
-                    <button
-                      type="button"
-                      className="btn secondary"
-                      onClick={() => setOpenToast(false)}
-                    >
-                      Nein
-                    </button>
-                  </div>
+              <Toast
+                open={openToastDelete()}
+                type="warn"
+                message="Abschnitt wirklich löschen?"
+              >
+                <div className="wrapper gap-1 justify-center">
+                  <button
+                    type="button"
+                    className="btn secondary"
+                    onClick={() => removeHeadline(indexHeadline())}
+                  >
+                    Ja
+                  </button>
+                  <button
+                    type="button"
+                    className="btn secondary"
+                    onClick={() => setOpenToastDelete(false)}
+                  >
+                    Nein
+                  </button>
                 </div>
               </Toast>
+              <Toast
+                open={openToastSave()}
+                type="success"
+                message="Artikel erfolgreich gespeichert!"
+              />
             </>
           )}
         </For>

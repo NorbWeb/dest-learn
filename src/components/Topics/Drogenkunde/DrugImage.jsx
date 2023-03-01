@@ -61,9 +61,8 @@ const DrugImage = (props) => {
       .catch((error) => {});
   }
 
-  getList();
-
   createEffect(() => {
+    getList();
     // console.log(imageList());
     // console.log(selected.name);
     // console.log(selected.url);
@@ -101,7 +100,7 @@ const DrugImage = (props) => {
             type="text"
             name="image-list"
             value={props.drug.img.name}
-            onInput={onInputChange}
+            onChange={onInputChange}
             list="images"
           />
           <datalist id="images">
@@ -109,7 +108,7 @@ const DrugImage = (props) => {
               {(img) => <option value={img.name}>{img.name}</option>}
             </For>
           </datalist>
-          <button
+          {/* <button
             type="button"
             onClick={() => setOpenWarn(true)}
             className="warn btn icon-btn"
@@ -117,8 +116,11 @@ const DrugImage = (props) => {
           >
             <i class="bi bi-trash"></i>
           </button>
-          <Toast type="warn" open={openWarn() === true}>
-            <div className="warn toast-title">Bild wirklich löschen?</div>
+          <Toast
+            type="warn"
+            open={openWarn() === true}
+            message={"Bild wirklich löschen?"}
+          >
             <div className="wrapper gap-1 justify-center">
               <button
                 type="button"
@@ -135,85 +137,99 @@ const DrugImage = (props) => {
                 Nein
               </button>
             </div>
-          </Toast>
+          </Toast> */}
         </div>
       </div>
     </>
   );
 };
 
-const DrugImageUpload = () => {
-  const [file, setFile] = createSignal();
-  const [nameExist, setNameExist] = createSignal(false);
+// const DrugImageUpload = (props) => {
+//   const [file, setFile] = createSignal();
+//   const [nameExist, setNameExist] = createSignal(false);
+//   const [openToastUpload, setOpenToastUpload] = createSignal();
+//   const [toastMessageUpload, setToastMessageUpload] = createSignal();
 
-  const onInputChangeFile = (e) => {
-    e.preventDefault();
-    setFile(e.currentTarget.files[0]);
-    checkIfUploadImgNameIsInDb();
-  };
+//   const showToastUpload = () => {
+//     setOpenToastUpload(true);
+//     setTimeout(() => {
+//       setOpenToastUpload(false);
+//     }, 5000);
+//   };
 
-  function checkIfUploadImgNameIsInDb() {
-    let tester = false;
-    if (file()) {
-      imageList().map((e) => (e.name === file().name ? (tester = true) : null));
-    }
-    if (tester) {
-      setNameExist(true);
-    } else {
-      setNameExist(false);
-    }
-  }
+//   const onInputChangeFile = (e) => {
+//     e.preventDefault();
+//     setFile(e.currentTarget.files[0]);
+//     checkIfUploadImgNameIsInDb();
+//   };
 
-  function resetFileUpload() {
-    document.getElementById("file-upload").reset();
-  }
+//   function checkIfUploadImgNameIsInDb() {
+//     let tester = false;
+//     if (file()) {
+//       imageList().map((e) => (e.name === file().name ? (tester = true) : null));
+//     }
+//     if (tester) {
+//       setNameExist(true);
+//     } else {
+//       setNameExist(false);
+//     }
+//   }
 
-  function uploadImage() {
-    const storageRef = ref(storage, `drug-images/${file().name}`);
-    uploadBytes(storageRef, file()).then((res) => {
-      if (res) {
-        setToastMessage(`Bild "${file().name}" erfolgreich hochgeladen`);
-        getList();
-        showToast();
-        resetFileUpload();
-        setFile();
-      }
-    });
-  }
+//   function resetFileUpload() {
+//     document.getElementById("file-upload").reset();
+//   }
 
-  createEffect(() => {
-    // console.log(file())
-  });
+//   function uploadImage() {
+//     const storageRef = ref(storage, `${props.folder}drug-images/${file().name}`);
+//     uploadBytes(storageRef, file()).then((res) => {
+//       if (res) {
+//         setToastMessageUpload(`Bild "${file().name}" erfolgreich hochgeladen`);
+//         getList();
+//         showToastUpload();
+//         resetFileUpload();
+//         setFile();
+//       }
+//     });
+//   }
 
-  return (
-    <div className="drug-image-upload">
-      <fieldset>
-        <legend for="type" classList={{ error: nameExist() }}>
-          {nameExist() ? "Dateiname schon vorhanden!" : "Bild hochladen"}
-        </legend>
-        <form id="file-upload" method="dialog">
-          <div className="wrapper gap-1">
-            <input
-              id="input-file"
-              className="image"
-              name="img"
-              type="file"
-              files={file()}
-              onChange={onInputChangeFile}
-            />
-            <button
-              type="button"
-              className="btn primary icon-btn btn-sm"
-              onClick={uploadImage}
-              disabled={!file() || nameExist()}
-            >
-              <i class="bi bi-file-arrow-up"></i>Upload
-            </button>
-          </div>
-        </form>
-      </fieldset>
-    </div>
-  );
-};
+//   createEffect(() => {
+//     // console.log(file())
+//   });
 
-export { DrugImage, DrugImageUpload };
+//   return (
+//     <div className="drug-image-upload">
+//       <Toast
+//         type="success"
+//         open={openToastUpload()}
+//         message={toastMessageUpload()}
+//       />
+//       <fieldset>
+//         <legend for="type" classList={{ error: nameExist() }}>
+//           {nameExist() ? "Dateiname schon vorhanden!" : "Bild hochladen"}
+//         </legend>
+//         <form id="file-upload" method="dialog">
+//           <div className="wrapper gap-1">
+//             <input
+//               id="input-file"
+//               className="image"
+//               name="img"
+//               type="file"
+//               files={file()}
+//               onChange={onInputChangeFile}
+//             />
+//             <button
+//               type="button"
+//               className="btn primary icon-btn btn-sm"
+//               onClick={uploadImage}
+//               disabled={!file() || nameExist()}
+//             >
+//               <i class="bi bi-file-arrow-up"></i>Upload
+//             </button>
+//           </div>
+//         </form>
+//       </fieldset>
+//     </div>
+//   );
+// };
+
+export { DrugImage };
