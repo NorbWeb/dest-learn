@@ -17,51 +17,48 @@ const DocLayout = (props) => {
               <h2 className="headline" id={headline.name}>
                 {headline.name}
               </h2>
-              <For each={headline.content}>
-                {(content) => (
-                  <Switch>
-                    <Match when={content.type === "text"}>
-                      <div className="text-box">{content.value}</div>
-                      <br />
-                    </Match>
-                    <Match when={content.type === "formula"}>
-                      <pre className="code-box">
-                        <code>{content.value}</code>
-                      </pre>
-                      <br />
-                    </Match>
-                    <Match when={content.type === "img"}>
-                      <div className="img-box">
-                        <img src={content.value} />
-                      </div>
-                      <br />
-                    </Match>
-                    <Match when={content.type === "link"}>
-                      <a
-                        className="external-link"
-                        href={content.value.split("|")[1]}
-                        target="_blank"
-                      >
-                        {content.value.split("|")[0]}
-                      </a>
-                      <br />
-                    </Match>
-                    <Match when={content.type === "quote"}>
-                      <div className="block-quote">
-                        <span className="bold">
+              <div className="content-box">
+                <For each={headline.content}>
+                  {(content) => (
+                    <Switch>
+                      <Match when={content.type === "text"}>
+                        <div className="text-box">{content.value}</div>
+                      </Match>
+                      <Match when={content.type === "formula"}>
+                        <div className="code-box">
+                          <pre >
+                            <code>{content.value}</code>
+                          </pre>
+                        </div>
+                      </Match>
+                      <Match when={content.type === "img"}>
+                        <div className="img-box">
+                          <img src={content.value} />
+                        </div>
+                      </Match>
+                      <Match when={content.type === "link"}>
+                        <div className="external-link">
+                          <a href={content.value.split("|")[1]} target="_blank">
+                            {content.value.split("|")[0]}
+                          </a>
+                        </div>
+                      </Match>
+                      <Match when={content.type === "quote"}>
+                        <div className="block-quote">
+                          <span className="bold">
+                            {content.value.includes("|")
+                              ? content.value.split("|")[0]
+                              : ""}
+                          </span>
                           {content.value.includes("|")
-                            ? content.value.split("|")[0]
-                            : ""}
-                        </span>
-                        {content.value.includes("|")
-                          ? content.value.split("|")[1]
-                          : content.value}
-                      </div>
-                      <br />
-                    </Match>
-                  </Switch>
-                )}
-              </For>
+                            ? content.value.split("|")[1]
+                            : content.value}
+                        </div>
+                      </Match>
+                    </Switch>
+                  )}
+                </For>
+              </div>
             </div>
           )}
         </For>

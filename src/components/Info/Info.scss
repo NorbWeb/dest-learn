@@ -1,4 +1,4 @@
-@import '../../Theme.scss';
+@import "../../Theme.scss";
 
 .sidebar-main-grid {
   display: grid;
@@ -38,25 +38,32 @@
       margin-bottom: 1.5rem;
     }
 
-    .text-box {
-    }
+    .content-box {
+      & > * {
+        margin-bottom: 1rem;
+      }
+      .text-box {
+      }
 
-    .code-box {
-      $color: #d1e1f8;
+      .external-link {
+      }
 
-      background-color: $color;
-      border: $color 1px solid;
-      margin: 0;
-      padding: 0.5rem 1rem;
-      border-radius: 0.5rem;
-      width: 100%;
-    }
-
-    .img-box {
-      img {
+      .code-box pre {
+        $color: #d1e1f8;
+        background-color: $color;
+        border: $color 1px solid;
+        margin: 0;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
         width: 100%;
-        max-height: 20rem;
-        object-fit: contain;
+      }
+
+      .img-box {
+        img {
+          width: 100%;
+          max-height: 20rem;
+          object-fit: contain;
+        }
       }
     }
   }
