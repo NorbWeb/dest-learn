@@ -27,4 +27,22 @@ const LogOutButton = () => {
   );
 };
 
-export { LogOutButton };
+const LogOutLi = () => {
+  const [user] = useAuth();
+
+  const handleClick = () => {
+    handleSignOut();
+  };
+
+  return (
+    <>
+      <Show when={user()} fallback={<div></div>}>
+        <li className="log-out-li" onClick={handleClick}>
+          <div>Abmelden</div>
+        </li>
+      </Show>
+    </>
+  );
+};
+
+export { LogOutButton, LogOutLi };

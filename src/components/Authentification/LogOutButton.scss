@@ -1,4 +1,6 @@
-.nav-menu-rigth{
+@import "../../Theme.scss";
+
+.nav-menu-rigth {
   margin-left: auto;
 
   .avatar-btn {
@@ -13,6 +15,19 @@
     padding: 0;
     i {
       font-size: 2.375rem;
+    }
+  }
+}
+
+.log-out-li {
+  cursor: pointer;
+  div {
+    padding-left: 0.5rem;
+  }
+  &:hover {
+    background-color: $primary;
+    div {
+      color: $text-light;
     }
   }
 }

@@ -14,8 +14,20 @@ $border: #0000002d;
   color: $text;
 }
 
+a {
+  $color: #43a9fc;
+  color: $color;
+  &:hover {
+    color: darken($color, 25%);
+  }
+}
+
 body {
   background-color: $bg;
+}
+
+.bold {
+  font-weight: bold;
 }
 
 .primary {

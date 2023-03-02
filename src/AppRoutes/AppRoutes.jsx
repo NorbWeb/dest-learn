@@ -24,6 +24,10 @@ const AppRoutes = () => {
         path="/dokumentation"
         element={<Navigate href="/dokumentation/technologie/destillation" />}
       />
+      <Route
+        path="/user"
+        element={<Navigate href="/user/login" />}
+      />
       <Route path="dokumentation" component={Info}>
         <Route path="technologie" element={<Outlet />}>
           <Routes_Technologie />

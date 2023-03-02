@@ -8,7 +8,9 @@ const Layout = () => {
       <header id="header" className="primary mode shadow">
         <Navbar />
       </header>
-      <Outlet />
+      <main>
+        <Outlet />
+      </main>
       <footer id="footer" className="secondary mode">
         <div className="container">Footer</div>
       </footer>

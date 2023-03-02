@@ -1,3 +1,5 @@
+@import '../../Theme.scss';
+
 .sidebar-main-grid {
   display: grid;
   grid-template-areas: "sidebar main";
@@ -57,14 +59,6 @@
         object-fit: contain;
       }
     }
-
-    .external-link {
-      $color: #43a9fc;
-      color: $color;
-      &:hover {
-        color: darken($color, 25%);
-      }
-    }
   }
 
   .headline {
@@ -94,6 +88,7 @@
       }
 
       a {
+        color: $text;
         text-decoration: none;
 
         &:hover {

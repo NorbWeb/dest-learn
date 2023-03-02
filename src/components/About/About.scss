@@ -2,15 +2,54 @@
   min-height: calc(100vh - 9rem);
   padding: 1rem;
 
-  #about-me {
-    width: 85%;
+  .grid-container {
+    display: grid;
+    grid-template-columns: auto;
+    grid-auto-flow: dense;
+    gap: 1.5rem;
+  }
 
-    h1 {
-      margin: 0 0 1rem 0;
+  p {
+    text-align: justify;
+  }
+
+  #about-the-project {
+    p {
+      &:first-of-type {
+        &::first-letter {
+          font-size: 3rem;
+          padding: 0 0.3rem 0.5rem 0.3rem;
+          margin: 0 0.3rem 0 0;
+          line-height: 1;
+          float: left;
+          border-radius: 8px;
+        }
+      }
+    }
+  }
+
+  #about-me {
+    p:first-of-type {
+      padding-left: 4rem;
     }
     img {
-      margin-left: 2rem;
-      border-radius: 15px;
+      border-radius: 1rem;
     }
+    ul {
+      list-style: "👉  ";
+    }
+  }
+}
+
+@media screen and (min-width: 820px) {
+  #about {
+    .grid-container {
+      grid-template-columns: 2fr 1fr;
+    }
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  #about {
   }
 }
