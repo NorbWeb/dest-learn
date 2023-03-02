@@ -34,6 +34,7 @@ const DocLayout = (props) => {
                       <div className="img-box">
                         <img src={content.value} />
                       </div>
+                      <br />
                     </Match>
                     <Match when={content.type === "link"}>
                       <a
@@ -43,6 +44,7 @@ const DocLayout = (props) => {
                       >
                         {content.value.split("|")[0]}
                       </a>
+                      <br />
                     </Match>
                     <Match when={content.type === "quote"}>
                       <div className="block-quote">
