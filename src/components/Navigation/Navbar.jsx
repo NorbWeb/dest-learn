@@ -29,9 +29,8 @@ const Navbar = () => {
     setOpen(() => !open());
   }
 
-  function clickOnBody() {
-    setOpen(false);
-    console.log("body");
+  function handleSideMenu() {
+    setSideMenuOpen(() => !sideMenuOpen());
   }
 
   return (
@@ -40,7 +39,7 @@ const Navbar = () => {
         <Show when={sideMenuOpen()}>
           <div className="offcanvas-container">
             <div
-              className="menu-container"
+              className="menu-container bg"
               use:clickOutside={() => setSideMenuOpen(false)}
             >
               <div className="menu-header">
@@ -54,13 +53,13 @@ const Navbar = () => {
                 </button>
               </div>
               <div className="menu-body">
-                <Sidebar />
+                <Sidebar close={handleSideMenu()} />
               </div>
             </div>
           </div>
         </Show>
         <div
-          className="menu-btn item-1"
+          className="menu-btn"
           onClick={() => setSideMenuOpen(!sideMenuOpen())}
         >
           <i class="bi bi-list"></i>
@@ -83,7 +82,7 @@ const Navbar = () => {
           <LogOutButton />
         </div>
 
-        <div className="menu-btn item-2" onClick={(e) => handleShow(e)}>
+        <div className="menu-btn" onClick={(e) => handleShow(e)}>
           <i class="bi bi-three-dots"></i>
         </div>
         <Show when={open()}>

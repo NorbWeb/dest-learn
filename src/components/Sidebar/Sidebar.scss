@@ -7,6 +7,11 @@
       list-style-type: none;
       line-height: 21px;
     }
+
+    ul {
+      padding: 0;
+      margin: 0;
+    }
   }
 
   a {
@@ -27,11 +32,17 @@
     align-items: center;
     gap: 0.25rem;
     img {
-      aspect-ratio: inherit;
+      aspect-ratio: 1/1;
       width: 1.5rem;
     }
   }
 }
 
 @media screen and (max-width: 990px) {
+  .offcanvas-body {
+    .offcanvas-list {
+      column-count: 2;
+      column-gap: 1.5rem;
+    }
+  }
 }

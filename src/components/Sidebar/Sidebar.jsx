@@ -3,7 +3,7 @@ import { A } from "@solidjs/router";
 import Logo from "../../assets/whisky-logo-96.png";
 
 import "./Sidebar.scss";
-const Sidebar = () => {
+const Sidebar = (props) => {
   const [item, setItem] = createSignal([
     { name: "Technologie", navItems: ["Destillation"] },
     { name: "Mathematik", navItems: ["Einheiten"] },
@@ -14,7 +14,7 @@ const Sidebar = () => {
   return (
     <div className="offcanvas-body">
       <nav>
-        <ul className='offcanvas-list'>
+        <ul className="offcanvas-list">
           <For each={item()}>
             {(item) => (
               <li className="menu-block">
@@ -29,6 +29,7 @@ const Sidebar = () => {
                         <A
                           href={`/dokumentation/${item.name.toLocaleLowerCase()}/${subItem.toLocaleLowerCase()}`}
                           activeClass="sidebar-active"
+                          onClick={ () => props.close }
                         >
                           {subItem}
                         </A>

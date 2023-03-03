@@ -22,31 +22,36 @@
       background-color: #fff;
 
       .menu-header {
-        height: 5rem;
-        border-bottom: 1px solid grey;
+        border-bottom: 1px solid #dee2e6;
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding: 1rem;
+        margin-bottom: 1.5rem;
+        font-size: 1.25rem;
       }
 
       .menu-body {
         height: 100%;
+        padding-left: 1rem;
       }
     }
-  }
-
-  img {
-    aspect-ratio: inherit;
-    height: 3rem;
   }
 
   .menu-btn {
     display: none;
     padding: 0.25rem;
+
     i {
       color: $secondary;
       font-size: 2rem;
+    }
+
+    &:hover {
+      cursor: pointer;
+      i {
+        color: darken($secondary, 25%);
+      }
     }
   }
 
@@ -65,26 +70,27 @@
       list-style-type: none;
       padding: 0.5rem;
     }
+    a {
+      color: $text-light;
+      &.active {
+        font-weight: 500;
+      }
+
+      &:disabled {
+        pointer-events: none;
+        color: grey;
+      }
+    }
   }
 
   #logo {
     transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+    aspect-ratio: inherit;
+    height: 3rem;
 
     &:hover {
       transform: rotate(20deg) scale(1.1);
       transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-    }
-  }
-
-  a {
-    color: $text-light;
-    &.active {
-      font-weight: 500;
-    }
-
-    &:disabled {
-      pointer-events: none;
-      color: grey;
     }
   }
 
@@ -101,17 +107,19 @@
     border-radius: 0.5rem;
     padding: 0.5rem 0;
 
-    ul {
-      flex-direction: column;
+    .menu-item-list {
       padding: 0;
+      list-style: none;
 
       a {
         color: inherit;
         &.active {
           background-color: $primary;
           color: $text-light;
+
           li {
             color: $text-light;
+            background-color: $primary;
           }
         }
 
@@ -135,6 +143,16 @@
     }
     .responsive-menu {
       display: none;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #navbar {
+    .offcanvas-container {
+      .menu-container {
+        width: 100%;
+      }
     }
   }
 }
