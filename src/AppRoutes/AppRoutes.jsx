@@ -11,7 +11,7 @@ import { Home } from "../components/Home/Home";
 import { About } from "../components/About/About";
 import { LoadingSpinner } from "../components/Helper/LoadingSpinner/LoadingSpinner";
 import { Routes_User } from "./R_User";
-import { Match, Show, Switch } from "solid-js";
+import { Show } from "solid-js";
 import { useAuth } from "../Context/AuthContext";
 
 const AppRoutes = () => {

@@ -24,3 +24,16 @@
     }
   }
 }
+
+@media screen and (max-width: 768px) {
+  #user {
+    .box {
+      margin: auto;
+      justify-content: center;
+
+      a:last-child {
+        align-self: flex-end;
+      }
+    }
+  }
+}

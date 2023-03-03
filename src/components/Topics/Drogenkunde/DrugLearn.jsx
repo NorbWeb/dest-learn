@@ -16,7 +16,7 @@ const DrugLearn = () => {
           bei dir? Dann kannst du hier ein wenig üben!
         </p>
         <p className='block-quote'>
-          <span className="bold">Anmerkung:</span> Die Optik alleine ist ein
+          <span className="bold">Anmerkung:</span>Die Optik alleine ist ein
           schlechtes Mittel zum Bestimmen von Drogen, jedoch für eine erste
           Einschätzung gut geeignet.
         </p>
