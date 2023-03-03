@@ -7,6 +7,17 @@
   gap: 1.5rem;
 }
 
+.sidebar {
+  padding: 1rem;
+  grid-area: sidebar;
+  display: block;
+  position: sticky;
+  overflow-y: auto;
+  top: 4rem;
+  height: calc(100vh - 4rem);
+  min-width: 12.5rem;
+}
+
 .main {
   grid-area: main;
   display: grid;
@@ -101,6 +112,43 @@
         &:hover {
           text-decoration: underline;
         }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 990px) {
+  .sidebar-main-grid {
+    display: block;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .main {
+    grid-template-areas:
+      "intro"
+      "toc"
+      "content";
+    grid-template-rows: auto auto 1fr;
+    grid-template-columns: 1fr;
+    padding: 0 2rem;
+    min-height: calc(100vh - 9rem);
+
+    .intro,
+    .toc,
+    .content {
+      padding-left: 0;
+    }
+
+    .toc {
+      position: relative;
+      top: 0;
+      height: fit-content;
+
+      h3 {
+        margin: 0;
       }
     }
   }

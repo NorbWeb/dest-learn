@@ -7,15 +7,45 @@
   align-items: center;
   justify-content: space-between;
 
+  .offcanvas-container {
+    position: fixed;
+    z-index: 10;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background-color: rgb(128, 128, 128, 0.75);
+
+    .menu-container {
+      width: 25rem;
+      height: 100%;
+      background-color: #fff;
+
+      .menu-header {
+        height: 5rem;
+        border-bottom: 1px solid grey;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+      }
+
+      .menu-body {
+        height: 100%;
+      }
+    }
+  }
+
   img {
     aspect-ratio: inherit;
     height: 3rem;
   }
 
-  #menu-btn {
+  .menu-btn {
     display: none;
     padding: 0.25rem;
     i {
+      color: $secondary;
       font-size: 2rem;
     }
   }
@@ -24,17 +54,17 @@
     display: flex;
     flex-direction: row;
     width: 100%;
-  }
 
-  ul {
-    display: flex;
-    flex-direction: row;
-    margin: 0;
-  }
+    ul {
+      display: flex;
+      flex-direction: row;
+      margin: 0;
+    }
 
-  li {
-    list-style-type: none;
-    padding: 0.5rem;
+    li {
+      list-style-type: none;
+      padding: 0.5rem;
+    }
   }
 
   #logo {
@@ -98,20 +128,12 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 990px) {
   #navbar {
-    #menu-btn {
+    .menu-btn {
       display: block;
     }
     .responsive-menu {
-      display: none;
-    }
-  }
-}
-
-@media screen and (min-width: 769px) {
-  #navbar {
-    .dialoge-menu {
       display: none;
     }
   }

@@ -53,39 +53,41 @@ const About = () => {
         </section>
         <section id="about-me" className="grid-item">
           <h2>Über mich</h2>
-          <img src="/placeholder.svg" alt="Bild von Norbert" />
-          <p>Hi, ich bin Norbert!</p>
-          <ul>
-            <li>
-              2014 - Ausbildung zum Destillateur bei der{" "}
-              <a href="https://www.august-ernst.de/" target="_blank">
-                August Ernst Gmbh
-              </a>
-            </li>
-            <li>
-              2017 - Arbeit als Destillateur und Qualitätsmanagementbeauftragter
-              ebenda
-            </li>
-            <li>
-              2018 - Wechsel zur{" "}
-              <a href="https://d-s-m.com/" target="_blank">
-                Deutschen Spirituosen Manufaktur
-              </a>
-              , Aufbau der Produktion und destillieren, destillieren...
-            </li>
-            <li>
-              ab 2022 -{" "}
-              <a href="https://norbert-madauss.com" target="_blank">
-                Webentwickler 😎
-              </a>
-            </li>
-            <li>
-              ab Okt 2022 - Fullstack Webentwickler bei{" "}
-              <a href="https://www.delphi-imm.de/" target="_blank">
-                Delphi IMM
-              </a>
-            </li>
-          </ul>
+          <div className='wrapper col aligne-center'>
+            <img src="/placeholder.svg" alt="Bild von Norbert" />
+            <p>Hi, ich bin Norbert!</p>
+            <ul>
+              <li>
+                2014 - Ausbildung zum Destillateur bei der{" "}
+                <a href="https://www.august-ernst.de/" target="_blank">
+                  August Ernst Gmbh
+                </a>
+              </li>
+              <li>
+                2017 - Arbeit als Destillateur und
+                Qualitätsmanagementbeauftragter ebenda
+              </li>
+              <li>
+                2018 - Wechsel zur{" "}
+                <a href="https://d-s-m.com/" target="_blank">
+                  Deutschen Spirituosen Manufaktur
+                </a>
+                , Aufbau der Produktion und destillieren, destillieren...
+              </li>
+              <li>
+                ab 2022 -{" "}
+                <a href="https://norbert-madauss.com" target="_blank">
+                  Webentwickler 😎
+                </a>
+              </li>
+              <li>
+                ab Okt 2022 - Fullstack Webentwickler bei{" "}
+                <a href="https://www.delphi-imm.de/" target="_blank">
+                  Delphi IMM
+                </a>
+              </li>
+            </ul>
+          </div>
         </section>
       </div>
     </div>

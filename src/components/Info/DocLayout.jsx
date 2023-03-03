@@ -9,7 +9,6 @@ const DocLayout = (props) => {
         <h1>{item.title}</h1>
         {item.description}
       </div>
-      <br />
       <div className="content">
         <For each={item.headline}>
           {(headline) => (
@@ -83,18 +82,3 @@ const DocLayout = (props) => {
 };
 
 export { DocLayout };
-
-{
-  /* content.value === "text" ? (
-                    <div>{headline.content}</div>
-                    <br />
-
-                content.value === "formula" ? (
-                  <div>
-                    <h2 className="headline" id={headline.name}>
-                      {headline.name}
-                    </h2>
-                    <code>{headline.formula}</code>
-                    <div>{headline.content}</div>
-                    <br /> */
-}

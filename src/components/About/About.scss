@@ -29,11 +29,11 @@
   }
 
   #about-me {
-    p:first-of-type {
-      padding-left: 4rem;
-    }
     img {
       border-radius: 1rem;
+      width: 17.5rem;
+      height: 17.5rem;
+      object-fit: contain;
     }
     ul {
       list-style: "👉  ";

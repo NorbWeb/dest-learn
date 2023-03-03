@@ -5,7 +5,9 @@ const Info = () => {
   return (
     <>
       <div class="container sidebar-main-grid">
-        <Sidebar />
+        <aside className="sidebar bg mode">
+          <Sidebar />
+        </aside>
         <div className="main">
           <Outlet />
         </div>

@@ -4,9 +4,12 @@ import { createEffect, createSignal, For, Show } from "solid-js";
 import Logo from "../../assets/whisky-logo-96.png";
 import { LogOutButton, LogOutLi } from "../Authentification/LogOutButton";
 import clickOutside from "../Helper/click-outside";
+import { Sidebar } from "../Sidebar/Sidebar";
 
 const Navbar = () => {
   const [open, setOpen] = createSignal(false);
+  const [sideMenuOpen, setSideMenuOpen] = createSignal(false);
+
   const navItem = [
     {
       name: "Dokumentation",
@@ -34,7 +37,35 @@ const Navbar = () => {
   return (
     <>
       <nav id="navbar" className="container">
-        <A href="/" activeClass={false} className="no-style">
+        <Show when={sideMenuOpen()}>
+          <div className="offcanvas-container">
+            <div
+              className="menu-container"
+              use:clickOutside={() => setSideMenuOpen(false)}
+            >
+              <div className="menu-header">
+                <div>Dokumente</div>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={() => setSideMenuOpen(false)}
+                >
+                  x
+                </button>
+              </div>
+              <div className="menu-body">
+                <Sidebar />
+              </div>
+            </div>
+          </div>
+        </Show>
+        <div
+          className="menu-btn item-1"
+          onClick={() => setSideMenuOpen(!sideMenuOpen())}
+        >
+          <i class="bi bi-list"></i>
+        </div>
+        <A href="/" activeClass={false} className="no-style home-icon">
           <img src={Logo} alt="Logo" id="logo" />
         </A>
         <div className="responsive-menu">
@@ -51,16 +82,13 @@ const Navbar = () => {
           </ul>
           <LogOutButton />
         </div>
-        <button
-          id="menu-btn"
-          className="btn icon-btn secondary"
-          onClick={(e) => handleShow(e)}
-        >
-          <i class="bi bi-list"></i>
-        </button>
+
+        <div className="menu-btn item-2" onClick={(e) => handleShow(e)}>
+          <i class="bi bi-three-dots"></i>
+        </div>
         <Show when={open()}>
           <div className="dialoge-menu" use:clickOutside={() => setOpen(false)}>
-            <ul>
+            <ul className="menu-item-list">
               <For each={navItem}>
                 {(item) => (
                   <A

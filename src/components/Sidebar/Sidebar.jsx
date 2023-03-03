@@ -12,38 +12,36 @@ const Sidebar = () => {
   ]);
 
   return (
-    <aside className="sidebar bg mode">
-      <div className="offcanvas-body">
-        <nav>
-          <ul>
-            <For each={item()}>
-              {(item) => (
-                <li className="menu-block">
-                  <strong className="links-heading">
-                    <img src={Logo} alt="icon" />
-                    {item.name}
-                  </strong>
-                  <ul>
-                    <For each={item.navItems}>
-                      {(subItem) => (
-                        <li>
-                          <A
-                            href={`/dokumentation/${item.name.toLocaleLowerCase()}/${subItem.toLocaleLowerCase()}`}
-                            activeClass="sidebar-active"
-                          >
-                            {subItem}
-                          </A>
-                        </li>
-                      )}
-                    </For>
-                  </ul>
-                </li>
-              )}
-            </For>
-          </ul>
-        </nav>
-      </div>
-    </aside>
+    <div className="offcanvas-body">
+      <nav>
+        <ul className='offcanvas-list'>
+          <For each={item()}>
+            {(item) => (
+              <li className="menu-block">
+                <strong className="links-heading">
+                  <img src={Logo} alt="icon" />
+                  {item.name}
+                </strong>
+                <ul>
+                  <For each={item.navItems}>
+                    {(subItem) => (
+                      <li>
+                        <A
+                          href={`/dokumentation/${item.name.toLocaleLowerCase()}/${subItem.toLocaleLowerCase()}`}
+                          activeClass="sidebar-active"
+                        >
+                          {subItem}
+                        </A>
+                      </li>
+                    )}
+                  </For>
+                </ul>
+              </li>
+            )}
+          </For>
+        </ul>
+      </nav>
+    </div>
   );
 };
 
