@@ -46,10 +46,10 @@ const AppRoutes = () => {
       <Route path="user" component={User}>
         <Routes_User />
       </Route>
-      <Route
+      {/* <Route
         path="admin"
         element={<DefaultComponent name="Admin Dashboard" back />}
-      ></Route>
+      ></Route> */}
       <Route path="about" component={About} />
       {/* switch: Loading Spinner / Not Found */}
       <Route

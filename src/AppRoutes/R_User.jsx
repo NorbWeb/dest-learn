@@ -1,11 +1,11 @@
-import { Route } from "@solidjs/router";
+import { Navigate, Route } from "@solidjs/router";
 import { LogInForm } from "../components/Authentification/LogInForm";
 import { DrugKitchen } from "../components/Topics/Drogenkunde/DrugKitchen";
 import { Editorial } from "../components/User/Editorial/Editorial";
 import { ImageStore } from "../components/User/Content/ImageStore";
 import { UserDashboard } from "../components/User/Content/UserDashboard";
 import { useAuth } from "../Context/AuthContext";
-import { DefaultComponent } from "./AppRoutes";
+// import { DefaultComponent } from "./AppRoutes";
 
 const Routes = () => {
   const [user] = useAuth();
@@ -16,7 +16,7 @@ const Routes = () => {
       <Route path="drug-kitchen" component={DrugKitchen} />
       <Route path="editorial-office" component={Editorial} />
       <Route path="image-store" component={ImageStore} />
-      <Route
+      {/* <Route
         path="profile"
         component={
           <DefaultComponent
@@ -25,7 +25,8 @@ const Routes = () => {
             img={user().photoURL}
           />
         }
-      />
+      /> */}
+      <Route path="*" element={<Navigate href="/user/login" />} />
     </>
   );
 };

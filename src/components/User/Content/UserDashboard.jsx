@@ -32,12 +32,12 @@ const UserDashboard = () => {
       foto: "/placeholder.svg",
       color: "#301b77",
     },
-    {
-      route: "profile",
-      title: "Profil",
-      foto: "/placeholder.svg",
-      color: "#99141d",
-    },
+    // {
+    //   route: "profile",
+    //   title: "Profil",
+    //   foto: "/placeholder.svg",
+    //   color: "#99141d",
+    // },
   ];
 
   const randomNames = [

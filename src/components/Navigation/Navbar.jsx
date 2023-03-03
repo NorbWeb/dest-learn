@@ -19,7 +19,7 @@ const Navbar = () => {
       href: "/user",
     },
 
-    { name: "Admin", href: "/admin" },
+    // { name: "Admin", href: "/admin" },
   ];
 
   function handleShow(e) {
