@@ -161,7 +161,9 @@ const Editorial = () => {
         setImageList(res.items);
         res.items.forEach((itemRef) => {});
       })
-      .catch((error) => {});
+      .catch((error) => {
+        console.debug(error);
+      });
   }
 
   const saveEditTopic = async (item) => {
@@ -262,6 +264,7 @@ const Editorial = () => {
         <textarea
           type="text"
           name="description"
+          className="description"
           value={article.description}
           onChange={(e) => onInputChangeDescription(e)}
         />
@@ -304,33 +307,33 @@ const Editorial = () => {
                   id={`${headline.name}-content`}
                 >
                   <label htmlFor="content">Inhalt</label>
-                  <div className="wrapper gap-1">
+                  <div className="wrapper gap-1 content-buttons">
                     <button
-                      className="btn secondary"
+                      className="btn secondary content-btn content-text"
                       onClick={() => addContent(indexHeadline(), "text")}
                     >
                       Text
                     </button>
                     <button
-                      className="btn secondary"
+                      className="btn secondary content-btn content-quote"
                       onClick={() => addContent(indexHeadline(), "quote")}
                     >
                       Block-Quote
                     </button>
                     <button
-                      className="btn secondary"
+                      className="btn secondary content-btn content-formula"
                       onClick={() => addContent(indexHeadline(), "formula")}
                     >
                       Formel
                     </button>
                     <button
-                      className="btn secondary"
+                      className="btn secondary content-btn content-img"
                       onClick={() => addContent(indexHeadline(), "img")}
                     >
                       Bild
                     </button>
                     <button
-                      className="btn secondary"
+                      className="btn secondary content-btn content-link"
                       onClick={() => addContent(indexHeadline(), "link")}
                     >
                       Link
@@ -340,7 +343,7 @@ const Editorial = () => {
                     {(item, indexContent) => (
                       <Switch>
                         <Match when={item.type === "text"}>
-                          <div className="input-button-group">
+                          <div className="content-element content-text">
                             <textarea
                               className="area content-input"
                               name="text"
@@ -361,7 +364,7 @@ const Editorial = () => {
                           </div>
                         </Match>
                         <Match when={item.type === "formula"}>
-                          <div className="input-button-group">
+                          <div className="content-element content-formula">
                             <textarea
                               className="area content-input"
                               name="formula"
@@ -382,7 +385,7 @@ const Editorial = () => {
                           </div>
                         </Match>
                         <Match when={item.type === "img"}>
-                          <div className="input-button-group">
+                          <div className="content-element content-img">
                             <input
                               type="text"
                               name="image-list"
@@ -415,7 +418,7 @@ const Editorial = () => {
                           </div>
                         </Match>
                         <Match when={item.type === "link"}>
-                          <div className="input-button-group">
+                          <div className="content-element content-link">
                             <textarea
                               className="area content-input"
                               name="link-url"
@@ -436,7 +439,7 @@ const Editorial = () => {
                           </div>
                         </Match>
                         <Match when={item.type === "quote"}>
-                          <div className="input-button-group">
+                          <div className="content-element content-quote">
                             <textarea
                               className="area content-input"
                               name="text"
@@ -460,7 +463,7 @@ const Editorial = () => {
                     )}
                   </For>
                 </div>
-                <div className="wrapper col gap-1 justify-between">
+                <div className="content-menu">
                   <button
                     className="btn secondary icon-btn view-button"
                     id={`${headline.name}-button`}
