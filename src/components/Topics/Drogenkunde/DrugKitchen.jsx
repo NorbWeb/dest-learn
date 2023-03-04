@@ -8,6 +8,7 @@ import { addDoc, collection, doc, updateDoc } from "firebase/firestore/lite";
 import { DrugImage } from "./DrugImage";
 import { useAuth } from "../../../Context/AuthContext";
 import { ImageUpload } from "../../Helper/ImageUpload/ImageUpload";
+import clickOutside from "../../Helper/click-outside";
 
 const DrugKitchen = () => {
   const [data, { getCategories, reload }] = useDrugData();
@@ -27,7 +28,7 @@ const DrugKitchen = () => {
     create: { editor: { id: "", name: "" }, date: "" },
     change: { editor: { id: "", name: "" }, date: "" },
   });
-  const [hover, setHover] = createSignal(false);
+  const [openInfo, setOpenInfo] = createSignal(false);
   const [openToast, setOpenToast] = createSignal(false);
   const [toastMessage, setToastMessage] = createSignal();
   const [drugExist, setDrugExist] = createSignal(false);
@@ -272,7 +273,7 @@ const DrugKitchen = () => {
   }
 
   createEffect(() => {
-    checkIfDrugNameIsInDb();
+    // checkIfDrugNameIsInDb();
     // if (tester) {
     // console.log(drug.treatment);
     // }
@@ -454,36 +455,39 @@ const DrugKitchen = () => {
               </div>
             </fieldset>
             <div className="highlight-container">
-              <label for="highlight">Bevorzugt</label>
-              <select
-                id="highlight"
-                name="highlight"
-                onChange={onInputChangeHighlight}
-                value={drug.highlight}
-              >
-                <option value="" selected></option>
-                <option value="Destillation">Destillation</option>
-                <option value="Wasserdampf-Destillation">
-                  Wasserdampf-Destillation
-                </option>
-                <option value="Extraktionsverfahren">
-                  Extraktionsverfahren
-                </option>
-                <option value="Mazeration">Mazeration</option>
-                <option value="Perkulation">Perkulation</option>
-                <option value="Digestion">Digestion</option>
-              </select>
-
+              <div className="highlight-select-box">
+                <label for="highlight">Bevorzugt</label>
+                <select
+                  id="highlight"
+                  name="highlight"
+                  onChange={onInputChangeHighlight}
+                  value={drug.highlight}
+                >
+                  <option value="" selected></option>
+                  <option value="Destillation">Destillation</option>
+                  <option value="Wasserdampf-Destillation">
+                    Wasserdampf-Destillation
+                  </option>
+                  <option value="Extraktionsverfahren">
+                    Extraktionsverfahren
+                  </option>
+                  <option value="Mazeration">Mazeration</option>
+                  <option value="Perkulation">Perkulation</option>
+                  <option value="Digestion">Digestion</option>
+                </select>
+              </div>
               <div
                 className="highlight-info"
-                onMouseOver={() => setHover(() => true)}
-                onMouseLeave={() => setHover(() => false)}
+                // onMouseOver={() => setOpenInfo(() => true)}
+                // onMouseLeave={() => setOpenInfo(() => false)}
+                onClick={() => setOpenInfo(true)}
               >
                 <i class="bi bi-info-circle"></i>
               </div>
               <div
                 className="highlight-info-text"
-                classList={{ show: hover() }}
+                classList={{ show: openInfo() }}
+                use:clickOutside={() => setOpenInfo(false)}
               >
                 Wähle ein bevorzugtes Verfahren, um zu verdeutlichen, dass es
                 hauptsächlich verwendet wird, bzw. die besten Ergebnisse
