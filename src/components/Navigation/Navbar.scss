@@ -7,7 +7,7 @@
   align-items: center;
   justify-content: space-between;
 
-  .offcanvas-container {
+  #offcanvas-container {
     position: fixed;
     z-index: 10;
     width: 100vw;
@@ -15,11 +15,77 @@
     top: 0;
     left: 0;
     background-color: rgba(5, 5, 5, 0.5);
+    opacity: 0;
 
-    .menu-container {
+    &.show {
+      animation: offcanvasShow 300ms ease both;
+    }
+
+    &.transition {
+      animation: offcanvasHide 300ms ease both;
+      visibility: hidden;
+    }
+
+    &.hide {
+      display: none;
+    }
+
+    @keyframes offcanvasShow {
+      from {
+        opacity: 0;
+        visibility: hidden;
+      }
+      to {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+
+    @keyframes offcanvasHide {
+      from {
+        opacity: 1;
+        visibility: visible;
+      }
+      to {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+
+    #offcanvas-menu {
       width: 25rem;
       height: 100%;
       background-color: #fff;
+
+      &.show {
+        animation: menuSlideIn 300ms ease both;
+      }
+
+      &.transition {
+        animation: menuSlideOut 300ms ease both;
+      }
+
+      &.hide {
+        display: none;
+      }
+
+      @keyframes menuSlideIn {
+        from {
+          transform: translateX(-20rem);
+        }
+        to {
+          transform: translateX(0rem);
+        }
+      }
+
+      @keyframes menuSlideOut {
+        from {
+          transform: translateX(0rem);
+        }
+        to {
+          transform: translateX(-20rem);
+        }
+      }
 
       .menu-header {
         border-bottom: 1px solid #dee2e6;
@@ -88,9 +154,21 @@
     aspect-ratio: inherit;
     height: 3rem;
 
-    &:hover {
-      transform: rotate(20deg) scale(1.1);
+    &.effect {
+      animation: logo 750ms ease-in-out;
       transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+    }
+  }
+
+  @keyframes logo {
+    0% {
+      transform: rotate(0deg) scale(1);
+    }
+    50% {
+      transform: rotate(20deg) scale(1.1);
+    }
+    100% {
+      transform: rotate(0deg) scale(1);
     }
   }
 

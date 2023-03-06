@@ -29,7 +29,7 @@ const Sidebar = (props) => {
                         <A
                           href={`/dokumentation/${item.name.toLocaleLowerCase()}/${subItem.toLocaleLowerCase()}`}
                           activeClass="sidebar-active"
-                          onClick={ () => props.close }
+                          onClick={() => props.close}
                         >
                           {subItem}
                         </A>

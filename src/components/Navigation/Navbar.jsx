@@ -3,12 +3,12 @@ import { A } from "@solidjs/router";
 import { createEffect, createSignal, For, Show } from "solid-js";
 import Logo from "../../assets/whisky-logo-96.png";
 import { LogOutButton, LogOutLi } from "../Authentification/LogOutButton";
-import clickOutside from "../Helper/click-outside";
 import { Sidebar } from "../Sidebar/Sidebar";
+import clickOutside from "../Helper/click-outside";
 
 const Navbar = () => {
   const [open, setOpen] = createSignal(false);
-  const [sideMenuOpen, setSideMenuOpen] = createSignal(false);
+  const [openSideMenu, setOpenSideMenu] = createSignal("hide");
 
   const navItem = [
     {
@@ -29,43 +29,62 @@ const Navbar = () => {
     setOpen(() => !open());
   }
 
-  function handleSideMenu() {
-    setSideMenuOpen(() => !sideMenuOpen());
+  function handleClose() {
+    if (openSideMenu() === "show") {
+      setOpenSideMenu("transition");
+    } else {
+      setOpenSideMenu("hide");
+    }
   }
 
   return (
     <>
       <nav id="navbar" className="container">
-        <Show when={sideMenuOpen()}>
-          <div className="offcanvas-container">
-            <div
-              className="menu-container bg"
-              use:clickOutside={() => setSideMenuOpen(false)}
-            >
-              <div className="menu-header">
-                <div>Dokumente</div>
-                <button
-                  type="button"
-                  className="btn-close"
-                  onClick={() => setSideMenuOpen(false)}
-                >
-                  x
-                </button>
-              </div>
-              <div className="menu-body">
-                <Sidebar close={handleSideMenu()} />
-              </div>
+        <div
+          id="offcanvas-container"
+          classList={{
+            show: openSideMenu() === "show",
+            transition: openSideMenu() === "transition",
+            hide: openSideMenu() === "hide",
+          }}
+        >
+          <div
+            id="offcanvas-menu"
+            classList={{
+              show: openSideMenu() === "show",
+              transition: openSideMenu() === "transition",
+              hide: openSideMenu() === "hide",
+            }}
+
+            className="bg"
+            use:clickOutside={() => handleClose()}
+          >
+            <div className="menu-header">
+              <div>Dokumente</div>
+              <button
+                type="button"
+                className="btn-close"
+                onClick={() => handleClose()}
+              >
+                x
+              </button>
+            </div>
+            <div className="menu-body">
+              <Sidebar close={handleClose()} />
             </div>
           </div>
-        </Show>
-        <div
-          className="menu-btn"
-          onClick={() => setSideMenuOpen(!sideMenuOpen())}
-        >
+        </div>
+        <div className="menu-btn" onClick={() => setOpenSideMenu("show")}>
           <i class="bi bi-list"></i>
         </div>
         <A href="/" activeClass={false} className="no-style home-icon">
-          <img src={Logo} alt="Logo" id="logo" />
+          <img
+            src={Logo}
+            alt="Logo"
+            id="logo"
+            onClick={(e) => e.currentTarget.classList.add("effect")}
+            onAnimationEnd={(e) => e.currentTarget.classList.remove("effect")}
+          />
         </A>
         <div className="responsive-menu">
           <ul>
