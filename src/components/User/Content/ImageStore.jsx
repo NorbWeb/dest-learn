@@ -7,8 +7,9 @@ import { Toast } from "../../Helper/Toast/Toast";
 const ImageStore = () => {
   const storage = getStorage();
   const [imageList, setImageList] = createSignal();
-  const [folder, setFolder] = createSignal("");
-  const [openToastwarn, setOpenToastWarn] = createSignal(false);
+  const [folder, setFolder] = createSignal();
+  const [openToastSuccess, setOpenToastSuccess] = createSignal(false);
+  const [openToastWarn, setOpenToastWarn] = createSignal(false);
   const [toastMessage, setToastMessage] = createSignal();
   const [disabled, setDisabled] = createSignal(true);
   let deleteImageList = [];
@@ -50,11 +51,16 @@ const ImageStore = () => {
     }
   }
 
-  function showToast() {
+  function showToastWarn() {
+    setToastMessage("Bilder wirklich löschen?");
     setOpenToastWarn(true);
+  }
+
+  function showToastSuccess() {
+    setOpenToastSuccess(true);
     setTimeout(() => {
-      setOpenToastWarn(false);
-    }, 5000);
+      setOpenToastSuccess(false);
+    }, 1000);
   }
 
   function deleteImage(image) {
@@ -63,6 +69,7 @@ const ImageStore = () => {
       .then(() => {
         setOpenToastWarn(false);
         setToastMessage(`Bilder erfolgreich gelöscht`);
+        showToastSuccess(true);
         getList();
         setDisabled(true);
         deleteImageList = [];
@@ -77,9 +84,6 @@ const ImageStore = () => {
     for (let i = 0; i < deleteImageList.length; i++) {
       deleteImage(deleteImageList[i]);
     }
-
-    getList();
-    deleteImageList = [];
   }
 
   createEffect(() => {});
@@ -98,9 +102,45 @@ const ImageStore = () => {
           >
             Zurück
           </button>
+          <button
+            className="btn primary"
+            onClick={() => showToastWarn()}
+            disabled={disabled() === true}
+          >
+            Löschen
+          </button>
         </div>
       </div>
-      <Toast open={openToastwarn()} type="success" message={toastMessage()} />
+      <Toast
+        open={openToastWarn()}
+        type="warn"
+        message={toastMessage()}
+        id="image-store-toast-1"
+      >
+        <div className="wrapper gap-1">
+          <button
+            className="btn secondary"
+            type="button"
+            onClick={() => handleDelete()}
+          >
+            Ja
+          </button>
+          <button
+            className="btn secondary"
+            type="button"
+            onClick={() => setOpenToastWarn(false)}
+          >
+            Nein
+          </button>
+        </div>
+      </Toast>
+      <Toast
+        open={openToastSuccess()}
+        type="success"
+        message={toastMessage()}
+        timeBeforeAutoClose={5000}
+        id="image-store-toast-2"
+      />
       <div className="wrapper col">
         <label htmlFor="list">Speicherort wählen</label>
         <select
@@ -116,14 +156,11 @@ const ImageStore = () => {
         </select>
       </div>
       <div className="menu">
-        <ImageUpload folder={folder()} update={getList()} />
-        <button
-          className="btn primary"
-          onClick={() => handleDelete()}
-          disabled={disabled() === true}
-        >
-          Löschen
-        </button>
+        <ImageUpload
+          folder={folder()}
+          update={getList()}
+          disabled={folder() ? false : true}
+        />
       </div>
       <div className="image-list">
         <ul>

@@ -1,6 +1,5 @@
 .user-content-card {
   $br: 1rem;
-
   width: 12.5rem;
   height: 12.5rem;
   text-decoration: none;
@@ -10,7 +9,7 @@
     border-radius: $br $br 0 0;
     width: 100%;
     height: 25%;
-    padding: 0 0.5rem;
+    padding: 0 0.75rem;
     font-weight: 600;
     color: #d4d4d4;
     display: flex;
@@ -26,4 +25,15 @@
       object-fit: cover;
     }
   }
+}
+
+@media screen and (max-width:768px) and (orientation: portrait) {
+  .user-content-card{
+    width: 40vw;
+    height: 40vw;
+  .user-content-card-title {
+    font-size: clamp(0.75rem, 3.5vw, 1.5rem);
+  }
+  }
+  
 }

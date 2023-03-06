@@ -2,19 +2,21 @@
 
 .toast-container {
   display: none;
+  max-width: 25rem;
+  width: fit-content;
   position: fixed;
   z-index: 1;
-  top: 7.5rem;
+  bottom: 3.75rem;
   left: 50%;
   margin: auto;
   transform: translate(-50%, -50%);
   transition: all 350ms ease;
 
   .toast-message {
-    width: fit-content;
     max-width: 25rem;
+    width: fit-content;
     height: fit-content;
-    padding: 1rem 2rem;
+    padding: 0.5rem 1rem;
     margin: auto;
     border-radius: 0.25rem;
     background-color: #fff;
@@ -24,6 +26,10 @@
     justify-content: center;
     align-items: center;
     gap: 1rem;
+
+    .children {
+      color: inherit;
+    }
 
     &.success {
       color: #fff;
@@ -58,5 +64,15 @@
   }
   100% {
     opacity: 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .toast-container {
+    width: 75vw;
+
+    .toast-message {
+      width: 75vw;
+    }
   }
 }

@@ -10,6 +10,7 @@
   .box {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 1rem;
     margin-bottom: 2rem;
 
@@ -29,11 +30,6 @@
   #user {
     .box {
       margin: auto;
-      justify-content: center;
-
-      a:last-child {
-        align-self: flex-end;
-      }
     }
   }
 }

@@ -1,56 +1,102 @@
 #drug-detail {
-  border-radius: 15px;
   padding-top: 1rem;
-  padding-left: 0.5rem;
 
-  .bold {
-    font-weight: 700;
-  }
   .card-title {
     font-size: 2rem;
     font-weight: 500;
   }
-
-  .card-note {
-    white-space: pre-wrap;
-    padding: 1rem 0;
-  }
-
-  .card-img {
-    aspect-ratio: 1/1;
-    object-fit: contain;
-    width: 33%;
-  }
-
-  p {
-    display: flex;
-    justify-content: left;
-
-    span {
-      width: 9rem;
+  .drug-detail-container {
+    .drug-detail-header {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
     }
-  }
+    .drug-detail-body {
+      margin-top: 1.5rem;
+      border-radius: 0.75rem;
+      $bg-color: rgba(247, 247, 162, 0.39);
+      $bg-stripes: darken($bg-color, 40%);
+      display: flex;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      background-image: linear-gradient($bg-stripes 1px, transparent 1px);
+      background-color: $bg-color;
+      background-size: 100% 2rem;
+      padding: 1rem 1.5rem;
+      line-height: 1.5rem;
+      gap: 1.5rem;
 
-  .list-box {
-    display: flex;
-    justify-content: left;
+      .bold {
+        font-weight: 700;
+      }
 
-    label {
-      width: 9rem;
-    }
+      .info-group > *:not(:last-child) {
+        padding-bottom: 1.5rem;
+      }
 
-    ul {
-      margin-top: 0;
-      padding-left: 20px;
+      .info-item {
+        width: 15rem;
+      }
 
-      li{
-        max-width: 20rem;
+      .list-box {
+        width: 15rem;
+
+        ul {
+          margin: 0;
+        }
+
+        .highlight {
+          &::after {
+            content: " (bevorzugt)";
+          }
+        }
+      }
+
+      .card-img {
+        object-fit: contain;
+        width: 17rem;
+        height: 17rem;
+        border-radius: 0.25rem;
+      }
+
+      .tesa {
+        position: absolute;
+        width: 4rem;
+        height: 2rem;
+        z-index: 2;
+        background: rgba(255, 255, 255, 0.11);
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        transform: rotate(-10deg);
+        top: -0.5rem;
+        left: 2rem;
       }
     }
+  }
+}
 
-    .highlight {
-      &::after{
-        content: ' (bevorzugt)';
+@media screen and (max-width: 768px) {
+  #drug-detail {
+    .drug-detail-container {
+      .card-img {
+        width: 17rem;
+        height: 17rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) and (orientation: portrait) {
+  #drug-detail {
+    .drug-detail-container {
+      .drug-detail-header {
+        flex-direction: column;
+        margin-bottom: 1.5rem;
+      }
+      .card-img {
+        width: 100%;
       }
     }
   }
@@ -59,9 +105,17 @@
 @media print {
   #header,
   #footer,
-  .sidebar,
-  #drug-detail .btn-group {
+  .sidebar {
     display: none;
+  }
+  #drug-detail {
+    .btn-group,
+    .tesa {
+      display: none;
+    }
+    .card-img {
+      box-shadow: none;
+    }
   }
 
   .sidebar-main-grid,

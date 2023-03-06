@@ -40,6 +40,8 @@ const ImageUpload = (props) => {
 
   const onInputChangeFile = (e) => {
     setNameExist(false);
+    props.update;
+    getList();
     e.preventDefault();
     let file = e.currentTarget.files[0];
     setFile(file);
@@ -90,12 +92,12 @@ const ImageUpload = (props) => {
         open={openToastUpload()}
         message={toastMessageUpload()}
       />
-      <fieldset>
+      <fieldset className="image-upload-container">
         <legend for="type" classList={{ error: nameExist() }}>
           {nameExist() ? "Dateiname schon vorhanden!" : "Bild hochladen"}
         </legend>
         <form id="file-upload" method="dialog">
-          <div className="wrapper gap-1">
+          <div className="input-button-wrapper">
             <input
               id="input-file"
               className="image"
@@ -103,6 +105,7 @@ const ImageUpload = (props) => {
               type="file"
               files={file()}
               onChange={onInputChangeFile}
+              disabled={props.disabled}
             />
             <button
               type="button"

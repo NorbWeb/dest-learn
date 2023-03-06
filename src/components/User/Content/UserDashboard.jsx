@@ -80,7 +80,7 @@ const UserDashboard = () => {
   return (
     <>
       <h3 className="title">
-        Hallo <i>{userProfile.name ? userProfile.name : random}</i> !
+        Hallo <span>{userProfile.name ? userProfile.name : random}</span> !
       </h3>
       {/* <button type="button" className="btn primary" onClick={updateUser}>
         Update

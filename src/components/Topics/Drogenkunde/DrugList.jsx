@@ -1,4 +1,4 @@
-import { createEffect, For } from "solid-js";
+import { createEffect, For, Show } from "solid-js";
 import { DrugCard } from "./DrugCard";
 import { useDrugData } from "../../../Context/DrugDataContext";
 import "./DrugList.scss";
@@ -30,36 +30,47 @@ const DrugList = (props) => {
 
   return (
     <>
-      <For each={data().categories}>
-        {(item) => (
-          <div className="category-box">
-            <h3 className="headline" id={item.category}>
-              {item.category}
-            </h3>
-            {view() != "list" ? (
+      <Show when={view() != "list"}>
+        <For each={data().categories}>
+          {(item) => (
+            <div className="category-box">
+              <h3 className="headline" id={item.category}>
+                {item.category}
+              </h3>
+
               <div class="drug-content-tile">
                 <For each={item.drugList}>
                   {(drug) => <DrugCard {...drug} />}
                 </For>
               </div>
-            ) : (
-              <ul>
-                <For each={item.drugList}>
-                  {(drug) => (
-                    <li className="list">
-                      <A
-                        href={`/dokumentation/drogenkunde/sammlung/${drug.id}`}
-                      >
-                        {drug.name}
-                      </A>
-                    </li>
-                  )}
-                </For>
-              </ul>
+            </div>
+          )}
+        </For>
+      </Show>
+      <Show when={view() === "list"}>
+        <ul id='category-list'>
+          <For each={data().categories}>
+            {(item) => (
+              <li>
+                <strong id={item.category}>{item.category}</strong>
+                <ul className='category-list-item'>
+                  <For each={item.drugList}>
+                    {(drug) => (
+                      <li className="list">
+                        <A
+                          href={`/dokumentation/drogenkunde/sammlung/${drug.id}`}
+                        >
+                          {drug.name}
+                        </A>
+                      </li>
+                    )}
+                  </For>
+                </ul>
+              </li>
             )}
-          </div>
-        )}
-      </For>
+          </For>
+        </ul>
+      </Show>
     </>
   );
 };

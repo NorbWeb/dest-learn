@@ -1,4 +1,4 @@
-@import '../../../Theme.scss';
+@import "../../../Theme.scss";
 
 #drug-content {
   padding-bottom: 1.5rem;
@@ -24,6 +24,57 @@
     text-decoration: none;
     &:hover {
       text-decoration: underline;
+    }
+  }
+
+  #category-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+
+    li {
+      width: 12.5rem;
+    }
+    .category-list-item {
+      margin-top: 0.5rem;
+      list-style: initial;
+      padding-left: 1.5rem;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) and (orientation: landscape) {
+  #drug-content {
+    .category-box {
+      .drug-content-tile {
+        justify-content: space-between;
+        row-gap: 2rem;
+      }
+    }
+
+    #category-list {
+      li {
+        width: 30%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) and (orientation: portrait) {
+  #drug-content {
+    .category-box {
+      .drug-content-tile {
+        justify-content: space-between;
+        row-gap: 2rem;
+      }
+    }
+
+    #category-list {
+      li {
+        width: 45%;
+      }
     }
   }
 }
