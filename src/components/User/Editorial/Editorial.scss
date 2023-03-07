@@ -1,3 +1,5 @@
+@import "../../../Theme.scss";
+
 #editorial {
   .editorial-title {
     margin: 0;
@@ -51,6 +53,41 @@
 
     button {
       margin-bottom: 1rem;
+    }
+
+    .info-element {
+      padding: 0.5rem;
+      margin-bottom: 0.5rem;
+      border: transparent 0.2rem solid;
+      border-radius: 0.5rem;
+
+      i {
+        font-size: 1.25rem;
+      }
+
+      &:hover {
+        border: darken($info, 20%) 0.2rem solid;
+        border-radius: 0.5rem;
+        i {
+          color: darken($info, 20%);
+        }
+      }
+    }
+
+    .info-element-text {
+      display: none;
+      position: absolute;
+      font-size: 0.825rem;
+      background-color: #fff;
+      padding: 0.25rem 0.5rem;
+      border: 0.1rem solid grey;
+      border-radius: 0.5rem;
+      z-index: 1;
+      top: 100%;
+
+      &.show {
+        display: block;
+      }
     }
   }
 
@@ -251,6 +288,14 @@
 
 @media screen and (max-width: 768px) {
   #editorial {
+    .selection-wrapper {
+      .info-element-text {
+        margin: 0 5%;
+        left: 0;
+        right: 0;
+      }
+    }
+
     .editorial-content {
       .description {
         min-height: 10rem;

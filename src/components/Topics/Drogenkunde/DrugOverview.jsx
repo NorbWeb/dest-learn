@@ -54,7 +54,7 @@ const DrugOverview = () => {
         <h3>Auf dieser Seite</h3>
         <div className="divider"></div>
         <nav id="TableOfContents">
-          <ul>
+          <ul className="main-list">
             <For each={getCategories()}>
               {(category) => (
                 <li>

@@ -1,7 +1,21 @@
-import { Match, Switch } from "solid-js";
+import { createEffect, For, Match, Switch } from "solid-js";
 
 const DocLayout = (props) => {
   let item = props;
+
+  let worker = {};
+  for (let i = 0; i < item.headline.length; i++) {
+    worker[item.headline[i].name] = {
+      content: item.headline[i].content.filter(
+        (f) => f.type === "text" && f.value.includes("|")
+      ),
+    };
+  }
+
+  createEffect(() => {
+    // console.log(item.headline);
+    // console.log(worker);
+  });
 
   return (
     <>
@@ -12,20 +26,27 @@ const DocLayout = (props) => {
       <div className="content">
         <For each={item.headline}>
           {(headline) => (
-            <div className="headline-box">
-              <h2 className="headline" id={headline.name}>
-                {headline.name}
-              </h2>
+            <div className="headline-box" id={headline.name}>
+              <h2 className="headline">{headline.name}</h2>
               <div className="content-box">
                 <For each={headline.content}>
                   {(content) => (
                     <Switch>
                       <Match when={content.type === "text"}>
-                        <div className="text-box">{content.value}</div>
+                        <div className="text-box">
+                          {content.value.includes("|") ? (
+                            <h4 id={content.value.split("|")[0]}>
+                              {content.value.split("|")[0]}
+                            </h4>
+                          ) : null}
+                          {content.value.includes("|")
+                            ? content.value.split("|")[1]
+                            : content.value}
+                        </div>
                       </Match>
                       <Match when={content.type === "formula"}>
                         <div className="code-box">
-                          <pre >
+                          <pre>
                             <code>{content.value}</code>
                           </pre>
                         </div>
@@ -43,16 +64,16 @@ const DocLayout = (props) => {
                         </div>
                       </Match>
                       <Match when={content.type === "quote"}>
-                        <div className="block-quote">
-                          <span className="bold">
-                            {content.value.includes("|")
-                              ? content.value.split("|")[0]
-                              : ""}
-                          </span>
+                        <p className="block-quote">
+                          {content.value.includes("|") ? (
+                            <span className="bold">
+                              {content.value.split("|")[0]}
+                            </span>
+                          ) : null}
                           {content.value.includes("|")
                             ? content.value.split("|")[1]
                             : content.value}
-                        </div>
+                        </p>
                       </Match>
                     </Switch>
                   )}
@@ -66,11 +87,28 @@ const DocLayout = (props) => {
         <h3>Auf dieser Seite</h3>
         <div className="divider"></div>
         <nav id="TableOfContents">
-          <ul>
+          <ul className="main-list">
             <For each={item.headline}>
               {(item) => (
                 <li>
                   <a href={`#${item.name}`}>{item.name}</a>
+                  {worker[item.name].content.length > 0 ? (
+                    <ul className="sub-list">
+                      <For
+                        each={item.content.filter(
+                          (f) => f.type === "text" && f.value.includes("|")
+                        )}
+                      >
+                        {(content) => (
+                          <li>
+                            <a href={`#${content.value.split("|")[0]}`}>
+                              {content.value.split("|")[0]}
+                            </a>
+                          </li>
+                        )}
+                      </For>
+                    </ul>
+                  ) : null}
                 </li>
               )}
             </For>

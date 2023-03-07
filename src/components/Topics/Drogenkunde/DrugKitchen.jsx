@@ -328,7 +328,6 @@ const DrugKitchen = () => {
               {drugExist() && !editDrug() ? "Droge schon vorhanden " : "Name"}
             </label>
             <input
-              autofocus
               required={isRequired}
               name="name"
               type="text"

@@ -15,7 +15,7 @@ const DrugLearn = () => {
           Du willst dich im erkennen von Drogen verbessern, hast aber nicht alle
           bei dir? Dann kannst du hier ein wenig üben!
         </p>
-        <p className='block-quote'>
+        <p className="block-quote">
           <span className="bold">Anmerkung:</span>Die Optik alleine ist ein
           schlechtes Mittel zum Bestimmen von Drogen, jedoch für eine erste
           Einschätzung gut geeignet.
@@ -36,7 +36,7 @@ const DrugLearn = () => {
       <div className="toc">
         <h3>Einstellungen</h3>
         <div className="divider"></div>
-        <ul>
+        <ul className="main-list">
           <li>
             <button className="btn primary" onClick={getRandom}>
               Mischen

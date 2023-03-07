@@ -54,6 +54,10 @@
         margin-bottom: 1rem;
       }
       .text-box {
+        h4 {
+          margin-bottom: 0.5rem;
+          margin-top: 0;
+        }
       }
 
       .external-link {
@@ -97,7 +101,7 @@
       border-top: 0.5px solid grey;
     }
 
-    ul {
+    .main-list {
       list-style-type: none;
       padding: 0;
 
@@ -112,6 +116,16 @@
         &:hover {
           text-decoration: underline;
         }
+      }
+    }
+
+    .sub-list {
+      list-style: none;
+      padding-left: 1rem;
+
+      li {
+        padding: 0.25rem 0;
+        margin-bottom: 0.25rem;
       }
     }
   }

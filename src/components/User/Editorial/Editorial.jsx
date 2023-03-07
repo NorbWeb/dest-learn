@@ -6,11 +6,13 @@ import { db } from "../../../firebase";
 import { getStorage, ref, listAll, getDownloadURL } from "firebase/storage";
 import { Toast } from "../../Helper/Toast/Toast";
 import "./Editorial.scss";
+import clickOutside from "../../Helper/click-outside";
 
 const Editorial = () => {
   const [data] = useContent();
   const [openToastDelete, setOpenToastDelete] = createSignal(false);
   const [openToastSave, setOpenToastSave] = createSignal(false);
+  const [openInfo, setOpenInfo] = createSignal(false);
   const [topic, setTopic] = createSignal("");
   const [imageList, setImageList] = createSignal();
   const [article, setArticle] = createStore({
@@ -40,6 +42,12 @@ const Editorial = () => {
     });
     if (selected != "") {
       setTopic(data()[selected]);
+      setArticle({
+        id: data()[selected][0].id,
+        title: data()[selected][0].title,
+        description: data()[selected][0].description,
+        headline: data()[selected][0].headline,
+      });
     } else {
       setTopic("");
     }
@@ -239,7 +247,7 @@ const Editorial = () => {
             <select
               id="article"
               name="article"
-              value={""}
+              value={article.title}
               onInput={selectArticle}
             >
               <option value=""></option>
@@ -257,6 +265,23 @@ const Editorial = () => {
           >
             Neuer Abschnitt
           </button>
+          <div className="info-element" onClick={() => setOpenInfo(true)}>
+            <i class="bi bi-info-circle"></i>
+          </div>
+
+          <div
+            className="info-element-text"
+            classList={{ show: openInfo() }}
+            onClick={() => setOpenInfo(false)}
+            use:clickOutside={() => setOpenInfo(false)}
+          >
+            Einige Inhalte können mit einem senkrechten Trennstrich ("|")
+            modifiziert werden. Dieser wird zwischen die Inhalte gesetzt, sodass
+            auf der linken Seite die Modifikation und auf der rechten der Inhalt
+            steht. Das Vorgehen ist immer gleich, nur die Auswirkung ist anders
+            - die Schreibweise kann ohne Leerzeichen erfolgen: Modifikation |
+            Inhalt.
+          </div>
         </div>
       </div>
       <div className="editorial-content">
@@ -303,7 +328,7 @@ const Editorial = () => {
                   />
                 </div>
                 <div
-                  className="content-wrapper show"
+                  className="content-wrapper hide"
                   id={`${headline.name}-content`}
                 >
                   <label htmlFor="content">Inhalt</label>
@@ -347,7 +372,7 @@ const Editorial = () => {
                             <textarea
                               className="area content-input"
                               name="text"
-                              placeholder="Jede Textbox ist ein Absatz. Absätze innerhalb einer Textbox sind nicht möglich."
+                              placeholder="Jede Textbox ist ein Absatz. Absätze innerhalb einer Textbox sind nicht möglich. Für Teilüberschrift, diese links von einem senkrechten Trennstrich eintragen: Überschrift|Text"
                               value={item.value}
                               onChange={(e) =>
                                 editContent(e, indexHeadline(), indexContent())
@@ -422,7 +447,7 @@ const Editorial = () => {
                             <textarea
                               className="area content-input"
                               name="link-url"
-                              placeholder="Den Link folgendermaßen mit senkrechten Trennstrich eintragen: text|url."
+                              placeholder="Den Link folgendermaßen mit senkrechtem Trennstrich eintragen: text|url."
                               value={item.value}
                               onChange={(e) =>
                                 editContent(e, indexHeadline(), indexContent())
@@ -443,7 +468,7 @@ const Editorial = () => {
                             <textarea
                               className="area content-input"
                               name="text"
-                              placeholder="Ein Info-Feld für Anmerkungen oder Hinweise. Um Text auf der linken Seite fett zu machen einen senkrechten Trennstrich benutzen: fett|normal"
+                              placeholder="Ein Info-Feld für Anmerkungen oder Hinweise. Um Text auf der linken Seite fett zu machen, einen senkrechten Trennstrich benutzen: fett|normal"
                               value={item.value}
                               onChange={(e) =>
                                 editContent(e, indexHeadline(), indexContent())
@@ -480,6 +505,7 @@ const Editorial = () => {
                   </button>
                 </div>
               </fieldset>
+
               <Toast
                 open={openToastDelete()}
                 type="warn"
@@ -510,6 +536,16 @@ const Editorial = () => {
             </>
           )}
         </For>
+      </div>
+      <div className='wrapper justify-end'>
+        <button
+          className="btn primary submit-btn"
+          type="button"
+          onClick={() => handleSubmit()}
+          disabled={article.id != "" ? false : true}
+        >
+          Speichern
+        </button>
       </div>
     </div>
   );

@@ -119,14 +119,18 @@
       .highlight-info {
         padding: 0.5rem;
         margin-top: 1rem;
+        border: transparent 0.2rem solid;
+        border-radius: 0.5rem;
 
         i {
           font-size: 1.25rem;
         }
 
         &:hover {
+          border: darken($info, 20%) 0.2rem solid;
+          border-radius: 0.5rem;
           i {
-            color: $info;
+            color: darken($info, 20%);
           }
         }
       }
@@ -201,12 +205,6 @@
       .treatment-fieldset,
       .highlight-container {
         width: 25rem;
-      }
-
-      .treatment-fieldset {
-        input[type="checkbox"] {
-          transform: scale(1.5, 1.5);
-        }
       }
     }
 
