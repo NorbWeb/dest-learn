@@ -82,7 +82,7 @@
 
       input[type="checkbox"] {
         width: fit-content;
-        transform: scale(1.5, 1.5);
+        transform: scale(1.25, 1.25);
       }
 
       label {
@@ -207,12 +207,12 @@
         width: 25rem;
       }
 
-      .treatment-fieldset {
-        input[type="checkbox"] {
-          width: fit-content;
-          transform: scale(1, 1);
-        }
-      }
+      // .treatment-fieldset {
+      //   input[type="checkbox"] {
+      //     width: fit-content;
+      //     transform: scale(1.5, 1.5);
+      //   }
+      // }
     }
 
     .grid-container {
