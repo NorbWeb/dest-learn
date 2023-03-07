@@ -40,30 +40,32 @@ const LogInForm = () => {
   });
 
   return (
-    <div className="log-in-form">
-      <h3>Willkommen zurück!</h3>
-      <form onSubmit={handelLogin} className="form">
-        <input
-          name="email"
-          type="email"
-          placeholder="E-Mail"
-          required
-          onInput={(e) => setEmail(e.currentTarget.value)}
-          value={email()}
-        />
-        <input
-          name="password"
-          type="password"
-          placeholder="Passwort"
-          required
-          onInput={(e) => setPassword(e.currentTarget.value)}
-          value={password()}
-        />
-        <button type="submit" className="btn primary">
-          Los geht's!
-        </button>
-      </form>
-      <div id="logInError" className="validation error"></div>
+    <div className='login-container'>
+      <div className="log-in-form">
+        <h3>Willkommen zurück!</h3>
+        <form onSubmit={handelLogin} className="form">
+          <input
+            name="email"
+            type="email"
+            placeholder="E-Mail"
+            required
+            onInput={(e) => setEmail(e.currentTarget.value)}
+            value={email()}
+          />
+          <input
+            name="password"
+            type="password"
+            placeholder="Passwort"
+            required
+            onInput={(e) => setPassword(e.currentTarget.value)}
+            value={password()}
+          />
+          <button type="submit" className="btn primary">
+            Los geht's!
+          </button>
+        </form>
+        <div id="logInError" className="validation error"></div>
+      </div>
     </div>
   );
 };
