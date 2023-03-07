@@ -150,6 +150,13 @@
           display: none;
         }
 
+        .content-box {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          gap: 1rem;
+        }
+
         .area {
           height: 100%;
           width: 100%;
@@ -159,12 +166,21 @@
           display: flex;
           align-items: flex-start;
 
+          .drag-handle {
+            padding: 0.25rem 0.25rem;
+            border-radius: 0.25rem 0 0 0.25rem;
+            i {
+              font-size: 1rem;
+            }
+          }
+
           input {
             width: 100%;
           }
 
           .content-input {
             border-top-right-radius: 0;
+            border-top-left-radius: 0;
           }
 
           .content-btn {
@@ -185,7 +201,8 @@
           textarea {
             border-color: $color;
           }
-          button {
+          .close-btn,
+          .drag-handle {
             background-color: $color;
             border-color: $color;
             i {
@@ -205,7 +222,8 @@
           textarea {
             border-color: $color;
           }
-          button {
+          .close-btn,
+          .drag-handle {
             background-color: $color;
             border-color: $color;
             i {
@@ -225,7 +243,8 @@
           textarea {
             border-color: $color;
           }
-          button {
+          .close-btn,
+          .drag-handle {
             background-color: $color;
             border-color: $color;
             i {
@@ -244,10 +263,13 @@
           }
           input {
             border-color: $color;
+            border-radius: 0;
           }
-          button {
+          .close-btn,
+          .drag-handle {
             background-color: $color;
             border-color: $color;
+            height: 2.15rem;
             i {
               color: #fff;
             }
@@ -265,7 +287,8 @@
           textarea {
             border-color: $color;
           }
-          button {
+          .close-btn,
+          .drag-handle {
             background-color: $color;
             border-color: $color;
             i {
@@ -308,7 +331,6 @@
           .content-buttons {
             flex-wrap: wrap;
           }
-
           .content-element:not(.content-img) {
             min-height: 7.5rem;
           }

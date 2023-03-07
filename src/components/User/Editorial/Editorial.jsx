@@ -48,6 +48,9 @@ const Editorial = () => {
         description: data()[selected][0].description,
         headline: data()[selected][0].headline,
       });
+      for (let i = 0; i < data()[selected][0].headline.length; i++) {
+        dragOperator(document.getElementById(`content-dragarea-${i}`), i);
+      }
     } else {
       setTopic("");
     }
@@ -65,7 +68,6 @@ const Editorial = () => {
           headline: filter[0].headline,
         });
       }
-      // console.log(article);
     } else {
       setArticle({
         id: "",
@@ -108,6 +110,9 @@ const Editorial = () => {
     if (type === "img") {
       getList();
     }
+    for (let i = 0; i < article.headline.length; i++) {
+      dragOperator(document.getElementById(`content-dragarea-${i}`), i);
+    }
   }
 
   function editContent(e, indexHeadline, indexContent) {
@@ -116,7 +121,6 @@ const Editorial = () => {
     let type = arr[indexContent].type;
     arr.splice(indexContent, 1, { type: type, value: value });
     setArticle("headline", indexHeadline, { content: [...arr] });
-    // console.log(article.headline[indexHeadline].content[indexContent].value);
   }
 
   function editContentFile(e, indexHeadline, indexContent) {
@@ -143,19 +147,13 @@ const Editorial = () => {
     setArticle("headline", indexHeadline, { content: [...arr] });
   }
 
-  function toggleView(name) {
-    // let input = document.getElementById(`${name}-input`);
+  function toggleView(name, index) {
     let content = document.getElementById(`${name}-content`);
     let button = document.getElementById(`${name}-button`);
-    if (
-      // input.classList.contains("hide") ||
-      content.classList.contains("hide")
-    ) {
-      // input.classList.remove("hide");
+    if (content.classList.contains("hide")) {
       content.classList.remove("hide");
       button.innerHTML = '<i class="bi bi-caret-up"></i>';
     } else {
-      // input.classList.add("hide");
       content.classList.add("hide");
       button.innerHTML = '<i class="bi bi-caret-down"></i>';
     }
@@ -194,11 +192,45 @@ const Editorial = () => {
     handleToastSave();
   }
 
-  createEffect(() => {
-    // console.log(imageList());
-  });
+  createEffect(() => {});
 
   getList();
+
+  // ################## DRAG & DROP ##################
+
+  function dragOperator(target, index) {
+    let items = target.getElementsByClassName("content-element"),
+      current = null;
+
+    for (let i of items) {
+      i.draggable = true;
+      i.ondragstart = (e) => {
+        current = i;
+      };
+      i.ondragover = (e) => {
+        e.preventDefault();
+      };
+      i.ondrop = (e) => {
+        e.preventDefault();
+        let arr = [...article.headline[index].content];
+        if (i != current) {
+          let currentpos = 0,
+            droppedpos = 0;
+          for (let it = 0; it < items.length; it++) {
+            if (current == items[it]) {
+              currentpos = it;
+            }
+            if (i == items[it]) {
+              droppedpos = it;
+            }
+          }
+
+          arr.splice(droppedpos, 0, arr.splice(currentpos, 1)[0]);
+          setArticle("headline", index, { content: [...arr] });
+        }
+      };
+    }
+  }
 
   return (
     <div id="editorial">
@@ -215,13 +247,6 @@ const Editorial = () => {
             >
               Zurück
             </button>
-            {/* <button
-              className="btn primary"
-              type="button"
-              onClick={() => handleReset()}
-            >
-              Reset
-            </button> */}
           </div>
           <button
             className="btn primary submit-btn"
@@ -364,137 +389,174 @@ const Editorial = () => {
                       Link
                     </button>
                   </div>
-                  <For each={headline.content}>
-                    {(item, indexContent) => (
-                      <Switch>
-                        <Match when={item.type === "text"}>
-                          <div className="content-element content-text">
-                            <textarea
-                              className="area content-input"
-                              name="text"
-                              placeholder="Jede Textbox ist ein Absatz. Absätze innerhalb einer Textbox sind nicht möglich. Für Teilüberschrift, diese links von einem senkrechten Trennstrich eintragen: Überschrift|Text"
-                              value={item.value}
-                              onChange={(e) =>
-                                editContent(e, indexHeadline(), indexContent())
-                              }
-                            />
-                            <button
-                              className="btn secondary btn-sm content-btn"
-                              onClick={() =>
-                                removeContent(indexHeadline(), indexContent())
-                              }
-                            >
-                              <i class="bi bi-x"></i>
-                            </button>
-                          </div>
-                        </Match>
-                        <Match when={item.type === "formula"}>
-                          <div className="content-element content-formula">
-                            <textarea
-                              className="area content-input"
-                              name="formula"
-                              placeholder="Formeln werden später so angezeigt, wie sie hier eingetragen werden."
-                              value={item.value}
-                              onChange={(e) =>
-                                editContent(e, indexHeadline(), indexContent())
-                              }
-                            />
-                            <button
-                              className="btn secondary btn-sm content-btn"
-                              onClick={() =>
-                                removeContent(indexHeadline(), indexContent())
-                              }
-                            >
-                              <i class="bi bi-x"></i>
-                            </button>
-                          </div>
-                        </Match>
-                        <Match when={item.type === "img"}>
-                          <div className="content-element content-img">
-                            <input
-                              type="text"
-                              name="image-list"
-                              value={item.name ? item.name : ""}
-                              onChange={(e) =>
-                                editContentFile(
-                                  e,
-                                  indexHeadline(),
-                                  indexContent()
-                                )
-                              }
-                              list="images"
-                              className="content-input"
-                            />
-                            <datalist id="images">
-                              <For each={imageList()}>
-                                {(img) => (
-                                  <option value={img.name}>{img.name}</option>
-                                )}
-                              </For>
-                            </datalist>
-                            <button
-                              className="btn secondary btn-sm content-btn"
-                              onClick={() =>
-                                removeContent(indexHeadline(), indexContent())
-                              }
-                            >
-                              <i class="bi bi-x"></i>
-                            </button>
-                          </div>
-                        </Match>
-                        <Match when={item.type === "link"}>
-                          <div className="content-element content-link">
-                            <textarea
-                              className="area content-input"
-                              name="link-url"
-                              placeholder="Den Link folgendermaßen mit senkrechtem Trennstrich eintragen: text|url."
-                              value={item.value}
-                              onChange={(e) =>
-                                editContent(e, indexHeadline(), indexContent())
-                              }
-                            />
-                            <button
-                              className="btn secondary btn-sm content-btn"
-                              onClick={() =>
-                                removeContent(indexHeadline(), indexContent())
-                              }
-                            >
-                              <i class="bi bi-x"></i>
-                            </button>
-                          </div>
-                        </Match>
-                        <Match when={item.type === "quote"}>
-                          <div className="content-element content-quote">
-                            <textarea
-                              className="area content-input"
-                              name="text"
-                              placeholder="Ein Info-Feld für Anmerkungen oder Hinweise. Um Text auf der linken Seite fett zu machen, einen senkrechten Trennstrich benutzen: fett|normal"
-                              value={item.value}
-                              onChange={(e) =>
-                                editContent(e, indexHeadline(), indexContent())
-                              }
-                            />
-                            <button
-                              className="btn secondary btn-sm content-btn"
-                              onClick={() =>
-                                removeContent(indexHeadline(), indexContent())
-                              }
-                            >
-                              <i class="bi bi-x"></i>
-                            </button>
-                          </div>
-                        </Match>
-                      </Switch>
-                    )}
-                  </For>
+                  <div
+                    id={`content-dragarea-${indexHeadline()}`}
+                    className="content-box"
+                    on
+                  >
+                    <For each={headline.content}>
+                      {(item, indexContent) => (
+                        <Switch>
+                          <Match when={item.type === "text"}>
+                            <div className="content-element content-text">
+                              <button className="btn secondary drag-handle">
+                                <i class="bi bi-grip-vertical"></i>
+                              </button>
+                              <textarea
+                                className="area content-input"
+                                name="text"
+                                placeholder="Jede Textbox ist ein Absatz. Absätze innerhalb einer Textbox sind nicht möglich. Für Teilüberschrift, diese links von einem senkrechten Trennstrich eintragen: Überschrift|Text"
+                                value={item.value}
+                                onChange={(e) =>
+                                  editContent(
+                                    e,
+                                    indexHeadline(),
+                                    indexContent()
+                                  )
+                                }
+                              />
+                              <button
+                                className="btn secondary btn-sm content-btn close-btn"
+                                onClick={() =>
+                                  removeContent(indexHeadline(), indexContent())
+                                }
+                              >
+                                <i class="bi bi-x"></i>
+                              </button>
+                            </div>
+                          </Match>
+                          <Match when={item.type === "formula"}>
+                            <div className="content-element content-formula">
+                              <button className="btn secondary drag-handle">
+                                <i class="bi bi-grip-vertical"></i>
+                              </button>
+                              <textarea
+                                className="area content-input"
+                                name="formula"
+                                placeholder="Formeln werden später so angezeigt, wie sie hier eingetragen werden."
+                                value={item.value}
+                                onChange={(e) =>
+                                  editContent(
+                                    e,
+                                    indexHeadline(),
+                                    indexContent()
+                                  )
+                                }
+                              />
+                              <button
+                                className="btn secondary btn-sm content-btn close-btn"
+                                onClick={() =>
+                                  removeContent(indexHeadline(), indexContent())
+                                }
+                              >
+                                <i class="bi bi-x"></i>
+                              </button>
+                            </div>
+                          </Match>
+                          <Match when={item.type === "img"}>
+                            <div className="content-element content-img">
+                              <button className="btn secondary drag-handle">
+                                <i class="bi bi-grip-vertical"></i>
+                              </button>
+                              <input
+                                type="text"
+                                name="image-list"
+                                value={item.name ? item.name : ""}
+                                onChange={(e) =>
+                                  editContentFile(
+                                    e,
+                                    indexHeadline(),
+                                    indexContent()
+                                  )
+                                }
+                                list="images"
+                                className="content-input"
+                              />
+                              <datalist id="images">
+                                <For each={imageList()}>
+                                  {(img) => (
+                                    <option value={img.name}>{img.name}</option>
+                                  )}
+                                </For>
+                              </datalist>
+                              <button
+                                className="btn secondary btn-sm content-btn close-btn"
+                                onClick={() =>
+                                  removeContent(indexHeadline(), indexContent())
+                                }
+                              >
+                                <i class="bi bi-x"></i>
+                              </button>
+                            </div>
+                          </Match>
+                          <Match when={item.type === "link"}>
+                            <div className="content-element content-link">
+                              <button className="btn secondary drag-handle">
+                                <i class="bi bi-grip-vertical"></i>
+                              </button>
+                              <textarea
+                                className="area content-input"
+                                name="link-url"
+                                placeholder="Den Link folgendermaßen mit senkrechtem Trennstrich eintragen: text|url."
+                                value={item.value}
+                                onChange={(e) =>
+                                  editContent(
+                                    e,
+                                    indexHeadline(),
+                                    indexContent()
+                                  )
+                                }
+                              />
+                              <button
+                                className="btn secondary btn-sm content-btn close-btn"
+                                onClick={() =>
+                                  removeContent(indexHeadline(), indexContent())
+                                }
+                              >
+                                <i class="bi bi-x"></i>
+                              </button>
+                            </div>
+                          </Match>
+                          <Match when={item.type === "quote"}>
+                            <div className="content-element content-quote">
+                              <button className="btn secondary drag-handle">
+                                <i class="bi bi-grip-vertical"></i>
+                              </button>
+                              <textarea
+                                className="area content-input"
+                                name="text"
+                                placeholder="Ein Info-Feld für Anmerkungen oder Hinweise. Um Text auf der linken Seite fett zu machen, einen senkrechten Trennstrich benutzen: fett|normal"
+                                value={item.value}
+                                onChange={(e) =>
+                                  editContent(
+                                    e,
+                                    indexHeadline(),
+                                    indexContent()
+                                  )
+                                }
+                              />
+                              <button
+                                className="btn secondary btn-sm content-btn close-btn"
+                                onClick={() =>
+                                  removeContent(indexHeadline(), indexContent())
+                                }
+                              >
+                                <i class="bi bi-x"></i>
+                              </button>
+                            </div>
+                          </Match>
+                        </Switch>
+                      )}
+                    </For>
+                  </div>
                 </div>
                 <div className="content-menu">
                   <button
                     className="btn secondary icon-btn view-button"
                     id={`${headline.name}-button`}
-                    onClick={() => toggleView(headline.name)}
+                    onClick={() => toggleView(headline.name, indexHeadline())}
                   >
-                    <i class="bi bi-caret-up"></i>
+                    <i class="bi bi-caret-down"></i>
                   </button>
                   <button
                     type="button"
@@ -537,7 +599,7 @@ const Editorial = () => {
           )}
         </For>
       </div>
-      <div className='wrapper justify-end'>
+      <div className="wrapper justify-end">
         <button
           className="btn primary submit-btn"
           type="button"
