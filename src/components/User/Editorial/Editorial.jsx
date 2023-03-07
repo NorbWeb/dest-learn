@@ -1,5 +1,5 @@
 import { doc, updateDoc } from "firebase/firestore/lite";
-import { createEffect, createSignal, For, Match, Switch } from "solid-js";
+import { createEffect, createSignal, For, Match, Show, Switch } from "solid-js";
 import { createStore } from "solid-js/store";
 import { useContent } from "../../../Context/ContentContext";
 import { db } from "../../../firebase";
@@ -15,6 +15,7 @@ const Editorial = () => {
   const [openInfo, setOpenInfo] = createSignal(false);
   const [topic, setTopic] = createSignal("");
   const [imageList, setImageList] = createSignal();
+  const [isTouch, setIsTouch] = createSignal(false);
   const [article, setArticle] = createStore({
     id: "",
     title: "",
@@ -48,9 +49,7 @@ const Editorial = () => {
         description: data()[selected][0].description,
         headline: data()[selected][0].headline,
       });
-      for (let i = 0; i < data()[selected][0].headline.length; i++) {
-        dragOperator(document.getElementById(`content-dragarea-${i}`), i);
-      }
+      setDragOperator(data()[selected][0].headline.length);
     } else {
       setTopic("");
     }
@@ -100,6 +99,14 @@ const Editorial = () => {
   function onInputChangeField(e, index, field) {
     let value = e.target.value;
     setArticle("headline", index, field, value);
+    if (field === "id") {
+      let sortHeadlines = [...article.headline];
+      sortHeadlines.sort((a, b) => a.id - b.id);
+      setArticle({
+        headline: [...sortHeadlines],
+      });
+      setDragOperator(article.headline.length);
+    }
   }
 
   function addContent(index, type) {
@@ -110,9 +117,7 @@ const Editorial = () => {
     if (type === "img") {
       getList();
     }
-    for (let i = 0; i < article.headline.length; i++) {
-      dragOperator(document.getElementById(`content-dragarea-${i}`), i);
-    }
+    setDragOperator(article.headline.length);
   }
 
   function editContent(e, indexHeadline, indexContent) {
@@ -192,9 +197,13 @@ const Editorial = () => {
     handleToastSave();
   }
 
-  createEffect(() => {});
-
-  getList();
+  function detectTouch() {
+    if ("ontouchstart" in document.documentElement) {
+      setIsTouch(true);
+    } else {
+      setIsTouch(false);
+    }
+  }
 
   // ################## DRAG & DROP ##################
 
@@ -231,6 +240,78 @@ const Editorial = () => {
       };
     }
   }
+
+  function setDragOperator(length) {
+    for (let i = 0; i < length; i++) {
+      dragOperator(document.getElementById(`content-dragarea-${i}`), i);
+    }
+  }
+
+  // ################## PARTIAL COMPONENTS ##################
+
+  const PositionChangeButton = (props) => {
+    function indexDown() {
+      let iC = props.indexContent;
+      let iH = props.indexHeadline;
+      let arr = [...article.headline[iH].content];
+      if (iC < arr.length - 1) {
+        arr.splice(iC, 0, arr.splice(iC + 1, 1)[0]);
+      }
+      setArticle("headline", iH, { content: [...arr] });
+    }
+
+    function indexUp() {
+      let iC = props.indexContent;
+      let iH = props.indexHeadline;
+      let arr = [...article.headline[iH].content];
+      if (iC > 0) {
+        arr.splice(iC, 0, arr.splice(iC - 1, 1)[0]);
+      }
+      setArticle("headline", iH, { content: [...arr] });
+    }
+
+    return (
+      <>
+        <Show when={!isTouch()}>
+          <button className="btn secondary drag-handle">
+            <i class="bi bi-grip-vertical"></i>
+          </button>
+        </Show>
+        <Show when={isTouch()}>
+          <div className="wrapper col">
+            <button
+              className="btn secondary drag-handle"
+              onClick={() => indexUp()}
+            >
+              <i class="bi bi-caret-up"></i>
+            </button>
+            <button
+              className="btn secondary drag-handle"
+              onClick={() => indexDown()}
+            >
+              <i class="bi bi-caret-down"></i>
+            </button>
+          </div>
+        </Show>
+      </>
+    );
+  };
+
+  const DeleteContentButton = (props) => {
+    return (
+      <button
+        className="btn secondary btn-sm content-btn close-btn"
+        onClick={() => removeContent(props.indexHeadline, props.indexContent)}
+      >
+        <i class="bi bi-x"></i>
+      </button>
+    );
+  };
+
+  createEffect(() => {});
+
+  detectTouch();
+  getList();
 
   return (
     <div id="editorial">
@@ -399,9 +480,10 @@ const Editorial = () => {
                         <Switch>
                           <Match when={item.type === "text"}>
                             <div className="content-element content-text">
-                              <button className="btn secondary drag-handle">
-                                <i class="bi bi-grip-vertical"></i>
-                              </button>
+                              <PositionChangeButton
+                                indexHeadline={indexHeadline()}
+                                indexContent={indexContent()}
+                              />
                               <textarea
                                 className="area content-input"
                                 name="text"
@@ -415,21 +497,18 @@ const Editorial = () => {
                                   )
                                 }
                               />
-                              <button
-                                className="btn secondary btn-sm content-btn close-btn"
-                                onClick={() =>
-                                  removeContent(indexHeadline(), indexContent())
-                                }
-                              >
-                                <i class="bi bi-x"></i>
-                              </button>
+                              <DeleteContentButton
+                                indexHeadline={indexHeadline()}
+                                indexContent={indexContent()}
+                              />
                             </div>
                           </Match>
                           <Match when={item.type === "formula"}>
                             <div className="content-element content-formula">
-                              <button className="btn secondary drag-handle">
-                                <i class="bi bi-grip-vertical"></i>
-                              </button>
+                              <PositionChangeButton
+                                indexHeadline={indexHeadline()}
+                                indexContent={indexContent()}
+                              />
                               <textarea
                                 className="area content-input"
                                 name="formula"
@@ -443,21 +522,18 @@ const Editorial = () => {
                                   )
                                 }
                               />
-                              <button
-                                className="btn secondary btn-sm content-btn close-btn"
-                                onClick={() =>
-                                  removeContent(indexHeadline(), indexContent())
-                                }
-                              >
-                                <i class="bi bi-x"></i>
-                              </button>
+                              <DeleteContentButton
+                                indexHeadline={indexHeadline()}
+                                indexContent={indexContent()}
+                              />
                             </div>
                           </Match>
                           <Match when={item.type === "img"}>
                             <div className="content-element content-img">
-                              <button className="btn secondary drag-handle">
-                                <i class="bi bi-grip-vertical"></i>
-                              </button>
+                              <PositionChangeButton
+                                indexHeadline={indexHeadline()}
+                                indexContent={indexContent()}
+                              />
                               <input
                                 type="text"
                                 name="image-list"
@@ -479,21 +555,18 @@ const Editorial = () => {
                                   )}
                                 </For>
                               </datalist>
-                              <button
-                                className="btn secondary btn-sm content-btn close-btn"
-                                onClick={() =>
-                                  removeContent(indexHeadline(), indexContent())
-                                }
-                              >
-                                <i class="bi bi-x"></i>
-                              </button>
+                              <DeleteContentButton
+                                indexHeadline={indexHeadline()}
+                                indexContent={indexContent()}
+                              />
                             </div>
                           </Match>
                           <Match when={item.type === "link"}>
                             <div className="content-element content-link">
-                              <button className="btn secondary drag-handle">
-                                <i class="bi bi-grip-vertical"></i>
-                              </button>
+                              <PositionChangeButton
+                                indexHeadline={indexHeadline()}
+                                indexContent={indexContent()}
+                              />
                               <textarea
                                 className="area content-input"
                                 name="link-url"
@@ -507,21 +580,18 @@ const Editorial = () => {
                                   )
                                 }
                               />
-                              <button
-                                className="btn secondary btn-sm content-btn close-btn"
-                                onClick={() =>
-                                  removeContent(indexHeadline(), indexContent())
-                                }
-                              >
-                                <i class="bi bi-x"></i>
-                              </button>
+                              <DeleteContentButton
+                                indexHeadline={indexHeadline()}
+                                indexContent={indexContent()}
+                              />
                             </div>
                           </Match>
                           <Match when={item.type === "quote"}>
                             <div className="content-element content-quote">
-                              <button className="btn secondary drag-handle">
-                                <i class="bi bi-grip-vertical"></i>
-                              </button>
+                              <PositionChangeButton
+                                indexHeadline={indexHeadline()}
+                                indexContent={indexContent()}
+                              />
                               <textarea
                                 className="area content-input"
                                 name="text"
@@ -535,14 +605,10 @@ const Editorial = () => {
                                   )
                                 }
                               />
-                              <button
-                                className="btn secondary btn-sm content-btn close-btn"
-                                onClick={() =>
-                                  removeContent(indexHeadline(), indexContent())
-                                }
-                              >
-                                <i class="bi bi-x"></i>
-                              </button>
+                              <DeleteContentButton
+                                indexHeadline={indexHeadline()}
+                                indexContent={indexContent()}
+                              />
                             </div>
                           </Match>
                         </Switch>
