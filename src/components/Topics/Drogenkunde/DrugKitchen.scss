@@ -206,6 +206,13 @@
       .highlight-container {
         width: 25rem;
       }
+
+      .treatment-fieldset {
+        input[type="checkbox"] {
+          width: fit-content;
+          transform: scale(1, 1);
+        }
+      }
     }
 
     .grid-container {
