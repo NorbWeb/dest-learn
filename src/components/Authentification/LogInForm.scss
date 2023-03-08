@@ -1,10 +1,11 @@
-.login-container {
-width: 100%;
-height: calc(100vh - 11rem);
-display: flex;
-justify-content: center;
-align-items: center;
+@import "../../Theme.scss";
 
+.login-container {
+  width: 100%;
+  min-height: $page-height;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   .log-in-form {
     padding-top: 3rem;
@@ -13,7 +14,6 @@ align-items: center;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-   
 
     .form {
       display: flex;
