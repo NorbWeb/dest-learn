@@ -1,11 +1,12 @@
 import { A } from "@solidjs/router";
-import { createSignal, Show } from "solid-js";
+import { createEffect, createSignal, Show } from "solid-js";
 import "./DrugCard.scss";
 
 const DrugCard = (props) => {
   const drug = props;
   const [show, setShow] = createSignal(false);
   const [view, setView] = createSignal(false);
+  const [count, setCount] = createSignal(5);
 
   function handleShow() {
     setShow(!show());
@@ -14,16 +15,35 @@ const DrugCard = (props) => {
 
   function handleView(event) {
     event.stopPropagation();
-    setView(!view());
-    setTimeout(() => setView(false), 5000);
+    setView(true);
+    timer();
   }
+
+  function handleClose() {
+    setView(false);
+    setCount(5);
+  }
+
+  function timer() {
+    let int = setInterval(
+      () =>
+        count() === 0 || !view() ? clearInterval(int) : setCount(count() - 1),
+      1000
+    );
+  }
+
+  createEffect(() => {
+    if (count() === 0) {
+      handleClose();
+    }
+  });
 
   return (
     <>
       <Show
         when={props.simple}
         fallback={
-          <div name="DrugCard" className="card">
+          <div name="DrugCard" className="card" id={drug.name}>
             <A href={drug.id}>
               <img
                 className="card-img"
@@ -40,6 +60,7 @@ const DrugCard = (props) => {
       >
         <div
           name="DrugCard"
+          id={drug.name}
           classList={{ small: !view() }}
           className="card simple"
           onClick={show() ? "" : handleShow}
@@ -49,10 +70,22 @@ const DrugCard = (props) => {
             src={drug.img.url ? drug.img.url : "/placeholder.svg"}
             alt={drug.name}
           />
-          <Show when={!show()}>
-            <button className="btn info btn-sm view-btn" onClick={handleView}>
-              {/* {view() ? count() : "big"} */}
-              {view() ? "small" : "big"}
+          <Show
+            when={!view()}
+            fallback={
+              <button
+                className="btn info btn-sm view-btn counter"
+                onClick={() => handleClose()}
+              >
+                {count()}
+              </button>
+            }
+          >
+            <button
+              className="btn info btn-sm view-btn"
+              onClick={(e) => handleView(e)}
+            >
+              {"big"}
             </button>
           </Show>
           <div className="card-body">

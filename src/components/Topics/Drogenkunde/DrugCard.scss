@@ -1,8 +1,11 @@
+@import "../../../Theme.scss";
+
 .card {
   border-radius: 15px;
-  width: 16.5rem;
+  width: 16rem;
   height: fit-content;
   transition: all 450ms ease;
+  background-color: darken($bg, 3%);
 
   &:hover:not(.simple) {
     transform: translateY(-10px);
@@ -58,8 +61,17 @@
     border-right: 0.5px solid #0000002d;
   }
 
+  &.simple:not(.small) {
+    position: absolute !important;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    width: 25rem;
+  }
+
   &.small {
-    width: 10rem;
+    width: 18%;
 
     .card-title {
       font-size: 1rem;
@@ -75,11 +87,14 @@
 @media screen and (max-width: 768px) and (orientation: landscape) {
   .card {
     width: 48%;
+    &.simple:not(.small) {
+      width: 100%;
+    }
 
     &.small {
       width: 30%;
 
-      &:last-child {
+      &:last-child:not(.simple) {
         margin-right: 35%;
       }
     }
@@ -89,6 +104,9 @@
 @media screen and (max-width: 768px) and (orientation: portrait) {
   .card {
     width: 100%;
+    &.simple:not(.small) {
+      width: 100%;
+    }
 
     &.small {
       width: 45%;

@@ -1,12 +1,33 @@
+@import "../../Theme.scss";
+
 #home {
   width: 100%;
-  height: calc(100vh - 9rem);
+  min-height: $page-height;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
   .welcome-banner {
+    text-align: center;
+  }
+
+  .info-message {
+    margin: 1rem 0;
+    padding: 0.5rem 1rem;
+    border: 1px solid darken($info, 20%);
+    border-radius: 0.5rem;
+    background-color: lighten($info, 35%);
+    color: darken($info, 30%);
+    max-width: 20rem;
+
+    h4 {
+      color: darken($info, 30%);
+    }
+  }
+
+  .help-us {
+    max-width: 25rem;
     text-align: center;
   }
 }

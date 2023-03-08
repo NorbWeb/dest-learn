@@ -1,7 +1,7 @@
 @use "mixins";
 
 $primary: #4039a8;
-$secondary: rgb(207, 211, 214);
+$secondary: #cfd3d6;
 $bg: #fff;
 $info: #f0ec27;
 $warn: #db1717;
@@ -12,6 +12,24 @@ $border: #0000002d;
 
 * {
   color: $text;
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 1320px;
+  padding: 0 1.5rem;
+  margin: 2rem auto;
+}
+
+$page-height: calc(100vh - 13rem);
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
 }
 
 a {
@@ -115,6 +133,7 @@ body {
 .divider {
   border-top: 0.5px solid $border;
   border-color: $border;
+  margin: 1rem 0;
 }
 
 .wrapper {

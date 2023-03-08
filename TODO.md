@@ -6,17 +6,11 @@ This is the markdown todo file for the dest-learn project.
 
 Things that need to be fixed, maked better or need some finish.
 
-- [ ] Navbar
-    - [ ] responsiveness
-    - [-] Do we need nav items User and Admin? Something else? (disabled now)
-- [ ] Sidebar responsiveness
-- [ ] About us section
 
 ## Content
 
 Tasks related to new content.
 
-- [ ] Database, maybe one of these: Firebase, Mongodb, Directus
 - [ ] Logo
 
 ## Style 
@@ -35,4 +29,10 @@ All interesting things that comes in mind.
 
 - [x] Set Layout
 - [x] Subsections for every MenuItem #prio1
+- [x] Database, maybe one of these: Firebase, Mongodb, Directus
+- [x] Navbar
+    - [x] responsiveness
+    - [x] Do we need nav items User and Admin? Something else? (disabled now)
+- [x] Sidebar responsiveness
+- [x] About us section
 

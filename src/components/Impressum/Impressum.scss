@@ -1,0 +1,9 @@
+@import "../../Theme.scss";
+
+#impressum {
+  min-height: $page-height;
+  
+  & > * {
+    margin-bottom: 2rem;
+  }
+}

@@ -8,14 +8,13 @@
 }
 
 .sidebar {
-  padding: 1rem;
+  padding: 0.5rem 1rem 0 0;
   grid-area: sidebar;
   display: block;
   position: sticky;
   overflow-y: auto;
-  top: 4rem;
+  top: 6rem;
   height: calc(100vh - 4rem);
-  min-width: 12.5rem;
 }
 
 .main {
@@ -37,25 +36,26 @@
 
   .intro {
     grid-area: intro;
-    padding: 1rem 0 0 0.5rem;
-    margin-bottom: 2rem;
+
+    h1 {
+      margin-bottom: 1rem;
+    }
   }
 
   .content {
     grid-area: content;
-    padding-left: 0.5rem;
 
-    .headline-box {
-      margin-bottom: 1.5rem;
+    .headline-box:not(:last-of-type) {
+      margin-bottom: 3rem;
     }
 
     .content-box {
       & > * {
-        margin-bottom: 1rem;
+        margin-bottom: 2rem;
       }
       .text-box {
         h4 {
-          margin-bottom: 0.5rem;
+          margin-bottom: 1rem;
           margin-top: 0;
           padding-top: 4.75rem;
           margin-top: -4.75rem;
@@ -88,6 +88,7 @@
   .headline {
     padding-top: 5rem;
     margin-top: -5rem;
+    margin-bottom: 1rem;
   }
 
   .toc {
@@ -95,9 +96,33 @@
     display: block;
     position: sticky;
     overflow-y: auto;
-    top: 4rem;
+    top: 6rem;
     height: calc(100vh - 4rem);
-    padding: 1rem 0 0 1rem;
+
+    .toc-btn {
+      display: none;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      border: 0.1rem solid rgb(235, 234, 234);
+      background-color: transparent;
+      color: $text;
+      transition: all 240ms ease;
+
+      i {
+        color: inherit;
+      }
+
+      &:hover {
+        color: $primary;
+        border-color: $primary;
+
+        i {
+          color: $primary;
+        }
+      }
+    }
 
     .divider {
       border-top: 0.5px solid grey;
@@ -105,10 +130,11 @@
 
     .main-list {
       list-style-type: none;
-      padding: 0;
+      padding: 0 1rem 0 0;
 
       li {
         margin-bottom: 0.25rem;
+        font-size: 0.875rem;
       }
 
       a {
@@ -124,7 +150,6 @@
     .sub-list {
       list-style: none;
       padding-left: 1rem;
-     
 
       li {
         padding: 0.25rem 0;
@@ -150,8 +175,7 @@
       "content";
     grid-template-rows: auto auto 1fr;
     grid-template-columns: 1fr;
-    padding: 0 6vw;
-    min-height: calc(100vh - 9rem);
+    min-height: $page-height;
 
     .intro,
     .toc,
@@ -166,6 +190,49 @@
 
       h3 {
         margin: 0;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .main {
+    .toc {
+      h3,
+      .divider {
+        display: none;
+      }
+
+      .toc-btn {
+        display: flex;
+      }
+
+      @media screen and (max-width: 576px) {
+        .toc-btn {
+          width: 100%;
+        }
+      }
+
+      #table-of-contents {
+        background-color: darken($bg, 3%);
+        border-radius: 0.5rem;
+        margin-top: 0.25rem;
+        max-height: 0px;
+        overflow: hidden;
+        transition: all 240ms ease;
+        padding: 0 0.75rem;
+        border: 0px solid darken($bg, 10%);
+
+        &.show {
+          border: 1px solid darken($bg, 10%);
+          max-height: 10rem;
+          padding: 0.75rem;
+          transition: all 240ms ease;
+        }
+
+        .main-list {
+          margin: 0;
+        }
       }
     }
   }

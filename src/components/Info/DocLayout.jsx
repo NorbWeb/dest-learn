@@ -1,7 +1,8 @@
-import { createEffect, For, Match, Switch } from "solid-js";
+import { createEffect, createSignal, For, Match, Switch } from "solid-js";
 
 const DocLayout = (props) => {
   let item = props;
+  const [openToc, setOpenToc] = createSignal(false);
 
   let worker = {};
   for (let i = 0; i < item.headline.length; i++) {
@@ -84,9 +85,18 @@ const DocLayout = (props) => {
         </For>
       </div>
       <div className="toc">
+        <button className="toc-btn" onClick={() => setOpenToc(!openToc())}>
+          Auf dieser Seite
+          <i
+            classList={{
+              "bi-caret-up": openToc(),
+              "bi-caret-down": !openToc(),
+            }}
+          ></i>
+        </button>
         <h3>Auf dieser Seite</h3>
         <div className="divider"></div>
-        <nav id="TableOfContents">
+        <nav id="table-of-contents" classList={{ show: openToc() }}>
           <ul className="main-list">
             <For each={item.headline}>
               {(item) => (

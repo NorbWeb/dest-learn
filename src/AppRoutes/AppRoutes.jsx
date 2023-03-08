@@ -13,6 +13,7 @@ import { LoadingSpinner } from "../components/Helper/LoadingSpinner/LoadingSpinn
 import { Routes_User } from "./R_User";
 import { Show } from "solid-js";
 import { useAuth } from "../Context/AuthContext";
+import { Impressum } from "../components/Impressum/Impressum";
 
 const AppRoutes = () => {
   const [user] = useAuth();
@@ -48,6 +49,8 @@ const AppRoutes = () => {
         element={<DefaultComponent name="Admin Dashboard" back />}
       ></Route> */}
       <Route path="about" component={About} />
+      <Route path="impressum" component={Impressum} />
+
       {/* switch: Loading Spinner / Not Found */}
       <Route
         path="*"

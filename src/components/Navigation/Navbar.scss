@@ -1,5 +1,12 @@
 @import "../../Theme.scss";
 
+.navbar-container {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1320px;
+  padding: 0 1.5rem;
+}
+
 #navbar {
   width: 100%;
   height: 100%;
@@ -95,18 +102,29 @@
         padding: 1rem;
         margin-bottom: 1.5rem;
         font-size: 1.25rem;
+
+        .btn-close {
+          margin-right: 1rem;
+        }
       }
 
       .menu-body {
         height: 100%;
-        padding-left: 1rem;
+        padding: 0 1rem;
       }
     }
   }
 
   .menu-btn {
     display: none;
-    padding: 0.25rem;
+    padding: 0.25rem 0.25rem 0.25rem 0.25rem;
+
+    &.sidemenu-btn {
+      margin-left: -0.325rem;
+    }
+    &.navmenu-btn {
+      margin-right: -0.275rem;
+    }
 
     i {
       color: $secondary;
@@ -176,10 +194,10 @@
     margin-left: auto;
   }
 
-  .dialoge-menu {
+  .dialogue-menu {
     position: absolute;
-    top: -0.2rem;
-    right: -0.5rem;
+    top: 0;
+    right: 0;
     background-color: $bg;
     border: 0.1rem solid grey;
     border-radius: 0.5rem;

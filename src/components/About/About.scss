@@ -1,6 +1,7 @@
+@import '../../Theme.scss';
+
 #about {
-  min-height: calc(100vh - 9rem);
-  padding: 1rem;
+  min-height: $page-height;
 
   .grid-container {
     display: grid;
@@ -30,6 +31,7 @@
 
   #about-me {
     img {
+      margin-top: 1rem;
       border-radius: 1rem;
       width: 17.5rem;
       height: 17.5rem;

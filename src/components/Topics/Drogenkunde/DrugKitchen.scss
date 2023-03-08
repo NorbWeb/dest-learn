@@ -17,9 +17,6 @@
   .drug-title {
     margin: 0;
   }
-  .divider {
-    margin: 1rem 0;
-  }
 
   .header-menu {
     width: 100%;
@@ -29,11 +26,13 @@
       width: 100%;
       display: flex;
       justify-content: flex-start;
+      align-items: flex-end;
       flex-wrap: wrap;
       gap: 1rem;
 
       .buttons {
-        margin: auto 0;
+        margin-bottom: 0.5rem;
+
         button:first-child {
           margin-right: 1rem;
         }
@@ -206,13 +205,6 @@
       .highlight-container {
         width: 25rem;
       }
-
-      // .treatment-fieldset {
-      //   input[type="checkbox"] {
-      //     width: fit-content;
-      //     transform: scale(1.5, 1.5);
-      //   }
-      // }
     }
 
     .grid-container {

@@ -1,6 +1,6 @@
 import "./Navbar.scss";
 import { A } from "@solidjs/router";
-import { createEffect, createSignal, For, Show } from "solid-js";
+import { createSignal, For, Show } from "solid-js";
 import Logo from "../../assets/whisky-logo-96.png";
 import { LogOutButton, LogOutLi } from "../Authentification/LogOutButton";
 import { Sidebar } from "../Sidebar/Sidebar";
@@ -39,7 +39,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav id="navbar" className="container">
+      <nav id="navbar" className="navbar-container">
         <div
           id="offcanvas-container"
           classList={{
@@ -55,7 +55,6 @@ const Navbar = () => {
               transition: openSideMenu() === "transition",
               hide: openSideMenu() === "hide",
             }}
-
             className="bg"
             use:clickOutside={() => handleClose()}
           >
@@ -74,7 +73,10 @@ const Navbar = () => {
             </div>
           </div>
         </div>
-        <div className="menu-btn" onClick={() => setOpenSideMenu("show")}>
+        <div
+          className="menu-btn sidemenu-btn"
+          onClick={() => setOpenSideMenu("show")}
+        >
           <i class="bi bi-list"></i>
         </div>
         <A href="/" activeClass={false} className="no-style home-icon">
@@ -101,11 +103,14 @@ const Navbar = () => {
           <LogOutButton />
         </div>
 
-        <div className="menu-btn" onClick={(e) => handleShow(e)}>
+        <div className="menu-btn navmenu-btn" onClick={(e) => handleShow(e)}>
           <i class="bi bi-three-dots"></i>
         </div>
         <Show when={open()}>
-          <div className="dialoge-menu" use:clickOutside={() => setOpen(false)}>
+          <div
+            className="dialogue-menu"
+            use:clickOutside={() => setOpen(false)}
+          >
             <ul className="menu-item-list">
               <For each={navItem}>
                 {(item) => (

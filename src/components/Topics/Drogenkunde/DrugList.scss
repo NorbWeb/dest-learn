@@ -5,13 +5,20 @@
 
   .category-box {
     &:not(:first-of-type) {
-      margin-top: 1rem;
+      margin-top: 3rem;
     }
+
+    .headline {
+      margin-bottom: 1rem;
+      font-size: 1.375rem;
+    }
+
     .drug-content-tile {
       display: flex;
       align-content: flex-start;
       flex-wrap: wrap;
-      gap: 1rem;
+      row-gap: 1rem;
+      column-gap: 2%;
     }
   }
 

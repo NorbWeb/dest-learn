@@ -18,10 +18,10 @@ const Sidebar = (props) => {
           <For each={item()}>
             {(item) => (
               <li className="menu-block">
-                <strong className="links-heading">
+                <div className="links-heading">
                   <img src={Logo} alt="icon" />
                   {item.name}
-                </strong>
+                </div>
                 <ul>
                   <For each={item.navItems}>
                     {(subItem) => (

@@ -6,13 +6,6 @@ import { A } from "@solidjs/router";
 
 const DrugList = (props) => {
   const [data] = useDrugData();
-  const { view, setView, viewOptions } = props;
-
-  if (!localStorage.getItem("drugViewPreference")) {
-    setView(viewOptions[0]);
-  } else {
-    setView(localStorage.getItem("drugViewPreference"));
-  }
 
   // remove and add css class to displayed component
   function setClass(add) {
@@ -22,21 +15,19 @@ const DrugList = (props) => {
     }
   }
 
-  // updates local store to view and run setClass
   createEffect(() => {
-    localStorage.setItem("drugViewPreference", `${view()}`);
-    setClass(view());
+    setClass(props.view);
   });
 
   return (
     <>
-      <Show when={view() != "list"}>
+      <Show when={props.view != "list"}>
         <For each={data().categories}>
           {(item) => (
             <div className="category-box">
-              <h3 className="headline" id={item.category}>
+              <h2 className="headline" id={item.category}>
                 {item.category}
-              </h3>
+              </h2>
 
               <div class="drug-content-tile">
                 <For each={item.drugList}>
@@ -47,13 +38,13 @@ const DrugList = (props) => {
           )}
         </For>
       </Show>
-      <Show when={view() === "list"}>
-        <ul id='category-list'>
+      <Show when={props.view === "list"}>
+        <ul id="category-list">
           <For each={data().categories}>
             {(item) => (
               <li>
-                <strong id={item.category}>{item.category}</strong>
-                <ul className='category-list-item'>
+                <h4 id={item.category}>{item.category}</h4>
+                <ul className="category-list-item">
                   <For each={item.drugList}>
                     {(drug) => (
                       <li className="list">
