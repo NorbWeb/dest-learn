@@ -25,38 +25,16 @@
     opacity: 0;
 
     &.show {
-      animation: offcanvasShow 300ms ease both;
+      animation: menuShow 300ms ease both;
     }
 
     &.transition {
-      animation: offcanvasHide 300ms ease both;
+      animation: menuHide 300ms ease both;
       visibility: hidden;
     }
 
     &.hide {
       display: none;
-    }
-
-    @keyframes offcanvasShow {
-      from {
-        opacity: 0;
-        visibility: hidden;
-      }
-      to {
-        opacity: 1;
-        visibility: visible;
-      }
-    }
-
-    @keyframes offcanvasHide {
-      from {
-        opacity: 1;
-        visibility: visible;
-      }
-      to {
-        opacity: 0;
-        visibility: hidden;
-      }
     }
 
     #offcanvas-menu {
@@ -65,42 +43,23 @@
       background-color: #fff;
 
       &.show {
-        animation: menuSlideIn 300ms ease both;
+        animation: menuSlideInLeft 300ms ease both;
       }
 
       &.transition {
-        animation: menuSlideOut 300ms ease both;
+        animation: menuSlideOutLeft 300ms ease both;
       }
 
       &.hide {
         display: none;
       }
 
-      @keyframes menuSlideIn {
-        from {
-          transform: translateX(-20rem);
-        }
-        to {
-          transform: translateX(0rem);
-        }
-      }
-
-      @keyframes menuSlideOut {
-        from {
-          transform: translateX(0rem);
-        }
-        to {
-          transform: translateX(-20rem);
-        }
-      }
-
-      .menu-header {
+      .offcanvas-menu-header {
         border-bottom: 1px solid #dee2e6;
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding: 1rem;
-        margin-bottom: 1.5rem;
         font-size: 1.25rem;
 
         .btn-close {
@@ -111,6 +70,7 @@
       .menu-body {
         height: 100%;
         padding: 0 1rem;
+        margin: 1rem 0;
       }
     }
   }
@@ -182,60 +142,86 @@
     }
   }
 
-  @keyframes logo {
-    0% {
-      transform: rotate(0deg) scale(1);
-    }
-    50% {
-      transform: rotate(20deg) scale(1.1);
-    }
-    100% {
-      transform: rotate(0deg) scale(1);
-    }
-  }
-
   .log-out-btn {
     margin-left: auto;
   }
 
-  .dialogue-menu {
-    position: absolute;
+  #nav-container {
+    position: fixed;
+    z-index: 10;
+    width: 100vw;
+    height: 100vh;
     top: 0;
-    right: 0;
-    background-color: $bg;
-    border: 0.1rem solid grey;
-    border-radius: 0.5rem;
-    padding: 0.5rem 0;
+    left: 0;
+    background-color: rgba(5, 5, 5, 0.5);
+    opacity: 0;
 
-    .menu-item-list {
-      padding: 0;
-      list-style: none;
+    &.show {
+      animation: menuShow 300ms ease both;
+    }
 
-      a {
-        color: inherit;
-        &.active {
-          background-color: $primary;
-          color: $text-light;
+    &.transition {
+      animation: menuHide 300ms ease both;
+      visibility: hidden;
+    }
 
-          li {
-            color: $text-light;
-            background-color: $primary;
-          }
+    &.hide {
+      display: none;
+    }
+
+    #nav-menu {
+      width: 25rem;
+      height: 100%;
+      background-color: #fff;
+      margin-left: auto;
+      padding: 0 1.5rem ;
+
+      &.show {
+        animation: menuSlideInRight 300ms ease both;
+      }
+
+      &.transition {
+        animation: menuSlideOutRight 300ms ease both;
+      }
+
+      &.hide {
+        display: none;
+      }
+
+      .nav-menu-header {
+        border-bottom: 1px solid #dee2e6;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0;
+        font-size: 1.25rem;
+
+        .btn-close {
+          margin-right: 1rem;
         }
+      }
+
+      .menu-item-list {
+        padding: 0;
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
 
         li {
-          padding: 0.5rem 1rem;
-
-          &:hover {
-            background-color: $primary;
-            color: $text-light;
+          padding: 0.5rem 0rem;
+          width: 50%;
+        }
+        a {
+          color: inherit;
+          &.active {
+            font-weight: 700;
           }
         }
       }
     }
   }
 }
-
+// ############################## MEDIA ##############################
 @media screen and (max-width: 990px) {
   #navbar {
     .menu-btn {
@@ -254,5 +240,81 @@
         width: 100%;
       }
     }
+    #nav-container {
+      #nav-menu {
+        width: 100%;
+      }
+    }
+  }
+}
+
+// ############################## KEY FRAMES ##############################
+@keyframes logo {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(20deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+@keyframes menuShow {
+  from {
+    opacity: 0;
+    visibility: hidden;
+  }
+  to {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@keyframes menuHide {
+  from {
+    opacity: 1;
+    visibility: visible;
+  }
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes menuSlideInLeft {
+  from {
+    transform: translateX(-20rem);
+  }
+  to {
+    transform: translateX(0rem);
+  }
+}
+
+@keyframes menuSlideOutLeft {
+  from {
+    transform: translateX(0rem);
+  }
+  to {
+    transform: translateX(-20rem);
+  }
+}
+
+@keyframes menuSlideInRight {
+  from {
+    transform: translateX(20rem);
+  }
+  to {
+    transform: translateX(0rem);
+  }
+}
+
+@keyframes menuSlideOutRight {
+  from {
+    transform: translateX(0rem);
+  }
+  to {
+    transform: translateX(20rem);
   }
 }

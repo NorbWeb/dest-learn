@@ -8,7 +8,7 @@ const Info = () => {
         <aside className="sidebar bg mode">
           <Sidebar />
         </aside>
-        <div className="main">
+        <div className="main mode">
           <Outlet />
         </div>
       </div>

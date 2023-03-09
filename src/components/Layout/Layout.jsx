@@ -9,11 +9,10 @@ const Layout = () => {
       <header id="header" className="primary mode shadow">
         <Navbar />
       </header>
-      <main>
+      <main className='mode'>
         <Outlet />
       </main>
       <footer id="footer" className="secondary mode">
-        {/* <div className="container">Footer</div> */}
         <Footer/>
       </footer>
     </>

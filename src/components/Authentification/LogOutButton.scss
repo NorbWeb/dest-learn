@@ -19,15 +19,9 @@
   }
 }
 
-.log-out-li {
+.log-out {
   cursor: pointer;
   div {
-    padding:  0.5rem 1rem;
-  }
-  &:hover {
-    background-color: $primary;
-    div {
-      color: $text-light;
-    }
+    padding: 0.5rem 0rem;
   }
 }

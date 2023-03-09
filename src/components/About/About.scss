@@ -1,7 +1,11 @@
-@import '../../Theme.scss';
+@import "../../Theme.scss";
 
 #about {
   min-height: $page-height;
+
+  .page-title {
+    margin-bottom: 1rem;
+  }
 
   .grid-container {
     display: grid;
@@ -30,15 +34,27 @@
   }
 
   #about-me {
-    img {
-      margin-top: 1rem;
-      border-radius: 1rem;
-      width: 17.5rem;
-      height: 17.5rem;
-      object-fit: contain;
-    }
-    ul {
-      list-style: "👉  ";
+    justify-self: start;
+    width: 100%;
+    .introduction {
+      display: flex;
+      justify-content: space-evenly;
+      flex-wrap: wrap;
+
+      .img-box {
+        img {
+          margin-top: 1rem;
+          border-radius: 1rem;
+          width: 17.5rem;
+          object-fit: cover;
+        }
+      }
+      .cv-list {
+        list-style: "👉  ";
+        max-width: 20rem;
+        padding-left: 2rem;
+        margin: auto;
+      }
     }
   }
 }
@@ -47,6 +63,23 @@
   #about {
     .grid-container {
       grid-template-columns: 2fr 1fr;
+    }
+    #about-me {
+      justify-self: center;
+
+      .introduction {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        .img-box {
+          img {
+            width: 100%;
+            max-width: 20rem;
+          }
+        }
+        .cv-list {
+          margin: 0;
+        }
+      }
     }
   }
 }

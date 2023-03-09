@@ -3,7 +3,7 @@ import "./About.scss";
 const About = () => {
   return (
     <div id="about" className="container">
-      <h1>Über Destillearn</h1>
+      <h1 className="page-title">Über Destillearn</h1>
       <div className="grid-container">
         <section id="about-the-project" className="grid-item">
           <h2>Die Motivation</h2>
@@ -53,10 +53,12 @@ const About = () => {
         </section>
         <section id="about-me" className="grid-item">
           <h2>Über mich</h2>
-          <div className='wrapper col aligne-center'>
-            <img src="/placeholder.svg" alt="Bild von Norbert" />
-            <p>Hi, ich bin Norbert!</p>
-            <ul>
+          <div className="introduction">
+            <div className="img-box">
+              <img src="/me.jpg" alt="Bild von Norbert" />
+              <p>Hi, ich bin Norbert!</p>
+            </div>
+            <ul className="cv-list">
               <li>
                 2014 - Ausbildung zum Destillateur bei der{" "}
                 <a href="https://www.august-ernst.de/" target="_blank">
@@ -77,8 +79,9 @@ const About = () => {
               <li>
                 ab 2022 -{" "}
                 <a href="https://norbert-madauss.com" target="_blank">
-                  Webentwickler 😎
-                </a>
+                  Webentwickler
+                </a>{" "}
+                😎
               </li>
               <li>
                 ab Okt 2022 - Fullstack Webentwickler bei{" "}

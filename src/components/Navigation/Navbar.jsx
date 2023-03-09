@@ -1,14 +1,14 @@
 import "./Navbar.scss";
 import { A } from "@solidjs/router";
-import { createSignal, For, Show } from "solid-js";
+import { createEffect, createSignal, For, Show } from "solid-js";
 import Logo from "../../assets/whisky-logo-96.png";
-import { LogOutButton, LogOutLi } from "../Authentification/LogOutButton";
+import { LogOutButton, LogOutElement } from "../Authentification/LogOutButton";
 import { Sidebar } from "../Sidebar/Sidebar";
 import clickOutside from "../Helper/click-outside";
 
 const Navbar = () => {
-  const [open, setOpen] = createSignal(false);
   const [openSideMenu, setOpenSideMenu] = createSignal("hide");
+  const [openNav, setOpenNav] = createSignal("hide");
 
   const navItem = [
     {
@@ -25,17 +25,56 @@ const Navbar = () => {
     // { name: "Admin", href: "/admin" },
   ];
 
-  function handleShow(e) {
-    setOpen(() => !open());
+  function autoCloseSide() {
+    setOpenSideMenu("hide");
   }
 
-  function handleClose() {
-    if (openSideMenu() === "show") {
-      setOpenSideMenu("transition");
-    } else {
-      setOpenSideMenu("hide");
+  function autoCloseNav() {
+    setOpenNav("hide");
+  }
+
+  function addAnimationEndEvent(id, signal, func) {
+    let element = document.getElementById(id);
+    if (signal === "transition") {
+      element.addEventListener("animationend", func);
     }
   }
+  function removeAnimationEndEvent(id, signal, func) {
+    let element = document.getElementById(id);
+    if (signal === "hide") {
+      element.removeEventListener("animationend", func);
+    }
+  }
+
+  function handleCloseSide() {
+    if (openSideMenu() === "show") {
+      setOpenSideMenu("transition");
+      addAnimationEndEvent(
+        "offcanvas-container",
+        openSideMenu(),
+        autoCloseSide
+      );
+    } else {
+      setOpenSideMenu("hide");
+      removeAnimationEndEvent(
+        "offcanvas-container",
+        openSideMenu(),
+        autoCloseSide
+      );
+    }
+  }
+
+  function handleCloseNav() {
+    if (openNav() === "show") {
+      setOpenNav("transition");
+      addAnimationEndEvent("nav-container", openNav(), autoCloseNav);
+    } else {
+      setOpenNav("hide");
+      removeAnimationEndEvent("nav-container", openNav(), autoCloseNav);
+    }
+  }
+
+  createEffect(() => {});
 
   return (
     <>
@@ -57,20 +96,20 @@ const Navbar = () => {
               hide: openSideMenu() === "hide",
             }}
             className="bg"
-            use:clickOutside={() => handleClose()}
+            use:clickOutside={() => handleCloseSide()}
           >
-            <div className="menu-header">
+            <div className="offcanvas-menu-header">
               <div>Dokumente</div>
               <button
                 type="button"
                 className="btn-close"
-                onClick={() => handleClose()}
+                onClick={() => handleCloseSide()}
               >
                 x
               </button>
             </div>
             <div className="menu-body">
-              <Sidebar close={handleClose()} />
+              <Sidebar close={handleCloseSide()} />
             </div>
           </div>
         </div>
@@ -116,33 +155,61 @@ const Navbar = () => {
           <LogOutButton />
         </div>
 
-        {/* menu button, to open dialogue menu - show when screen reach middle breakpoint */}
-        <div className="menu-btn navmenu-btn" onClick={(e) => handleShow(e)}>
+        {/* menu button, to open nav menu - show when screen reach middle breakpoint */}
+        <div
+          className="menu-btn navmenu-btn"
+          onClick={() => setOpenNav("show")}
+        >
           <i class="bi bi-three-dots"></i>
         </div>
 
-        {/* dialogue menu - can be open when screen reach middle breakpoint */}
-        <Show when={open()}>
+        {/* nav menu - can be open when screen reach middle breakpoint */}
+        <div
+          id="nav-container"
+          classList={{
+            show: openNav() === "show",
+            transition: openNav() === "transition",
+            hide: openNav() === "hide",
+          }}
+        >
           <div
-            className="dialogue-menu"
-            use:clickOutside={() => setOpen(false)}
+            id="nav-menu"
+            use:clickOutside={() => handleCloseNav()}
+            classList={{
+              show: openNav() === "show",
+              transition: openNav() === "transition",
+              hide: openNav() === "hide",
+            }}
           >
+            <div className="nav-menu-header">
+              <div>Destillearn</div>
+              <button
+                type="button"
+                className="btn-close"
+                onClick={() => handleCloseNav()}
+              >
+                x
+              </button>
+            </div>
             <ul className="menu-item-list">
               <For each={navItem}>
                 {(item) => (
-                  <A
-                    href={item.href}
-                    end={false}
-                    onClick={() => setOpen(false)}
-                  >
-                    <li>{item.name}</li>
-                  </A>
+                  <li>
+                    <A
+                      href={item.href}
+                      end={false}
+                      onClick={() => handleCloseNav()}
+                    >
+                      {item.name}
+                    </A>
+                  </li>
                 )}
               </For>
-              <LogOutLi />
             </ul>
+            <div className="divider"></div>
+            <LogOutElement closeNav={handleCloseNav()} />
           </div>
-        </Show>
+        </div>
       </nav>
     </>
   );

@@ -1,3 +1,5 @@
+@import '../../Theme.scss';
+
 .offcanvas-body {
   .offcanvas-list {
     padding: 0;
@@ -15,16 +17,24 @@
   }
 
   a {
-    margin-left: 1rem;
+    margin-left: 1.25rem;
     margin-top: 0.125rem;
     margin-bottom: 0.5rem;
-    padding: 0.1875rem 0.75rem;
+    padding: 0.1875rem 0.5rem;
     border-radius: 0.5rem;
     font-size: 0.875rem;
+
+    &.sidebar-active{
+      background-color: lighten($primary, 45%);
+      font-weight: 600;
+    }
   }
 
   .menu-block {
     margin-bottom: 1rem;
+    li{
+      margin-bottom: 0.25rem;
+    }
   }
 
   .links-heading {
@@ -33,6 +43,7 @@
     gap: 0.25rem;
     padding-right: 0.5rem;
     font-weight: 600;
+    margin-bottom: 0.5rem;
     img {
       aspect-ratio: 1/1;
       width: 1.5rem;

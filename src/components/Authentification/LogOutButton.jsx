@@ -27,22 +27,23 @@ const LogOutButton = () => {
   );
 };
 
-const LogOutLi = () => {
+const LogOutElement = (props) => {
   const [user] = useAuth();
 
   const handleClick = () => {
     handleSignOut();
+    props.closeNav;
   };
 
   return (
     <>
       <Show when={user()} fallback={<div></div>}>
-        <li className="log-out-li" onClick={handleClick}>
+        <div className="log-out" onClick={handleClick}>
           <div>Abmelden</div>
-        </li>
+        </div>
       </Show>
     </>
   );
 };
 
-export { LogOutButton, LogOutLi };
+export { LogOutButton, LogOutElement };
