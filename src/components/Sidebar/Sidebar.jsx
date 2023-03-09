@@ -1,14 +1,13 @@
 import { createSignal, For } from "solid-js";
 import { A } from "@solidjs/router";
-import Logo from "../../assets/whisky-logo-96.png";
 
 import "./Sidebar.scss";
 const Sidebar = (props) => {
   const [item, setItem] = createSignal([
-    { name: "Technologie", navItems: ["Destillation"] },
-    { name: "Mathematik", navItems: ["Einheiten"] },
-    { name: "Drogenkunde", navItems: ["Sammlung", "Lernen"] },
-    { name: "Spirituosen", navItems: ["Rechtliches"] },
+    { name: "Technologie", icon:'/icons/icons8-chemiefabrik-2-48.png', navItems: ["Destillation"] },
+    { name: "Mathematik", icon:'/icons/icons8-taschenrechner-48.png', navItems: ["Einheiten"] },
+    { name: "Drogenkunde", icon:'/icons/icons8-naturkost-48.png', navItems: ["Sammlung", "Lernen"] },
+    { name: "Spirituosen", icon:'/icons/icons8-rum-48.png', navItems: ["Rechtliches"] },
   ]);
 
   return (
@@ -19,7 +18,7 @@ const Sidebar = (props) => {
             {(item) => (
               <li className="menu-block">
                 <div className="links-heading">
-                  <img src={Logo} alt="icon" />
+                  <img src={item.icon} alt="icon" />
                   {item.name}
                 </div>
                 <ul>

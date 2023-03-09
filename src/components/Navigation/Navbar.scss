@@ -167,14 +167,18 @@
     }
   }
 
-  #logo {
-    transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-    aspect-ratio: inherit;
-    height: 3rem;
-
-    &.effect {
-      animation: logo 750ms ease-in-out;
+  .logo-btn {
+    background-color: transparent;
+    border: none;
+    #logo {
       transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+      aspect-ratio: inherit;
+      height: 3rem;
+
+      &.effect {
+        animation: logo 750ms ease-in-out;
+        transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+      }
     }
   }
 

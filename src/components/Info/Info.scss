@@ -14,7 +14,8 @@
   position: sticky;
   overflow-y: auto;
   top: 6rem;
-  height: calc(100vh - 4rem);
+  // height: calc(100vh - 13rem);
+  height: $page-height;
 }
 
 .main {
@@ -97,7 +98,7 @@
     position: sticky;
     overflow-y: auto;
     top: 6rem;
-    height: calc(100vh - 4rem);
+    height: $page-height;
 
     .toc-btn {
       display: none;
@@ -223,6 +224,10 @@
         padding: 0 0.75rem;
         border: 0px solid darken($bg, 10%);
 
+        li{
+          margin-bottom: 0.5rem;
+        }
+
         &.show {
           border: 1px solid darken($bg, 10%);
           max-height: 10rem;
@@ -232,6 +237,9 @@
 
         .main-list {
           margin: 0;
+        }
+        .sub-list{
+          margin-top: 0.25rem;
         }
       }
     }

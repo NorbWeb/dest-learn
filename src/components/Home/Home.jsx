@@ -9,7 +9,7 @@ const Home = () => {
       <div className="info-message">
         <h4>### Hinweis ###</h4>
         Diese Seite befindet sich noch im Aufbau! Es können Einschränkungen in der
-        Bedienung auftreten und Inhalte können einen geringen oder unvollständigen
+        Bedienung auftreten und Inhalte einen geringen oder unvollständigen
         Umfang aufweisen.
       </div>
       <div className="help-us">

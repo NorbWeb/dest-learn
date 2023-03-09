@@ -40,6 +40,7 @@ const Navbar = () => {
   return (
     <>
       <nav id="navbar" className="navbar-container">
+        {/* offcanvas menu - can be open when screen reach middle breakpoint */}
         <div
           id="offcanvas-container"
           classList={{
@@ -73,21 +74,33 @@ const Navbar = () => {
             </div>
           </div>
         </div>
+
+        {/* menu button, to open offcanvas - show when screen reach middle breakpoint */}
         <div
           className="menu-btn sidemenu-btn"
           onClick={() => setOpenSideMenu("show")}
         >
           <i class="bi bi-list"></i>
         </div>
+
+        {/* logo button - go to landing page */}
         <A href="/" activeClass={false} className="no-style home-icon">
-          <img
-            src={Logo}
-            alt="Logo"
-            id="logo"
-            onClick={(e) => e.currentTarget.classList.add("effect")}
-            onAnimationEnd={(e) => e.currentTarget.classList.remove("effect")}
-          />
+          <button
+            onClick={() =>
+              document.getElementById("logo").classList.add("effect")
+            }
+            className="logo-btn"
+          >
+            <img
+              src={Logo}
+              alt="Logo"
+              id="logo"
+              onAnimationEnd={(e) => e.currentTarget.classList.remove("effect")}
+            />
+          </button>
         </A>
+
+        {/* default menu on large screen */}
         <div className="responsive-menu">
           <ul>
             <For each={navItem}>
@@ -103,9 +116,12 @@ const Navbar = () => {
           <LogOutButton />
         </div>
 
+        {/* menu button, to open dialogue menu - show when screen reach middle breakpoint */}
         <div className="menu-btn navmenu-btn" onClick={(e) => handleShow(e)}>
           <i class="bi bi-three-dots"></i>
         </div>
+
+        {/* dialogue menu - can be open when screen reach middle breakpoint */}
         <Show when={open()}>
           <div
             className="dialogue-menu"

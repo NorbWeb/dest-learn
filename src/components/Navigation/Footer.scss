@@ -4,4 +4,33 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+  background-color: inherit;
+
+  .icon-section {
+    background-color: inherit;
+
+    &:hover {
+      .icon-wrapper {
+        display: block;
+      }
+    }
+    .icon-wrapper {
+      list-style: none;
+      display: none;
+      position: absolute;
+      bottom: 0.25rem;
+      left: -1rem;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      background-color: inherit;
+
+      li{
+        margin-bottom: 0.5rem;
+      }
+
+      &:hover {
+        display: block;
+      }
+    }
+  }
 }
