@@ -1,4 +1,4 @@
-import { createEffect, For, Show } from "solid-js";
+import { createEffect, createSignal, For, Show } from "solid-js";
 import { DrugCard } from "./DrugCard";
 import { useDrugData } from "../../../Context/DrugDataContext";
 import "./DrugList.scss";
@@ -6,12 +6,17 @@ import { A } from "@solidjs/router";
 
 const DrugList = (props) => {
   const [data] = useDrugData();
+  const [openMarked, setOpenMarked] = createSignal(false);
 
   // remove and add css class to displayed component
   function setClass(add) {
     let matches = document.getElementsByClassName("card");
     for (let i = 0; i < matches.length; i++) {
-      matches.item(i).className = `card ${add}`;
+      if (matches.item(i).classList.contains("marked")) {
+        matches.item(i).className = `card ${add} marked`;
+      } else {
+        matches.item(i).className = `card ${add}`;
+      }
     }
   }
 
@@ -53,6 +58,21 @@ const DrugList = (props) => {
                         >
                           {drug.name}
                         </A>
+                        <Show when={drug.marked}>
+                          <span
+                            className="marked-info"
+                            onMouseOver={() => setOpenMarked(true)}
+                            onMouseLeave={() => setOpenMarked(false)}
+                          >
+                            {" "}
+                            <i class="bi bi-info-circle"></i>
+                          </span>
+                          <Show when={openMarked()}>
+                            <div className="marked-info-text shadow">
+                              Kennzeichnungspflichtig
+                            </div>
+                          </Show>
+                        </Show>
                       </li>
                     )}
                   </For>

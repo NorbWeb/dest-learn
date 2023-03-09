@@ -12,6 +12,10 @@
     box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
   }
 
+  &.marked{
+    border: 0.2rem solid $info;
+  }
+
   a {
     text-decoration: none;
   }

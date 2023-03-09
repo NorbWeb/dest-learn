@@ -43,7 +43,12 @@ const DrugCard = (props) => {
       <Show
         when={props.simple}
         fallback={
-          <div name="DrugCard" className="card" id={drug.name}>
+          <div
+            name="DrugCard"
+            className="card"
+            id={drug.name}
+            classList={{ marked: drug.marked }}
+          >
             <A href={drug.id}>
               <img
                 className="card-img"
@@ -61,7 +66,7 @@ const DrugCard = (props) => {
         <div
           name="DrugCard"
           id={drug.name}
-          classList={{ small: !view() }}
+          classList={{ small: !view(), marked: drug.marked }}
           className="card simple"
           onClick={show() ? "" : handleShow}
         >

@@ -167,7 +167,7 @@ const ImageStore = () => {
           <For each={imageList()}>
             {(image, index) => (
               <li>
-                <div className="wrapper gap-1 aligne-center">
+                <div className="wrapper gap-1 align-center">
                   <input
                     value={image.name}
                     type="checkbox"

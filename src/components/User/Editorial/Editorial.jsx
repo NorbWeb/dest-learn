@@ -403,7 +403,7 @@ const Editorial = () => {
           {(headline, indexHeadline) => (
             <>
               <fieldset id={headline.name} className="headline-body">
-                <legend className="wrapper aligne-end gap-1">
+                <legend className="wrapper align-end gap-1">
                   <div className="legend-text">
                     {headline.name != "" ? headline.name : "Neuer Abschnitt"}
                   </div>

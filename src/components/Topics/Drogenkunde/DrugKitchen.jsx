@@ -29,6 +29,7 @@ const DrugKitchen = () => {
     change: { editor: { id: "", name: "" }, date: "" },
   });
   const [openInfo, setOpenInfo] = createSignal(false);
+  const [openMark, setOpenMark] = createSignal(false);
   const [openToast, setOpenToast] = createSignal(false);
   const [toastMessage, setToastMessage] = createSignal();
   const [drugExist, setDrugExist] = createSignal(false);
@@ -51,6 +52,7 @@ const DrugKitchen = () => {
       highlight: "",
       create: { editor: { id: "", name: "" }, date: "" },
       change: { editor: { id: "", name: "" }, date: "" },
+      marked: "",
     });
   }
 
@@ -78,6 +80,7 @@ const DrugKitchen = () => {
           editor: { id: drug.change.editor.id, name: drug.change.editor.name },
           date: drug.change,
         },
+        marked: drug.marked,
       });
     } else if (editDrug() === true) {
       setToastMessage("Droge erfolgreich bearbeitet");
@@ -98,6 +101,7 @@ const DrugKitchen = () => {
           editor: { id: user().uid, name: user().displayName },
           date: new Date(),
         },
+        marked: drug.marked,
       });
     }
   }
@@ -207,6 +211,14 @@ const DrugKitchen = () => {
     }
   };
 
+  const onInputChangeMarked = (e) => {
+    if (e.target.checked) {
+      setDrug("marked", e.target.value);
+    } else {
+      setDrug("marked", undefined);
+    }
+  };
+
   function clearHighlight() {
     let clear = document.getElementsByClassName("highlight");
     for (let i = 0; i < clear.length; i++) {
@@ -275,7 +287,7 @@ const DrugKitchen = () => {
   createEffect(() => {
     // checkIfDrugNameIsInDb();
     // if (tester) {
-    // console.log(drug.treatment);
+    console.log(drug.marked);
     // }
   });
 
@@ -475,18 +487,14 @@ const DrugKitchen = () => {
                   <option value="Digestion">Digestion</option>
                 </select>
               </div>
-              <div
-                className="highlight-info"
-                // onMouseOver={() => setOpenInfo(() => true)}
-                // onMouseLeave={() => setOpenInfo(() => false)}
-                onClick={() => setOpenInfo(true)}
-              >
+              <div className="info-icon" onClick={() => setOpenInfo(true)}>
                 <i class="bi bi-info-circle"></i>
               </div>
               <div
                 className="highlight-info-text"
                 classList={{ show: openInfo() }}
                 use:clickOutside={() => setOpenInfo(false)}
+                onClick={() => setOpenInfo(false)}
               >
                 Wähle ein bevorzugtes Verfahren, um zu verdeutlichen, dass es
                 hauptsächlich verwendet wird, bzw. die besten Ergebnisse
@@ -518,6 +526,28 @@ const DrugKitchen = () => {
                   )}
                 </For>
               </ol>
+              <div className="marking-group">
+                <input
+                  type="checkbox"
+                  id="marking"
+                  onChange={(e) => onInputChangeMarked(e)}
+                  value={true}
+                  checked={drug.marked}
+                />
+                <label htmlFor="marking">Kennzeichnungspflichtig</label>
+                <div className="info-icon" onClick={() => setOpenMark(true)}>
+                  <i class="bi bi-info-circle"></i>
+                </div>
+                <div
+                  className="marking-info-text"
+                  classList={{ show: openMark() }}
+                  use:clickOutside={() => setOpenMark(false)}
+                  onClick={() => setOpenMark(false)}
+                >
+                  Wenn ein Inhaltsstoff dieser Droge eine Kennzeichnungspflicht
+                  auf dem Etikett notwendig macht.
+                </div>
+              </div>
             </div>
           </div>
           <div className="multi-input grid-item">
