@@ -213,10 +213,15 @@ const DrugKitchen = () => {
 
   const onInputChangeMarked = (e) => {
     if (e.target.checked) {
-      setDrug("marked", e.target.value);
+      setDrug("marked", { state: e.target.value });
     } else {
-      setDrug("marked", undefined);
+      setDrug("marked", "");
     }
+  };
+
+  const onInputChangeMarkedValue = (e) => {
+    e.preventDefault();
+    setDrug("marked", { value: e.currentTarget.value });
   };
 
   function clearHighlight() {
@@ -284,12 +289,7 @@ const DrugKitchen = () => {
     clearHighlight();
   }
 
-  createEffect(() => {
-    // checkIfDrugNameIsInDb();
-    // if (tester) {
-    console.log(drug.marked);
-    // }
-  });
+  createEffect(() => {});
 
   return (
     <>
@@ -527,16 +527,18 @@ const DrugKitchen = () => {
                 </For>
               </ol>
               <div className="marking-group">
-                <input
-                  type="checkbox"
-                  id="marking"
-                  onChange={(e) => onInputChangeMarked(e)}
-                  value={true}
-                  checked={drug.marked}
-                />
-                <label htmlFor="marking">Kennzeichnungspflichtig</label>
-                <div className="info-icon" onClick={() => setOpenMark(true)}>
-                  <i class="bi bi-info-circle"></i>
+                <div className="wrapper align-center">
+                  <input
+                    type="checkbox"
+                    id="marking"
+                    onChange={onInputChangeMarked}
+                    value={true}
+                    checked={drug.marked ? true : false}
+                  />
+                  <label htmlFor="marking">Besonderheit</label>
+                  <div className="info-icon" onClick={() => setOpenMark(true)}>
+                    <i class="bi bi-info-circle"></i>
+                  </div>
                 </div>
                 <div
                   className="marking-info-text"
@@ -545,8 +547,18 @@ const DrugKitchen = () => {
                   onClick={() => setOpenMark(false)}
                 >
                   Wenn ein Inhaltsstoff dieser Droge eine Kennzeichnungspflicht
-                  auf dem Etikett notwendig macht.
+                  auf dem Etikett notwendig macht oder es Grenzwerte für
+                  bestimmte Inhaltsstoffe gibt.
                 </div>
+                <Show when={drug.marked}>
+                  <textarea
+                    name="marked"
+                    id="marking-value"
+                    value={drug.marked.value ? drug.marked.value : ""}
+                    onInput={onInputChangeMarkedValue}
+                    placeholder="Aufzählungen, die als Liste dargestellt werden sollen, mit einem '>' pro Eintrag einleiten (text > text > text > ...)."
+                  />
+                </Show>
               </div>
             </div>
           </div>

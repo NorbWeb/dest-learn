@@ -16,6 +16,7 @@ export function DrugDataProvider(props) {
     let data = querySnapshot.docs.map((doc) => doc.data());
     let id = querySnapshot.docs.map((doc) => doc.id);
     data.map((drug, index) => (drug.id = id[index]));
+    data.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0));
 
     let drugData = {
       allDrugs: data,
@@ -40,6 +41,13 @@ export function DrugDataProvider(props) {
       }
       drugData.categories.push(obj);
     }
+
+    categorieList.sort((a, b) => (a > b ? 1 : b > a ? -1 : 0));
+
+    drugData.categories.sort((a, b) =>
+      a.category > b.category ? 1 : b.category > a.category ? -1 : 0
+    );
+
     // console.log(drugData, categorieList);
     setData(drugData);
   };

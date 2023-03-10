@@ -6,7 +6,6 @@ import { A } from "@solidjs/router";
 
 const DrugList = (props) => {
   const [data] = useDrugData();
-  const [openMarked, setOpenMarked] = createSignal(false);
 
   // remove and add css class to displayed component
   function setClass(add) {
@@ -59,19 +58,9 @@ const DrugList = (props) => {
                           {drug.name}
                         </A>
                         <Show when={drug.marked}>
-                          <span
-                            className="marked-info"
-                            onMouseOver={() => setOpenMarked(true)}
-                            onMouseLeave={() => setOpenMarked(false)}
-                          >
-                            {" "}
-                            <i class="bi bi-info-circle"></i>
+                          <span className="marked-info">
+                            <i class="bi bi-exclamation-diamond"></i>
                           </span>
-                          <Show when={openMarked()}>
-                            <div className="marked-info-text shadow">
-                              Kennzeichnungspflichtig
-                            </div>
-                          </Show>
                         </Show>
                       </li>
                     )}

@@ -1,5 +1,5 @@
 import { useParams } from "@solidjs/router";
-import { createEffect, createSignal, Show } from "solid-js";
+import { createEffect, createSignal, For, Match, Show, Switch } from "solid-js";
 import { useDrugData } from "../../../Context/DrugDataContext";
 import { LoadingSpinner } from "../../Helper/LoadingSpinner/LoadingSpinner";
 import "./DrugDetail.scss";
@@ -45,28 +45,28 @@ const DrugDetail = () => {
             </div>
             <div className="divider" />
             <div className="drug-detail-body">
-              <div>
+              <div className="grid-img">
                 <img
                   className="card-img shadow"
-                  src={drug().img.url}
+                  src={drug().img.url ? drug().img.url : "/placeholder.svg"}
                   alt={drug().name}
                 />
                 <div className="tesa" />
               </div>
-              <div className="card-note info-item">
+              <div className="card-note grid-note">
                 <label className="bold">Notiz</label>
                 <div className="info-text">{drug().note}</div>
               </div>
-              <div className="info-group">
-                <div className="info-item">
+              <div className="info-group grid-group">
+                <div>
                   <label className="bold">Art</label>
                   <div className="info-text">{drug().type}</div>
                 </div>
-                <div className="info-item">
+                <div>
                   <label className="bold">Familie</label>
                   <div className="info-text">{drug().family}</div>
                 </div>
-                <div className="info-item">
+                <div>
                   <label className="bold">Herkunft</label>
                   <div className="info-text"> {drug().origin}</div>
                 </div>
@@ -96,7 +96,7 @@ const DrugDetail = () => {
                   </ul>
                 </div>
               </div>
-              <div className="list-box">
+              <div className="list-box grid-ingredients">
                 <label htmlFor="list-ingredients" className="bold">
                   Inhaltsstoffe
                 </label>
@@ -106,7 +106,7 @@ const DrugDetail = () => {
                   </For>
                 </ul>
               </div>
-              <div className="list-box">
+              <div className="list-box grid-use">
                 <label htmlFor="list-use" className="bold">
                   Verwendung
                 </label>
@@ -114,6 +114,27 @@ const DrugDetail = () => {
                   <For each={drug().use}>{(use) => <li>{use}</li>}</For>
                 </ul>
               </div>
+              <Show when={drug().marked}>
+                <div className="special-info grid-special">
+                  <label htmlFor="special-label" className="bold">
+                    Besonderheit
+                  </label>
+                  <Switch>
+                    <Match when={drug().marked.value.includes(">")}>
+                      <div className="list-box">
+                        <ul>
+                          <For each={drug().marked.value.split(">")}>
+                            {(item) => <li>{item}</li>}
+                          </For>
+                        </ul>
+                      </div>
+                    </Match>
+                    <Match when={!drug().marked.value.includes(">")}>
+                      <div className="info-text">{drug().marked.value}</div>
+                    </Match>
+                  </Switch>
+                </div>
+              </Show>
             </div>
           </div>
         </Show>

@@ -1,3 +1,5 @@
+@import "../../../Theme.scss";
+
 #drug-detail {
   padding-top: 1rem;
 
@@ -18,15 +20,40 @@
       border-radius: 0.75rem;
       $bg-color: rgba(247, 247, 162, 0.39);
       $bg-stripes: darken($bg-color, 40%);
-      display: flex;
-      align-items: flex-start;
-      flex-wrap: wrap;
+
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+      grid-template-rows: auto;
+      grid-template-areas:
+        "img img note note note note"
+        "group group group ingredients ingredients ingredients"
+        "use use use special special special";
       background-image: linear-gradient($bg-stripes 1px, transparent 1px);
       background-color: $bg-color;
       background-size: 100% 2rem;
       padding: 1rem 1.5rem;
       line-height: 1.5rem;
       gap: 1.5rem;
+
+      .grid-img {
+        grid-area: img;
+      }
+
+      .grid-note {
+        grid-area: note;
+      }
+      .grid-group {
+        grid-area: group;
+      }
+      .grid-ingredients {
+        grid-area: ingredients;
+      }
+      .grid-use {
+        grid-area: use;
+      }
+      .grid-special {
+        grid-area: special;
+      }
 
       .bold {
         font-weight: 700;
@@ -36,13 +63,7 @@
         padding-bottom: 1.5rem;
       }
 
-      .info-item {
-        width: 15rem;
-      }
-
       .list-box {
-        width: 15rem;
-
         ul {
           margin: 0;
         }
@@ -54,10 +75,24 @@
         }
       }
 
+      .special-info {
+        border-radius: 0.5rem;
+        border: 1px solid darken($info, 35%);
+        background-color: lighten($info, 30%);
+        background-color: adjust-color($info, $lightness: 30%);
+        padding: 0.5rem;
+        height: fit-content;
+
+        label,
+        .list-box li,
+        .info-text {
+          color: darken($info, 35%);
+        }
+      }
+
       .card-img {
         object-fit: contain;
-        width: 17rem;
-        height: 17rem;
+        width: 100%;
         border-radius: 0.25rem;
         background-color: #fff;
       }
@@ -81,9 +116,15 @@
 @media screen and (max-width: 768px) {
   #drug-detail {
     .drug-detail-container {
-      .card-img {
-        width: 17rem;
-        height: 17rem;
+      .drug-detail-body {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+          "img "
+          "note"
+          "group"
+          "ingredients"
+          "use"
+          "special";
       }
     }
   }
@@ -96,9 +137,6 @@
         flex-direction: column;
         margin-bottom: 1.5rem;
         gap: 1rem;
-      }
-      .card-img {
-        width: 100%;
       }
     }
   }
