@@ -308,6 +308,17 @@ const Editorial = () => {
     );
   };
 
+  function setHeight(e) {
+    let h = e.target.clientHeight;
+    let s = e.target.scrollHeight;
+    console.log(h, s);
+    if (h < s) {
+      e.target.style.height = `${s + 10}px`;
+    } else if (!e.target.value || e.target.value === "") {
+      e.target.style.height = `fit-content`;
+    }
+  }
+
   createEffect(() => {});
 
   detectTouch();
@@ -396,8 +407,10 @@ const Editorial = () => {
           type="text"
           name="description"
           className="description"
+          id="description"
           value={article.description}
           onChange={(e) => onInputChangeDescription(e)}
+          onInput={(e) => setHeight(e)}
         />
         <For each={article.headline}>
           {(headline, indexHeadline) => (
@@ -496,6 +509,8 @@ const Editorial = () => {
                                     indexContent()
                                   )
                                 }
+                                onInput={(e) => setHeight(e)}
+                                resize={false}
                               />
                               <DeleteContentButton
                                 indexHeadline={indexHeadline()}
@@ -521,6 +536,7 @@ const Editorial = () => {
                                     indexContent()
                                   )
                                 }
+                                onInput={(e) => setHeight(e)}
                               />
                               <DeleteContentButton
                                 indexHeadline={indexHeadline()}
@@ -579,6 +595,7 @@ const Editorial = () => {
                                     indexContent()
                                   )
                                 }
+                                onInput={(e) => setHeight(e)}
                               />
                               <DeleteContentButton
                                 indexHeadline={indexHeadline()}
@@ -604,6 +621,7 @@ const Editorial = () => {
                                     indexContent()
                                   )
                                 }
+                                onInput={(e) => setHeight(e)}
                               />
                               <DeleteContentButton
                                 indexHeadline={indexHeadline()}
