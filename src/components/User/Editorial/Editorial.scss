@@ -135,10 +135,7 @@
       }
 
       .content-wrapper {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        gap: 1rem;
+        $color: #808080;
 
         label {
           margin: 0;
@@ -148,21 +145,35 @@
           display: none;
         }
 
-        .content-box {
-          display: flex;
-          flex-direction: column;
+        .area {
           width: 100%;
-          gap: 1rem;
+          border-color: $color;
+          height: 3rem;
         }
 
-        .area {
-          height: 100%;
-          width: 100%;
+        .content-buttons {
+          margin-bottom: 1rem;
         }
 
         .content-element {
           display: flex;
           align-items: flex-start;
+          flex-direction: column;
+
+          .content-label {
+            padding: 0.25rem 0.5rem 0 0.5rem;
+            background-color: $color;
+            border-radius: 10px 10px 0 0;
+            color: #fff;
+            font-size: 0.85rem;
+          }
+
+          .content-body {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: row;
+            width: 100%;
+          }
 
           .drag-handle {
             padding: 0.25rem 0.25rem;
@@ -174,6 +185,7 @@
 
           input {
             width: 100%;
+            border-color: $color;
           }
 
           .content-input {
@@ -181,117 +193,9 @@
             border-top-left-radius: 0;
           }
 
-          .content-btn {
+          .close-btn {
             border-top-left-radius: 0;
             border-bottom-left-radius: 0;
-          }
-        }
-
-        .content-text {
-          $color: #808080;
-          border-color: $color;
-
-          &.content-btn {
-            background-color: $color;
-            color: #fff;
-          }
-
-          textarea {
-            border-color: $color;
-          }
-          .close-btn,
-          .drag-handle {
-            background-color: $color;
-            border-color: $color;
-            i {
-              color: #fff;
-            }
-          }
-        }
-
-        .content-quote {
-          $color: #bbb803;
-          border-color: $color;
-
-          &.content-btn {
-            background-color: $color;
-            color: #fff;
-          }
-          textarea {
-            border-color: $color;
-          }
-          .close-btn,
-          .drag-handle {
-            background-color: $color;
-            border-color: $color;
-            i {
-              color: #fff;
-            }
-          }
-        }
-
-        .content-formula {
-          $color: #038f2d;
-          border-color: $color;
-
-          &.content-btn {
-            background-color: $color;
-            color: #fff;
-          }
-          textarea {
-            border-color: $color;
-          }
-          .close-btn,
-          .drag-handle {
-            background-color: $color;
-            border-color: $color;
-            i {
-              color: #fff;
-            }
-          }
-        }
-
-        .content-img {
-          $color: #a412c9;
-          border-color: $color;
-
-          &.content-btn {
-            background-color: $color;
-            color: #fff;
-          }
-          input {
-            border-color: $color;
-            border-radius: 0;
-          }
-          .close-btn,
-          .drag-handle {
-            background-color: $color;
-            border-color: $color;
-            height: 2.15rem;
-            i {
-              color: #fff;
-            }
-          }
-        }
-
-        .content-link {
-          $color: #43a9fc;
-          border-color: $color;
-
-          &.content-btn {
-            background-color: $color;
-            color: #fff;
-          }
-          textarea {
-            border-color: $color;
-          }
-          .close-btn,
-          .drag-handle {
-            background-color: $color;
-            border-color: $color;
-            i {
-              color: #fff;
-            }
           }
         }
       }
@@ -325,14 +229,6 @@
       .headline-body {
         flex-wrap: wrap;
 
-        .content-wrapper {
-          .content-buttons {
-            flex-wrap: wrap;
-          }
-          .content-element:not(.content-img) {
-            min-height: 7.5rem;
-          }
-        }
         .content-menu {
           flex-direction: row;
         }

@@ -7,7 +7,7 @@ const Sidebar = (props) => {
     { name: "Technologie", icon:'/icons/icons8-chemiefabrik-2-48.png', navItems: ["Destillation"] },
     { name: "Mathematik", icon:'/icons/icons8-taschenrechner-48.png', navItems: ["Einheiten"] },
     { name: "Drogenkunde", icon:'/icons/icons8-naturkost-48.png', navItems: ["Sammlung", "Lernen"] },
-    { name: "Spirituosen", icon:'/icons/icons8-rum-48.png', navItems: ["Rechtliches"] },
+    { name: "Spirituosen", icon:'/icons/icons8-rum-48.png', navItems: ['Kategorien',"Rechtliches"] },
   ]);
 
   return (

@@ -35,4 +35,3 @@ All interesting things that comes in mind.
     - [x] Do we need nav items User and Admin? Something else? (disabled now)
 - [x] Sidebar responsiveness
 - [x] About us section
-

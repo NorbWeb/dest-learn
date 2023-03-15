@@ -7,15 +7,52 @@ const DocLayout = (props) => {
   let worker = {};
   for (let i = 0; i < item.headline.length; i++) {
     worker[item.headline[i].name] = {
-      content: item.headline[i].content.filter(
-        (f) => f.type === "text" && f.value.includes("|")
-      ),
+      content: item.headline[i].content.filter((f) => f.type === "heading"),
     };
+  }
+
+  function listSplit(content) {
+    let worker = content.value.split("\n");
+    let result = [];
+    let target = 0;
+    for (let i = 0; i < worker.length; i++) {
+      if (worker[i].charAt(0) != ">") {
+        result.push(worker[i]);
+      } else if (
+        worker[i].charAt(0) === ">" &&
+        worker[i - 1].charAt(0) != ">"
+      ) {
+        target = i;
+        result.push([worker[i].split(">").join("")]);
+      } else if (
+        worker[i].charAt(0) === ">" &&
+        worker[i - 1].charAt(0) === ">"
+      ) {
+        result[result.length - 1].push(worker[i].split(">").join(""));
+      }
+    }
+
+    return (
+      <For each={result}>
+        {(item) => (
+          <Switch>
+            <Match when={typeof item === "string"}>
+              <li>{item}</li>
+            </Match>
+            <Match when={typeof item === "object"}>
+              <ul className="secondary-content-list">
+                <For each={item}>{(sub) => <li>{sub}</li>}</For>
+              </ul>
+            </Match>
+          </Switch>
+        )}
+      </For>
+    );
   }
 
   createEffect(() => {
     // console.log(item.headline);
-    // console.log(worker);
+    // console.log(listTest);
   });
 
   return (
@@ -35,14 +72,9 @@ const DocLayout = (props) => {
                     <Switch>
                       <Match when={content.type === "text"}>
                         <div className="text-box">
-                          {content.value.includes("|") ? (
-                            <h4 id={content.value.split("|")[0]}>
-                              {content.value.split("|")[0]}
-                            </h4>
-                          ) : null}
-                          {content.value.includes("|")
-                            ? content.value.split("|")[1]
-                            : content.value}
+                          <For each={content.value.split("\n")}>
+                            {(item) => <p>{item}</p>}
+                          </For>
                         </div>
                       </Match>
                       <Match when={content.type === "formula"}>
@@ -76,6 +108,14 @@ const DocLayout = (props) => {
                             : content.value}
                         </p>
                       </Match>
+                      <Match when={content.type === "list"}>
+                        <ul className="primary-content-list">{listSplit(content)}</ul>
+                      </Match>
+                      <Match when={content.type === "heading"}>
+                        <h4 id={content.value}
+                        className='heading'
+                        >{content.value}</h4>
+                      </Match>
                     </Switch>
                   )}
                 </For>
@@ -106,13 +146,13 @@ const DocLayout = (props) => {
                     <ul className="sub-list">
                       <For
                         each={item.content.filter(
-                          (f) => f.type === "text" && f.value.includes("|")
+                          (f) => f.type === "heading"
                         )}
                       >
                         {(content) => (
                           <li>
-                            <a href={`#${content.value.split("|")[0]}`}>
-                              {content.value.split("|")[0]}
+                            <a href={`#${content.value}`}>
+                              {content.value}
                             </a>
                           </li>
                         )}

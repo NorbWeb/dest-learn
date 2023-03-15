@@ -7,6 +7,17 @@ import { useContent } from "../Context/ContentContext";
 const Routes = () => {
   const [data, { getArticle }] = useContent();
 
+  const Kategorien = () => {
+    return (
+      <>
+        <Show when={data().spirituosen} fallback={<LoadingSpinner />}>
+          <DocLayout {...getArticle("spirituosen", "Kategorien")} />
+        </Show>
+      </>
+    );
+  };
+
+
   const Verordnung = () => {
     return (
       <>
@@ -19,6 +30,7 @@ const Routes = () => {
 
   return (
     <>
+      <Route path="kategorien" component={Kategorien} />
       <Route path="rechtliches" component={Verordnung} />
     </>
   );

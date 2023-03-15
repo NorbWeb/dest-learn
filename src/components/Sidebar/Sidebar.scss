@@ -1,4 +1,4 @@
-@import '../../Theme.scss';
+@import "../../Theme.scss";
 
 .offcanvas-body {
   .offcanvas-list {
@@ -24,7 +24,7 @@
     border-radius: 0.5rem;
     font-size: 0.875rem;
 
-    &.sidebar-active{
+    &.sidebar-active {
       background-color: lighten($primary, 45%);
       font-weight: 600;
     }
@@ -32,7 +32,8 @@
 
   .menu-block {
     margin-bottom: 1rem;
-    li{
+    break-inside: avoid;
+    li {
       margin-bottom: 0.25rem;
     }
   }

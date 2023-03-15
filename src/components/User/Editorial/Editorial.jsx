@@ -272,11 +272,6 @@ const Editorial = () => {
 
     return (
       <>
-        <Show when={!isTouch()}>
-          <button className="btn secondary drag-handle">
-            <i class="bi bi-grip-vertical"></i>
-          </button>
-        </Show>
         <Show when={isTouch()}>
           <div className="wrapper col">
             <button
@@ -300,7 +295,7 @@ const Editorial = () => {
   const DeleteContentButton = (props) => {
     return (
       <button
-        className="btn secondary btn-sm content-btn close-btn"
+        className="btn btn-sm secondary close-btn"
         onClick={() => removeContent(props.indexHeadline, props.indexContent)}
       >
         <i class="bi bi-x"></i>
@@ -311,13 +306,56 @@ const Editorial = () => {
   function setHeight(e) {
     let h = e.target.clientHeight;
     let s = e.target.scrollHeight;
-    console.log(h, s);
     if (h < s) {
       e.target.style.height = `${s + 10}px`;
-    } else if (!e.target.value || e.target.value === "") {
-      e.target.style.height = `fit-content`;
     }
   }
+
+  const contentTamplates = [
+    {
+      name: "quote",
+      label: "Block-Quote",
+      placeholder:
+        "Ein Info-Feld für Anmerkungen oder Hinweise. Um Einführungstext fett zu machen, einen senkrechten Trennstrich benutzen: fett|normal.",
+    },
+    {
+      name: "text",
+      label: "Text",
+      placeholder: "Text kann mit Absätzen versehen werden.",
+    },
+    {
+      name: "formula",
+      label: "Formel",
+      placeholder:
+        "Formeln werden später so angezeigt, wie sie hier eingetragen werden.",
+    },
+    {
+      name: "link",
+      label: "Link",
+      placeholder:
+        "Den Link folgendermaßen mit senkrechtem Trennstrich eintragen: text|url.",
+    },
+    {
+      name: "list",
+      label: "Liste",
+      placeholder:
+        "Jeder Listeneintrag ist eine Zeile. Unterlisteneinträge werden mit '>' eingeleitet.",
+    },
+    {
+      name: "heading",
+      label: "Überschrift",
+      placeholder:
+        "Simple Zwischenüberschrift. Erzeugt einen Link in der Seitenliste.",
+    },
+    {
+      name: "img",
+      label: "Bild",
+    },
+  ];
+
+  contentTamplates.sort((a, b) =>
+    a.label > b.label ? 1 : b.label > a.label ? -1 : 0
+  );
 
   createEffect(() => {});
 
@@ -451,182 +489,109 @@ const Editorial = () => {
                   id={`${headline.name}-content`}
                 >
                   <label htmlFor="content">Inhalt</label>
-                  <div className="wrapper gap-1 content-buttons">
-                    <button
-                      className="btn secondary content-btn content-text"
-                      onClick={() => addContent(indexHeadline(), "text")}
-                    >
-                      Text
-                    </button>
-                    <button
-                      className="btn secondary content-btn content-quote"
-                      onClick={() => addContent(indexHeadline(), "quote")}
-                    >
-                      Block-Quote
-                    </button>
-                    <button
-                      className="btn secondary content-btn content-formula"
-                      onClick={() => addContent(indexHeadline(), "formula")}
-                    >
-                      Formel
-                    </button>
-                    <button
-                      className="btn secondary content-btn content-img"
-                      onClick={() => addContent(indexHeadline(), "img")}
-                    >
-                      Bild
-                    </button>
-                    <button
-                      className="btn secondary content-btn content-link"
-                      onClick={() => addContent(indexHeadline(), "link")}
-                    >
-                      Link
-                    </button>
+                  <div className="wrapper gap-1 content-buttons flex-wrap">
+                    <For each={contentTamplates}>
+                      {(button) => (
+                        <button
+                          className="btn secondary"
+                          onClick={() =>
+                            addContent(indexHeadline(), button.name)
+                          }
+                        >
+                          {button.label}
+                        </button>
+                      )}
+                    </For>
                   </div>
                   <div
                     id={`content-dragarea-${indexHeadline()}`}
                     className="content-box"
-                    on
                   >
                     <For each={headline.content}>
                       {(item, indexContent) => (
                         <Switch>
-                          <Match when={item.type === "text"}>
-                            <div className="content-element content-text">
-                              <PositionChangeButton
-                                indexHeadline={indexHeadline()}
-                                indexContent={indexContent()}
-                              />
-                              <textarea
-                                className="area content-input"
-                                name="text"
-                                placeholder="Jede Textbox ist ein Absatz. Absätze innerhalb einer Textbox sind nicht möglich. Für Teilüberschrift, diese links von einem senkrechten Trennstrich eintragen: Überschrift|Text"
-                                value={item.value}
-                                onChange={(e) =>
-                                  editContent(
-                                    e,
-                                    indexHeadline(),
-                                    indexContent()
-                                  )
+                          <For each={contentTamplates}>
+                            {(template) => (
+                              <Match
+                                when={
+                                  item.type === template.name &&
+                                  item.type != "img"
                                 }
-                                onInput={(e) => setHeight(e)}
-                                resize={false}
-                              />
-                              <DeleteContentButton
-                                indexHeadline={indexHeadline()}
-                                indexContent={indexContent()}
-                              />
-                            </div>
-                          </Match>
-                          <Match when={item.type === "formula"}>
-                            <div className="content-element content-formula">
-                              <PositionChangeButton
-                                indexHeadline={indexHeadline()}
-                                indexContent={indexContent()}
-                              />
-                              <textarea
-                                className="area content-input"
-                                name="formula"
-                                placeholder="Formeln werden später so angezeigt, wie sie hier eingetragen werden."
-                                value={item.value}
-                                onChange={(e) =>
-                                  editContent(
-                                    e,
-                                    indexHeadline(),
-                                    indexContent()
-                                  )
-                                }
-                                onInput={(e) => setHeight(e)}
-                              />
-                              <DeleteContentButton
-                                indexHeadline={indexHeadline()}
-                                indexContent={indexContent()}
-                              />
-                            </div>
-                          </Match>
+                              >
+                                <div className="content-element">
+                                  <label className="content-label">
+                                    {template.label}
+                                  </label>
+                                  <div className="content-body">
+                                    <PositionChangeButton
+                                      indexHeadline={indexHeadline()}
+                                      indexContent={indexContent()}
+                                    />
+                                    <textarea
+                                      className={`area content-input area-${template.name}`}
+                                      name={template.name}
+                                      placeholder={template.placeholder}
+                                      value={item.value}
+                                      onChange={(e) =>
+                                        editContent(
+                                          e,
+                                          indexHeadline(),
+                                          indexContent()
+                                        )
+                                      }
+                                      onInput={(e) => setHeight(e)}
+                                      onFocus={(e) => setHeight(e)}
+                                      onBlur={(e) =>
+                                        (e.target.style.height = "3rem")
+                                      }
+                                      resize={false}
+                                    />
+                                    <DeleteContentButton
+                                      indexHeadline={indexHeadline()}
+                                      indexContent={indexContent()}
+                                    />
+                                  </div>
+                                </div>
+                              </Match>
+                            )}
+                          </For>
                           <Match when={item.type === "img"}>
-                            <div className="content-element content-img">
-                              <PositionChangeButton
-                                indexHeadline={indexHeadline()}
-                                indexContent={indexContent()}
-                              />
-                              <input
-                                type="text"
-                                name="image-list"
-                                value={item.name ? item.name : ""}
-                                onChange={(e) =>
-                                  editContentFile(
-                                    e,
-                                    indexHeadline(),
-                                    indexContent()
-                                  )
-                                }
-                                list="images"
-                                className="content-input"
-                              />
-                              <datalist id="images">
-                                <For each={imageList()}>
-                                  {(img) => (
-                                    <option value={img.name}>{img.name}</option>
-                                  )}
-                                </For>
-                              </datalist>
-                              <DeleteContentButton
-                                indexHeadline={indexHeadline()}
-                                indexContent={indexContent()}
-                              />
-                            </div>
-                          </Match>
-                          <Match when={item.type === "link"}>
-                            <div className="content-element content-link">
-                              <PositionChangeButton
-                                indexHeadline={indexHeadline()}
-                                indexContent={indexContent()}
-                              />
-                              <textarea
-                                className="area content-input"
-                                name="link-url"
-                                placeholder="Den Link folgendermaßen mit senkrechtem Trennstrich eintragen: text|url."
-                                value={item.value}
-                                onChange={(e) =>
-                                  editContent(
-                                    e,
-                                    indexHeadline(),
-                                    indexContent()
-                                  )
-                                }
-                                onInput={(e) => setHeight(e)}
-                              />
-                              <DeleteContentButton
-                                indexHeadline={indexHeadline()}
-                                indexContent={indexContent()}
-                              />
-                            </div>
-                          </Match>
-                          <Match when={item.type === "quote"}>
-                            <div className="content-element content-quote">
-                              <PositionChangeButton
-                                indexHeadline={indexHeadline()}
-                                indexContent={indexContent()}
-                              />
-                              <textarea
-                                className="area content-input"
-                                name="text"
-                                placeholder="Ein Info-Feld für Anmerkungen oder Hinweise. Um Text auf der linken Seite fett zu machen, einen senkrechten Trennstrich benutzen: fett|normal"
-                                value={item.value}
-                                onChange={(e) =>
-                                  editContent(
-                                    e,
-                                    indexHeadline(),
-                                    indexContent()
-                                  )
-                                }
-                                onInput={(e) => setHeight(e)}
-                              />
-                              <DeleteContentButton
-                                indexHeadline={indexHeadline()}
-                                indexContent={indexContent()}
-                              />
+                            <div className="content-element">
+                              <label className="content-label">Bild</label>
+                              <div className="content-body">
+                                <PositionChangeButton
+                                  indexHeadline={indexHeadline()}
+                                  indexContent={indexContent()}
+                                />
+                                <input
+                                  type="text"
+                                  name="image-list"
+                                  value={item.name ? item.name : ""}
+                                  onChange={(e) =>
+                                    editContentFile(
+                                      e,
+                                      indexHeadline(),
+                                      indexContent()
+                                    )
+                                  }
+                                  list="images"
+                                  className="content-input"
+                                  placeholder="Bild wählen..."
+                                />
+                                <datalist id="images">
+                                  <For each={imageList()}>
+                                    {(img) => (
+                                      <option value={img.name}>
+                                        {img.name}
+                                      </option>
+                                    )}
+                                  </For>
+                                </datalist>
+                                <DeleteContentButton
+                                  indexHeadline={indexHeadline()}
+                                  indexContent={indexContent()}
+                                />
+                              </div>
                             </div>
                           </Match>
                         </Switch>
