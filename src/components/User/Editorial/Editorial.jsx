@@ -273,7 +273,7 @@ const Editorial = () => {
     return (
       <>
         <Show when={isTouch()}>
-          <div className="wrapper col">
+          <div className="drag-handle-wrapper">
             <button
               className="btn secondary drag-handle"
               onClick={() => indexUp()}
@@ -519,14 +519,16 @@ const Editorial = () => {
                                 }
                               >
                                 <div className="content-element">
-                                  <label className="content-label">
-                                    {template.label}
-                                  </label>
-                                  <div className="content-body">
+                                  <div className="content-header">
+                                    <label className="content-label">
+                                      {template.label}
+                                    </label>
                                     <PositionChangeButton
                                       indexHeadline={indexHeadline()}
                                       indexContent={indexContent()}
                                     />
+                                  </div>
+                                  <div className="content-body">
                                     <textarea
                                       className={`area content-input area-${template.name}`}
                                       name={template.name}
@@ -557,12 +559,14 @@ const Editorial = () => {
                           </For>
                           <Match when={item.type === "img"}>
                             <div className="content-element">
-                              <label className="content-label">Bild</label>
-                              <div className="content-body">
+                              <div className="content-header">
+                                <label className="content-label">Bild</label>
                                 <PositionChangeButton
                                   indexHeadline={indexHeadline()}
                                   indexContent={indexContent()}
                                 />
+                              </div>
+                              <div className="content-body">
                                 <input
                                   type="text"
                                   name="image-list"

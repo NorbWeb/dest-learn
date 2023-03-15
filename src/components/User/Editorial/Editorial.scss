@@ -153,6 +153,7 @@
 
         .content-buttons {
           margin-bottom: 1rem;
+          margin-top: 0.5rem;
         }
 
         .content-element {
@@ -168,6 +169,12 @@
             font-size: 0.85rem;
           }
 
+          .content-header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+          }
+
           .content-body {
             display: flex;
             align-items: flex-start;
@@ -175,9 +182,20 @@
             width: 100%;
           }
 
+          .drag-handle-wrapper {
+            margin-right: 40%;
+          }
+
           .drag-handle {
-            padding: 0.25rem 0.25rem;
-            border-radius: 0.25rem 0 0 0.25rem;
+            padding: 0 0.75rem;
+
+            &:nth-child(1) {
+              border-radius: 0.25rem 0 0 0;
+            }
+            &:nth-child(2) {
+              border-radius: 0 0.25rem 0 0;
+            }
+
             i {
               font-size: 1rem;
             }

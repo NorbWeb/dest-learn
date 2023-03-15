@@ -58,7 +58,8 @@ body {
   line-height: 1.5rem;
 
   &:disabled {
-    background-color: grey;
+    background-color: grey!important;
+    color: $text-light;
     border-color: grey;
     pointer-events: none;
   }
