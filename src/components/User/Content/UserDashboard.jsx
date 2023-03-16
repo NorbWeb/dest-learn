@@ -1,5 +1,6 @@
+import { useNavigate } from "@solidjs/router";
 import { updateProfile } from "firebase/auth";
-import { createEffect, For } from "solid-js";
+import { createEffect, For, Show } from "solid-js";
 import { createStore } from "solid-js/store";
 import { useAuth } from "../../../Context/AuthContext";
 import { Card } from "./Card";
@@ -7,6 +8,8 @@ import "./UserDashboard.scss";
 
 const UserDashboard = () => {
   const [user] = useAuth();
+  const adminUsers = import.meta.env.VITE_ADMIN.split(",");
+  const navigate = useNavigate();
   const [userProfile, setUserProfile] = createStore({
     id: "",
     name: "",
@@ -88,6 +91,11 @@ const UserDashboard = () => {
       <div className="box">
         <For each={props}>{(section) => <Card props={section} />}</For>
       </div>
+      <Show when={adminUsers.includes(user().uid)}>
+        <button className="btn secondary" onClick={() => navigate('/admin')}>
+          Admin
+        </button>
+      </Show>
     </>
   );
 };

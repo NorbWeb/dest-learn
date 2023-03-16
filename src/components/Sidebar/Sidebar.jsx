@@ -5,7 +5,7 @@ import "./Sidebar.scss";
 const Sidebar = (props) => {
   const [item, setItem] = createSignal([
     { name: "Technologie", icon:'/icons/icons8-chemiefabrik-2-48.png', navItems: ["Destillation"] },
-    { name: "Mathematik", icon:'/icons/icons8-taschenrechner-48.png', navItems: ["Einheiten"] },
+    { name: "Mathematik", icon:'/icons/icons8-taschenrechner-48.png', navItems: ["Einheiten", "Flächen & Volumen"] },
     { name: "Drogenkunde", icon:'/icons/icons8-naturkost-48.png', navItems: ["Sammlung", "Lernen"] },
     { name: "Spirituosen", icon:'/icons/icons8-rum-48.png', navItems: ['Kategorien',"Rechtliches"] },
   ]);

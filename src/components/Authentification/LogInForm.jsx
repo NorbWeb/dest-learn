@@ -8,12 +8,10 @@ const LogInForm = () => {
   const [user] = useAuth();
   const [email, setEmail] = createSignal("");
   const [password, setPassword] = createSignal("");
-
   const handelLogin = (event) => {
     event.preventDefault();
     logginEmailPassword(email(), password(), showValidationError);
   };
-
   const navigate = useNavigate();
   const showValidationError = (message) => {
     let box = document.getElementById("logInError");
@@ -40,7 +38,7 @@ const LogInForm = () => {
   });
 
   return (
-    <div className='login-container'>
+    <div className="login-container">
       <div className="log-in-form">
         <h3>Willkommen zurück!</h3>
         <form onSubmit={handelLogin} className="form">

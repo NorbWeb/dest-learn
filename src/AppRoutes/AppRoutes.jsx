@@ -14,6 +14,7 @@ import { Routes_User } from "./R_User";
 import { Show } from "solid-js";
 import { useAuth } from "../Context/AuthContext";
 import { Impressum } from "../components/Impressum/Impressum";
+import { Admin } from "../components/Admin/Admin";
 
 const AppRoutes = () => {
   const [user] = useAuth();
@@ -44,10 +45,10 @@ const AppRoutes = () => {
       <Route path="user" component={User}>
         <Routes_User />
       </Route>
-      {/* <Route
+      <Route
         path="admin"
-        element={<DefaultComponent name="Admin Dashboard" back />}
-      ></Route> */}
+        component={Admin}
+      ></Route>
       <Route path="about" component={About} />
       <Route path="impressum" component={Impressum} />
 

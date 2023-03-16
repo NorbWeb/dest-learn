@@ -17,9 +17,20 @@ const Routes = () => {
     );
   };
 
+  const FlächenVolumen = () => {
+    return (
+      <>
+        <Show when={data().mathematik} fallback={<LoadingSpinner />}>
+          <DocLayout {...getArticle("mathematik", "Flächen & Volumen")} />
+        </Show>
+      </>
+    );
+  };
+
   return (
     <>
       <Route path="einheiten" component={Einheiten} />
+      <Route path="flächen & volumen" component={FlächenVolumen} />
     </>
   );
 };

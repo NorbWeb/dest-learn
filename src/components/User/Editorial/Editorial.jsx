@@ -152,12 +152,13 @@ const Editorial = () => {
     setArticle("headline", indexHeadline, { content: [...arr] });
   }
 
-  function toggleView(name, index) {
+  function toggleView(name) {
     let content = document.getElementById(`${name}-content`);
     let button = document.getElementById(`${name}-button`);
     if (content.classList.contains("hide")) {
       content.classList.remove("hide");
       button.innerHTML = '<i class="bi bi-caret-up"></i>';
+
       let list = document.getElementsByClassName("area");
       for (let i = 0; i < list.length; i++) {
         let s = list[i].scrollHeight;
@@ -217,6 +218,52 @@ const Editorial = () => {
       e.target.style.height = `${s + 10}px`;
     }
   }
+
+  const contentTamplates = [
+    {
+      name: "quote",
+      label: "Block-Quote",
+      placeholder:
+        "Ein Info-Feld für Anmerkungen oder Hinweise. Um Einführungstext fett zu machen, einen senkrechten Trennstrich benutzen: fett|normal.",
+    },
+    {
+      name: "text",
+      label: "Text",
+      placeholder: "Text kann mit Absätzen versehen werden.",
+    },
+    {
+      name: "formula",
+      label: "Formel",
+      placeholder:
+        "Formeln werden später so angezeigt, wie sie hier eingetragen werden.",
+    },
+    {
+      name: "link",
+      label: "Link",
+      placeholder:
+        "Den Link folgendermaßen mit senkrechtem Trennstrich eintragen: text|url.",
+    },
+    {
+      name: "list",
+      label: "Liste",
+      placeholder:
+        "Jeder Listeneintrag ist eine Zeile. Unterlisteneinträge werden mit '>' eingeleitet.",
+    },
+    {
+      name: "heading",
+      label: "Überschrift",
+      placeholder:
+        "Simple Zwischenüberschrift. Erzeugt einen Link in der Seitenliste.",
+    },
+    {
+      name: "img",
+      label: "Bild",
+    },
+  ];
+
+  contentTamplates.sort((a, b) =>
+    a.label > b.label ? 1 : b.label > a.label ? -1 : 0
+  );
 
   // ################## DRAG & DROP ##################
 
@@ -315,52 +362,6 @@ const Editorial = () => {
       </button>
     );
   };
-
-  const contentTamplates = [
-    {
-      name: "quote",
-      label: "Block-Quote",
-      placeholder:
-        "Ein Info-Feld für Anmerkungen oder Hinweise. Um Einführungstext fett zu machen, einen senkrechten Trennstrich benutzen: fett|normal.",
-    },
-    {
-      name: "text",
-      label: "Text",
-      placeholder: "Text kann mit Absätzen versehen werden.",
-    },
-    {
-      name: "formula",
-      label: "Formel",
-      placeholder:
-        "Formeln werden später so angezeigt, wie sie hier eingetragen werden.",
-    },
-    {
-      name: "link",
-      label: "Link",
-      placeholder:
-        "Den Link folgendermaßen mit senkrechtem Trennstrich eintragen: text|url.",
-    },
-    {
-      name: "list",
-      label: "Liste",
-      placeholder:
-        "Jeder Listeneintrag ist eine Zeile. Unterlisteneinträge werden mit '>' eingeleitet.",
-    },
-    {
-      name: "heading",
-      label: "Überschrift",
-      placeholder:
-        "Simple Zwischenüberschrift. Erzeugt einen Link in der Seitenliste.",
-    },
-    {
-      name: "img",
-      label: "Bild",
-    },
-  ];
-
-  contentTamplates.sort((a, b) =>
-    a.label > b.label ? 1 : b.label > a.label ? -1 : 0
-  );
 
   createEffect(() => {});
 
