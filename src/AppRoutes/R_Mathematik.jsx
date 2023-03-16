@@ -30,7 +30,7 @@ const Routes = () => {
   return (
     <>
       <Route path="einheiten" component={Einheiten} />
-      <Route path="flächen & volumen" component={FlächenVolumen} />
+      <Route path="flächen-und-volumen" component={FlächenVolumen} />
     </>
   );
 };
