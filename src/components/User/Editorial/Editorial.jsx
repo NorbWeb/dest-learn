@@ -158,6 +158,11 @@ const Editorial = () => {
     if (content.classList.contains("hide")) {
       content.classList.remove("hide");
       button.innerHTML = '<i class="bi bi-caret-up"></i>';
+      let list = document.getElementsByClassName("area");
+      for (let i = 0; i < list.length; i++) {
+        let s = list[i].scrollHeight;
+        list[i].style.height = `${s + 10}px`;
+      }
     } else {
       content.classList.add("hide");
       button.innerHTML = '<i class="bi bi-caret-down"></i>';
@@ -202,6 +207,14 @@ const Editorial = () => {
       setIsTouch(true);
     } else {
       setIsTouch(false);
+    }
+  }
+
+  function setHeight(e) {
+    let h = e.target.clientHeight;
+    let s = e.target.scrollHeight;
+    if (h < s) {
+      e.target.style.height = `${s + 10}px`;
     }
   }
 
@@ -302,14 +315,6 @@ const Editorial = () => {
       </button>
     );
   };
-
-  function setHeight(e) {
-    let h = e.target.clientHeight;
-    let s = e.target.scrollHeight;
-    if (h < s) {
-      e.target.style.height = `${s + 10}px`;
-    }
-  }
 
   const contentTamplates = [
     {
@@ -459,148 +464,148 @@ const Editorial = () => {
                     {headline.name != "" ? headline.name : "Neuer Abschnitt"}
                   </div>
                 </legend>
-                <div
-                  className="input-wrapper show"
-                  id={`${headline.name}-input`}
-                >
-                  <label htmlFor="id">Laufende-Nr.</label>
-                  <input
-                    className="field"
-                    type="number"
-                    name="id"
-                    value={headline.id}
-                    onChange={(e) =>
-                      onInputChangeField(e, indexHeadline(), "id")
-                    }
-                  />
-                  <label htmlFor="name">Name</label>
-                  <input
-                    className="field"
-                    type="text"
-                    name="name"
-                    value={headline.name}
-                    onChange={(e) =>
-                      onInputChangeField(e, indexHeadline(), "name")
-                    }
-                  />
-                </div>
-                <div
-                  className="content-wrapper hide"
-                  id={`${headline.name}-content`}
-                >
-                  <label htmlFor="content">Inhalt</label>
-                  <div className="wrapper gap-1 content-buttons flex-wrap">
-                    <For each={contentTamplates}>
-                      {(button) => (
-                        <button
-                          className="btn secondary"
-                          onClick={() =>
-                            addContent(indexHeadline(), button.name)
-                          }
-                        >
-                          {button.label}
-                        </button>
-                      )}
-                    </For>
+                <div className="structure-wrapper">
+                  <div className="input-wrapper" id={`${headline.name}-input`}>
+                    <div className="wrapper col">
+                      <label htmlFor="id">Laufende-Nr.</label>
+                      <input
+                        className="field"
+                        type="number"
+                        name="id"
+                        value={headline.id}
+                        onChange={(e) =>
+                          onInputChangeField(e, indexHeadline(), "id")
+                        }
+                      />
+                    </div>
+                    <div className="wrapper col">
+                      <label htmlFor="name">Name</label>
+                      <input
+                        className="field"
+                        type="text"
+                        name="name"
+                        value={headline.name}
+                        onChange={(e) =>
+                          onInputChangeField(e, indexHeadline(), "name")
+                        }
+                      />
+                    </div>
                   </div>
                   <div
-                    id={`content-dragarea-${indexHeadline()}`}
-                    className="content-box"
+                    className="content-wrapper hide"
+                    id={`${headline.name}-content`}
                   >
-                    <For each={headline.content}>
-                      {(item, indexContent) => (
-                        <Switch>
-                          <For each={contentTamplates}>
-                            {(template) => (
-                              <Match
-                                when={
-                                  item.type === template.name &&
-                                  item.type != "img"
-                                }
-                              >
-                                <div className="content-element">
-                                  <div className="content-header">
-                                    <label className="content-label">
-                                      {template.label}
-                                    </label>
-                                    <PositionChangeButton
-                                      indexHeadline={indexHeadline()}
-                                      indexContent={indexContent()}
-                                    />
-                                  </div>
-                                  <div className="content-body">
-                                    <textarea
-                                      className={`area content-input area-${template.name}`}
-                                      name={template.name}
-                                      placeholder={template.placeholder}
-                                      value={item.value}
-                                      onChange={(e) =>
-                                        editContent(
-                                          e,
-                                          indexHeadline(),
-                                          indexContent()
-                                        )
-                                      }
-                                      onInput={(e) => setHeight(e)}
-                                      onFocus={(e) => setHeight(e)}
-                                      onBlur={(e) =>
-                                        (e.target.style.height = "3rem")
-                                      }
-                                      resize={false}
-                                    />
-                                    <DeleteContentButton
-                                      indexHeadline={indexHeadline()}
-                                      indexContent={indexContent()}
-                                    />
-                                  </div>
-                                </div>
-                              </Match>
-                            )}
-                          </For>
-                          <Match when={item.type === "img"}>
-                            <div className="content-element">
-                              <div className="content-header">
-                                <label className="content-label">Bild</label>
-                                <PositionChangeButton
-                                  indexHeadline={indexHeadline()}
-                                  indexContent={indexContent()}
-                                />
-                              </div>
-                              <div className="content-body">
-                                <input
-                                  type="text"
-                                  name="image-list"
-                                  value={item.name ? item.name : ""}
-                                  onChange={(e) =>
-                                    editContentFile(
-                                      e,
-                                      indexHeadline(),
-                                      indexContent()
-                                    )
+                    <label htmlFor="content">Inhalt</label>
+                    <div className="wrapper gap-1 content-buttons flex-wrap">
+                      <For each={contentTamplates}>
+                        {(button) => (
+                          <button
+                            className="btn secondary btn-sm"
+                            onClick={() =>
+                              addContent(indexHeadline(), button.name)
+                            }
+                          >
+                            {button.label}
+                          </button>
+                        )}
+                      </For>
+                    </div>
+                    <div
+                      id={`content-dragarea-${indexHeadline()}`}
+                      className="content-box"
+                    >
+                      <For each={headline.content}>
+                        {(item, indexContent) => (
+                          <Switch>
+                            <For each={contentTamplates}>
+                              {(template) => (
+                                <Match
+                                  when={
+                                    item.type === template.name &&
+                                    item.type != "img"
                                   }
-                                  list="images"
-                                  className="content-input"
-                                  placeholder="Bild wählen..."
-                                />
-                                <datalist id="images">
-                                  <For each={imageList()}>
-                                    {(img) => (
-                                      <option value={img.name}>
-                                        {img.name}
-                                      </option>
-                                    )}
-                                  </For>
-                                </datalist>
-                                <DeleteContentButton
-                                  indexHeadline={indexHeadline()}
-                                  indexContent={indexContent()}
-                                />
+                                >
+                                  <div className="content-element">
+                                    <div className="content-header">
+                                      <label className="content-label">
+                                        {template.label}
+                                      </label>
+                                      <PositionChangeButton
+                                        indexHeadline={indexHeadline()}
+                                        indexContent={indexContent()}
+                                      />
+                                    </div>
+                                    <div className="content-body">
+                                      <textarea
+                                        className={`area content-input area-${template.name}`}
+                                        name={template.name}
+                                        placeholder={template.placeholder}
+                                        value={item.value}
+                                        onChange={(e) =>
+                                          editContent(
+                                            e,
+                                            indexHeadline(),
+                                            indexContent()
+                                          )
+                                        }
+                                        onInput={(e) => setHeight(e)}
+                                        onFocus={(e) => setHeight(e)}
+                                        resize={false}
+                                      />
+                                      <DeleteContentButton
+                                        indexHeadline={indexHeadline()}
+                                        indexContent={indexContent()}
+                                      />
+                                    </div>
+                                  </div>
+                                </Match>
+                              )}
+                            </For>
+                            <Match when={item.type === "img"}>
+                              <div className="content-element">
+                                <div className="content-header">
+                                  <label className="content-label">Bild</label>
+                                  <PositionChangeButton
+                                    indexHeadline={indexHeadline()}
+                                    indexContent={indexContent()}
+                                  />
+                                </div>
+                                <div className="content-body">
+                                  <input
+                                    type="text"
+                                    name="image-list"
+                                    value={item.name ? item.name : ""}
+                                    onChange={(e) =>
+                                      editContentFile(
+                                        e,
+                                        indexHeadline(),
+                                        indexContent()
+                                      )
+                                    }
+                                    list="images"
+                                    className="content-input"
+                                    placeholder="Bild wählen..."
+                                  />
+                                  <datalist id="images">
+                                    <For each={imageList()}>
+                                      {(img) => (
+                                        <option value={img.name}>
+                                          {img.name}
+                                        </option>
+                                      )}
+                                    </For>
+                                  </datalist>
+                                  <DeleteContentButton
+                                    indexHeadline={indexHeadline()}
+                                    indexContent={indexContent()}
+                                  />
+                                </div>
                               </div>
-                            </div>
-                          </Match>
-                        </Switch>
-                      )}
-                    </For>
+                            </Match>
+                          </Switch>
+                        )}
+                      </For>
+                    </div>
                   </div>
                 </div>
                 <div className="content-menu">
@@ -620,37 +625,36 @@ const Editorial = () => {
                   </button>
                 </div>
               </fieldset>
-
-              <Toast
-                open={openToastDelete()}
-                type="warn"
-                message="Abschnitt wirklich löschen?"
-              >
-                <div className="wrapper gap-1 justify-center">
-                  <button
-                    type="button"
-                    className="btn secondary"
-                    onClick={() => removeHeadline(indexHeadline())}
-                  >
-                    Ja
-                  </button>
-                  <button
-                    type="button"
-                    className="btn secondary"
-                    onClick={() => setOpenToastDelete(false)}
-                  >
-                    Nein
-                  </button>
-                </div>
-              </Toast>
-              <Toast
-                open={openToastSave()}
-                type="success"
-                message="Artikel erfolgreich gespeichert!"
-              />
             </>
           )}
         </For>
+        <Toast
+          open={openToastDelete()}
+          type="warn"
+          message="Abschnitt wirklich löschen?"
+        >
+          <div className="wrapper gap-1 justify-center">
+            <button
+              type="button"
+              className="btn secondary"
+              onClick={() => removeHeadline(indexHeadline())}
+            >
+              Ja
+            </button>
+            <button
+              type="button"
+              className="btn secondary"
+              onClick={() => setOpenToastDelete(false)}
+            >
+              Nein
+            </button>
+          </div>
+        </Toast>
+        <Toast
+          open={openToastSave()}
+          type="success"
+          message="Artikel erfolgreich gespeichert!"
+        />
       </div>
       <div className="wrapper justify-end">
         <button

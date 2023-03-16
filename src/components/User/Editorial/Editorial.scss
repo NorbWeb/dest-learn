@@ -127,11 +127,12 @@
 
       .input-wrapper {
         display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        &.hide {
-          display: none;
-        }
+        flex-direction: row;
+        gap: 1rem;
+      }
+
+      .structure-wrapper {
+        width: 100%;
       }
 
       .content-wrapper {
@@ -149,7 +150,6 @@
         .area {
           width: 100%;
           border-color: $color;
-          height: 3rem;
         }
 
         .content-buttons {
@@ -247,6 +247,10 @@
 
       .headline-body {
         flex-wrap: wrap;
+
+        .input-wrapper{
+          flex-direction: column;
+        }
 
         .content-menu {
           flex-direction: row;
