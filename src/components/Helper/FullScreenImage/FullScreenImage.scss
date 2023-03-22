@@ -1,0 +1,33 @@
+.fullscreen-container {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1021;
+
+  .image-wrapper {
+    transform: translate(-50%, -50%);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+
+    .fullscreen-image {
+      max-width: 95vw;
+      max-height: 95vh;
+    }
+  }
+}
+
+@media screen and (max-width: 990px) {
+  .fullscreen-container {
+    .image-wrapper {
+      .fullscreen-image {
+        max-width: 95vw;
+        max-height: 95vh;
+        padding-top: 4rem;
+      }
+    }
+  }
+}
