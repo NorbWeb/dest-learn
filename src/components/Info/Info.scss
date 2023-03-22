@@ -67,8 +67,11 @@
       }
 
       .img-box {
+        margin: 1rem 0;
+        display: flex;
+        justify-content: center;
         img {
-          width: 100%;
+          cursor: pointer;
           max-height: 20rem;
           object-fit: contain;
         }

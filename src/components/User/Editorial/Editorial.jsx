@@ -229,7 +229,8 @@ const Editorial = () => {
     {
       name: "text",
       label: "Text",
-      placeholder: "Text kann mit Absätzen versehen werden.",
+      placeholder:
+        "Text kann mit Absätzen versehen werden. Um Wörter fett zu machen, diese in '|' einschließen: text |fett| text.",
     },
     {
       name: "formula",
@@ -436,12 +437,11 @@ const Editorial = () => {
             onClick={() => setOpenInfo(false)}
             use:clickOutside={() => setOpenInfo(false)}
           >
-            Einige Inhalte können mit einem senkrechten Trennstrich ("|")
-            modifiziert werden. Dieser wird zwischen die Inhalte gesetzt, sodass
-            auf der linken Seite die Modifikation und auf der rechten der Inhalt
-            steht. Das Vorgehen ist immer gleich, nur die Auswirkung ist anders
-            - die Schreibweise kann ohne Leerzeichen erfolgen: Modifikation |
-            Inhalt.
+            Einige Inhalte können mit einem Modifikator angepasst werden. Genaue
+            Anweisung, wie und ob ein Modifikator eingesetzt werden kann,
+            erfolgt in dem jeweiligen Inhaltselement. Elemente können mit drag &
+            drop oder mit den Pfeilen (nur auf Touchscreens) neu angeordnet
+            werden.
           </div>
         </div>
       </div>
@@ -480,7 +480,7 @@ const Editorial = () => {
                       />
                     </div>
                     <div className="wrapper col">
-                      <label htmlFor="name">Name</label>
+                      <label htmlFor="name">Titel</label>
                       <input
                         className="field"
                         type="text"

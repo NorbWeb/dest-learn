@@ -1,8 +1,14 @@
 import { createEffect, createSignal, For, Match, Switch } from "solid-js";
+import { createStore } from "solid-js/store";
+import { FullScreenImage } from "../Helper/FullScreenImage/FullScreenImage";
 
 const DocLayout = (props) => {
   let item = props;
   const [openToc, setOpenToc] = createSignal(false);
+  const [handleFullScreenImage, setHandleFullScreenImage] = createStore({
+    open: false,
+    src: "",
+  });
 
   let worker = {};
   for (let i = 0; i < item.headline.length; i++) {
@@ -12,23 +18,17 @@ const DocLayout = (props) => {
   }
 
   function listSplit(content) {
-    let worker = content.value.split("\n");
+    let list = content.value.split("\n");
     let result = [];
     let target = 0;
-    for (let i = 0; i < worker.length; i++) {
-      if (worker[i].charAt(0) != ">") {
-        result.push(worker[i]);
-      } else if (
-        worker[i].charAt(0) === ">" &&
-        worker[i - 1].charAt(0) != ">"
-      ) {
+    for (let i = 0; i < list.length; i++) {
+      if (list[i].charAt(0) != ">") {
+        result.push(list[i]);
+      } else if (list[i].charAt(0) === ">" && list[i - 1].charAt(0) != ">") {
         target = i;
-        result.push([worker[i].split(">").join("")]);
-      } else if (
-        worker[i].charAt(0) === ">" &&
-        worker[i - 1].charAt(0) === ">"
-      ) {
-        result[result.length - 1].push(worker[i].split(">").join(""));
+        result.push([list[i].split(">").join("")]);
+      } else if (list[i].charAt(0) === ">" && list[i - 1].charAt(0) === ">") {
+        result[result.length - 1].push(list[i].split(">").join(""));
       }
     }
 
@@ -50,6 +50,29 @@ const DocLayout = (props) => {
     );
   }
 
+  function highlightText(content) {
+    if (!content.includes("|")) {
+      return <p>{content}</p>;
+    } else {
+      let text = content.split("");
+      let OESwitch = 0;
+      for (let i = 0; i < text.length; i++) {
+        if (OESwitch === 0 && text[i] === "|") {
+          text.splice(i, 1, "<strong class='highlight-text'>");
+          OESwitch = 1;
+        } else if (OESwitch === 1 && text[i] === "|") {
+          text.splice(i, 1, "</strong>");
+          OESwitch = 0;
+        }
+      }
+      let result = text.join("");
+      let element = document.createElement("p");
+      element.innerHTML = result;
+
+      return element;
+    }
+  }
+
   createEffect(() => {
     // console.log(item.headline);
     // console.log(listTest);
@@ -62,6 +85,11 @@ const DocLayout = (props) => {
         {item.description}
       </div>
       <div className="content">
+        <FullScreenImage
+          src={handleFullScreenImage.src}
+          open={handleFullScreenImage.open}
+          setOpen={setHandleFullScreenImage}
+        />
         <For each={item.headline}>
           {(headline) => (
             <div className="headline-box" id={headline.name}>
@@ -73,7 +101,7 @@ const DocLayout = (props) => {
                       <Match when={content.type === "text"}>
                         <div className="text-box">
                           <For each={content.value.split("\n")}>
-                            {(item) => <p>{item}</p>}
+                            {(item) => highlightText(item)}
                           </For>
                         </div>
                       </Match>
@@ -86,7 +114,15 @@ const DocLayout = (props) => {
                       </Match>
                       <Match when={content.type === "img"}>
                         <div className="img-box">
-                          <img src={content.value} />
+                          <img
+                            onClick={() =>
+                              setHandleFullScreenImage({
+                                open: true,
+                                src: content.value,
+                              })
+                            }
+                            src={content.value}
+                          />
                         </div>
                       </Match>
                       <Match when={content.type === "link"}>
@@ -109,12 +145,14 @@ const DocLayout = (props) => {
                         </p>
                       </Match>
                       <Match when={content.type === "list"}>
-                        <ul className="primary-content-list">{listSplit(content)}</ul>
+                        <ul className="primary-content-list">
+                          {listSplit(content)}
+                        </ul>
                       </Match>
                       <Match when={content.type === "heading"}>
-                        <h4 id={content.value}
-                        className='heading'
-                        >{content.value}</h4>
+                        <h3 id={content.value} className="heading">
+                          {content.value}
+                        </h3>
                       </Match>
                     </Switch>
                   )}
@@ -145,15 +183,11 @@ const DocLayout = (props) => {
                   {worker[item.name].content.length > 0 ? (
                     <ul className="sub-list">
                       <For
-                        each={item.content.filter(
-                          (f) => f.type === "heading"
-                        )}
+                        each={item.content.filter((f) => f.type === "heading")}
                       >
                         {(content) => (
                           <li>
-                            <a href={`#${content.value}`}>
-                              {content.value}
-                            </a>
+                            <a href={`#${content.value}`}>{content.value}</a>
                           </li>
                         )}
                       </For>
