@@ -67,6 +67,7 @@ const Editorial = () => {
           headline: filter[0].headline,
         });
       }
+      setDragOperator(filter[0].headline.length);
     } else {
       setArticle({
         id: "",
