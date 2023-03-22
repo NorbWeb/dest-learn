@@ -99,21 +99,21 @@ const DocLayout = (props) => {
                   {(content) => (
                     <Switch>
                       <Match when={content.type === "text"}>
-                        <div className="text-box">
+                        <div className="text-box content-block">
                           <For each={content.value.split("\n")}>
                             {(item) => highlightText(item)}
                           </For>
                         </div>
                       </Match>
                       <Match when={content.type === "formula"}>
-                        <div className="code-box">
+                        <div className="code-box content-block">
                           <pre>
                             <code>{content.value}</code>
                           </pre>
                         </div>
                       </Match>
                       <Match when={content.type === "img"}>
-                        <div className="img-box">
+                        <div className="img-box content-block">
                           <img
                             onClick={() =>
                               setHandleFullScreenImage({
@@ -126,14 +126,14 @@ const DocLayout = (props) => {
                         </div>
                       </Match>
                       <Match when={content.type === "link"}>
-                        <div className="external-link">
+                        <div className="external-link content-block">
                           <a href={content.value.split("|")[1]} target="_blank">
                             {content.value.split("|")[0]}
                           </a>
                         </div>
                       </Match>
                       <Match when={content.type === "quote"}>
-                        <p className="block-quote">
+                        <p className="block-quote content-block">
                           {content.value.includes("|") ? (
                             <span className="bold">
                               {content.value.split("|")[0]}
@@ -145,12 +145,12 @@ const DocLayout = (props) => {
                         </p>
                       </Match>
                       <Match when={content.type === "list"}>
-                        <ul className="primary-content-list">
+                        <ul className="primary-content-list content-block">
                           {listSplit(content)}
                         </ul>
                       </Match>
                       <Match when={content.type === "heading"}>
-                        <h3 id={content.value} className="heading">
+                        <h3 id={content.value} className="heading content-block">
                           {content.value}
                         </h3>
                       </Match>
