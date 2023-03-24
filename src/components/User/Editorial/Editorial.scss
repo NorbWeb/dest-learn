@@ -181,6 +181,17 @@
             align-items: flex-start;
             flex-direction: row;
             width: 100%;
+
+            .img-body {
+              width: 100%;
+              .img-input{
+                margin-bottom: 0;
+                border-radius: 0;
+              }
+              .img-alt {
+                border-top: none;
+              }
+            }
           }
 
           .drag-handle-wrapper {
@@ -248,7 +259,7 @@
       .headline-body {
         flex-wrap: wrap;
 
-        .input-wrapper{
+        .input-wrapper {
           flex-direction: column;
         }
 

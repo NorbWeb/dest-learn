@@ -1,3 +1,5 @@
+@import "../../../Theme.scss";
+
 .fullscreen-container {
   width: 100vw;
   height: 100vh;
@@ -16,6 +18,16 @@
     .fullscreen-image {
       max-width: 95vw;
       max-height: 95vh;
+      box-shadow: rgba(255, 226, 226, 0.25) 0px 25px 50px -12px;
+      border-radius: 0.25rem;
+    }
+
+    .fullscreen-caption {
+      color: $text;
+      width: fit-content;
+      background-color: #e7e7e7;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.5rem;
     }
   }
 }
@@ -26,7 +38,33 @@
       .fullscreen-image {
         max-width: 95vw;
         max-height: 95vh;
-        padding-top: 4rem;
+        margin-top: 2rem;
+      }
+      .fullscreen-caption {
+        font-size: 0.75rem;
+        max-width: 40vw;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 990px) and (orientation: landscape) {
+  .fullscreen-container {
+    .image-wrapper {
+      display: flex;
+      align-items: end;
+      justify-content: center;
+      flex-wrap: wrap;
+      width: 100%;
+
+      .fullscreen-image {
+        max-width: 95vw;
+        max-height: 90vh;
+        margin-top: 0.25rem;
+      }
+      .fullscreen-caption {
+        margin: 0.25rem 1rem;
+        max-width: 100%;
       }
     }
   }

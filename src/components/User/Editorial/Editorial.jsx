@@ -147,6 +147,18 @@ const Editorial = () => {
     }
   }
 
+  function editContentFileAlt(e, indexHeadline, indexContent) {
+    let inputValue = e.target.value;
+    setArticle(
+      "headline",
+      indexHeadline,
+      "content",
+      indexContent,
+      "alt",
+      inputValue
+    );
+  }
+
   function removeContent(indexHeadline, indexContent) {
     let arr = [...article.headline[indexHeadline].content];
     arr.splice(indexContent, 1);
@@ -516,6 +528,7 @@ const Editorial = () => {
                       id={`content-dragarea-${indexHeadline()}`}
                       className="content-box"
                     >
+                      {/* <<<<<<<<<<<<<<<< Content - not img >>>>>>>>>>>>>>>> */}
                       <For each={headline.content}>
                         {(item, indexContent) => (
                           <Switch>
@@ -563,6 +576,7 @@ const Editorial = () => {
                                 </Match>
                               )}
                             </For>
+                            {/* <<<<<<<<<<<<<<<< img >>>>>>>>>>>>>>>> */}
                             <Match when={item.type === "img"}>
                               <div className="content-element">
                                 <div className="content-header">
@@ -573,30 +587,46 @@ const Editorial = () => {
                                   />
                                 </div>
                                 <div className="content-body">
-                                  <input
-                                    type="text"
-                                    name="image-list"
-                                    value={item.name ? item.name : ""}
-                                    onChange={(e) =>
-                                      editContentFile(
-                                        e,
-                                        indexHeadline(),
-                                        indexContent()
-                                      )
-                                    }
-                                    list="images"
-                                    className="content-input"
-                                    placeholder="Bild wählen..."
-                                  />
-                                  <datalist id="images">
-                                    <For each={imageList()}>
-                                      {(img) => (
-                                        <option value={img.name}>
-                                          {img.name}
-                                        </option>
-                                      )}
-                                    </For>
-                                  </datalist>
+                                  <div className="img-body">
+                                    <input
+                                      type="text"
+                                      name="image-list"
+                                      value={item.name ? item.name : ""}
+                                      onChange={(e) =>
+                                        editContentFile(
+                                          e,
+                                          indexHeadline(),
+                                          indexContent()
+                                        )
+                                      }
+                                      list="images"
+                                      className="content-input img-input"
+                                      placeholder="Bild wählen..."
+                                    />
+                                    <datalist id="images">
+                                      <For each={imageList()}>
+                                        {(img) => (
+                                          <option value={img.name}>
+                                            {img.name}
+                                          </option>
+                                        )}
+                                      </For>
+                                    </datalist>
+                                    <input
+                                      type="text"
+                                      className="content-input img-alt"
+                                      name="image-alt"
+                                      value={item.alt ? item.alt : ""}
+                                      placeholder="Beschreibung"
+                                      onChange={(e) =>
+                                        editContentFileAlt(
+                                          e,
+                                          indexHeadline(),
+                                          indexContent()
+                                        )
+                                      }
+                                    />
+                                  </div>
                                   <DeleteContentButton
                                     indexHeadline={indexHeadline()}
                                     indexContent={indexContent()}

@@ -8,6 +8,8 @@ const DocLayout = (props) => {
   const [handleFullScreenImage, setHandleFullScreenImage] = createStore({
     open: false,
     src: "",
+    alt: "",
+    name: "",
   });
 
   let worker = {};
@@ -74,7 +76,6 @@ const DocLayout = (props) => {
   }
 
   createEffect(() => {
-    // console.log(item.headline);
     // console.log(listTest);
   });
 
@@ -89,6 +90,8 @@ const DocLayout = (props) => {
           src={handleFullScreenImage.src}
           open={handleFullScreenImage.open}
           setOpen={setHandleFullScreenImage}
+          name={handleFullScreenImage.name}
+          alt={handleFullScreenImage.alt}
         />
         <For each={item.headline}>
           {(headline) => (
@@ -98,6 +101,7 @@ const DocLayout = (props) => {
                 <For each={headline.content}>
                   {(content) => (
                     <Switch>
+                      {/* >>>>>>>>>>>>>>>> text <<<<<<<<<<<<<<<< */}
                       <Match when={content.type === "text"}>
                         <div className="text-box content-block">
                           <For each={content.value.split("\n")}>
@@ -105,6 +109,7 @@ const DocLayout = (props) => {
                           </For>
                         </div>
                       </Match>
+                      {/* >>>>>>>>>>>>>>>> formula <<<<<<<<<<<<<<<< */}
                       <Match when={content.type === "formula"}>
                         <div className="code-box content-block">
                           <pre>
@@ -112,12 +117,16 @@ const DocLayout = (props) => {
                           </pre>
                         </div>
                       </Match>
+                      {/* >>>>>>>>>>>>>>>> img <<<<<<<<<<<<<<<< */}
                       <Match when={content.type === "img"}>
                         <div className="img-box content-block">
                           <img
+                            alt={content.alt}
                             onClick={() =>
                               setHandleFullScreenImage({
                                 open: true,
+                                alt: content.alt,
+                                name: content.name,
                                 src: content.value,
                               })
                             }
@@ -125,6 +134,7 @@ const DocLayout = (props) => {
                           />
                         </div>
                       </Match>
+                      {/* >>>>>>>>>>>>>>>> link <<<<<<<<<<<<<<<< */}
                       <Match when={content.type === "link"}>
                         <div className="external-link content-block">
                           <a href={content.value.split("|")[1]} target="_blank">
@@ -132,6 +142,7 @@ const DocLayout = (props) => {
                           </a>
                         </div>
                       </Match>
+                      {/* >>>>>>>>>>>>>>>> quote <<<<<<<<<<<<<<<< */}
                       <Match when={content.type === "quote"}>
                         <p className="block-quote content-block">
                           {content.value.includes("|") ? (
@@ -144,13 +155,18 @@ const DocLayout = (props) => {
                             : content.value}
                         </p>
                       </Match>
+                      {/* >>>>>>>>>>>>>>>> list <<<<<<<<<<<<<<<< */}
                       <Match when={content.type === "list"}>
                         <ul className="primary-content-list content-block">
                           {listSplit(content)}
                         </ul>
                       </Match>
+                      {/* >>>>>>>>>>>>>>>> heading <<<<<<<<<<<<<<<< */}
                       <Match when={content.type === "heading"}>
-                        <h3 id={content.value} className="heading content-block">
+                        <h3
+                          id={content.value}
+                          className="heading content-block"
+                        >
                           {content.value}
                         </h3>
                       </Match>
