@@ -132,17 +132,17 @@ const Editorial = () => {
   function editContentFile(e, indexHeadline, indexContent) {
     if (e.target.value) {
       let name = e.target.value;
-      let arr = [...article.headline[indexHeadline].content];
-      let type = arr[indexContent].type;
       name;
       const storageRef = ref(storage, `content-images/${name}`);
       getDownloadURL(storageRef).then((downloadUrl) => {
-        arr.splice(indexContent, 1, {
-          type: type,
-          value: downloadUrl,
-          name: name,
-        });
-        setArticle("headline", indexHeadline, { content: [...arr] });
+        setArticle(
+          "headline",
+          indexHeadline,
+          "content",
+          indexContent,
+          "value",
+          downloadUrl
+        );
       });
     }
   }
@@ -155,6 +155,18 @@ const Editorial = () => {
       "content",
       indexContent,
       "alt",
+      inputValue
+    );
+  }
+
+  function editContentTextAndFile_text(e, indexHeadline, indexContent) {
+    let inputValue = e.target.value;
+    setArticle(
+      "headline",
+      indexHeadline,
+      "content",
+      indexContent,
+      "text",
       inputValue
     );
   }
@@ -272,6 +284,14 @@ const Editorial = () => {
     {
       name: "img",
       label: "Bild",
+      special: true,
+    },
+    {
+      name: "text-img",
+      label: "Text & Bild",
+      special: true,
+      placeholder:
+        'Text kann mit Absätzen versehen werden. Das Bild hat eine max Breite und Höhe, und wird immer rechts angezeigt. Um Wörter fett zu machen, diese in "|" einschließen: text |fett| text.',
     },
   ];
 
@@ -528,7 +548,7 @@ const Editorial = () => {
                       id={`content-dragarea-${indexHeadline()}`}
                       className="content-box"
                     >
-                      {/* <<<<<<<<<<<<<<<< Content - not img >>>>>>>>>>>>>>>> */}
+                      {/* <<<<<<<<<<<<<<<< Normal Content >>>>>>>>>>>>>>>> */}
                       <For each={headline.content}>
                         {(item, indexContent) => (
                           <Switch>
@@ -537,7 +557,7 @@ const Editorial = () => {
                                 <Match
                                   when={
                                     item.type === template.name &&
-                                    item.type != "img"
+                                    !template.special
                                   }
                                 >
                                   <div className="content-element">
@@ -576,7 +596,7 @@ const Editorial = () => {
                                 </Match>
                               )}
                             </For>
-                            {/* <<<<<<<<<<<<<<<< img >>>>>>>>>>>>>>>> */}
+                            {/* <<<<<<<<<<<<<<<< Special Content - img >>>>>>>>>>>>>>>> */}
                             <Match when={item.type === "img"}>
                               <div className="content-element">
                                 <div className="content-header">
@@ -625,6 +645,94 @@ const Editorial = () => {
                                           indexContent()
                                         )
                                       }
+                                    />
+                                  </div>
+                                  <DeleteContentButton
+                                    indexHeadline={indexHeadline()}
+                                    indexContent={indexContent()}
+                                  />
+                                </div>
+                              </div>
+                            </Match>
+                            {/* <<<<<<<<<<<<<<<< Special Content - text-img >>>>>>>>>>>>>>>> */}
+                            <Match when={item.type === "text-img"}>
+                              <div className="content-element">
+                                <div className="content-header">
+                                  <label className="content-label">
+                                    Text & Bild
+                                  </label>
+                                  <PositionChangeButton
+                                    indexHeadline={indexHeadline()}
+                                    indexContent={indexContent()}
+                                  />
+                                </div>
+                                <div className="content-body">
+                                  <div className="text-img-body">
+                                    <input
+                                      type="text"
+                                      name="image-list"
+                                      value={item.name ? item.name : ""}
+                                      onChange={(e) =>
+                                        editContentFile(
+                                          e,
+                                          indexHeadline(),
+                                          indexContent()
+                                        )
+                                      }
+                                      list="images"
+                                      className="content-input img-input"
+                                      placeholder="Bild wählen..."
+                                    />
+                                    <datalist id="images">
+                                      <For each={imageList()}>
+                                        {(img) => (
+                                          <option value={img.name}>
+                                            {img.name}
+                                          </option>
+                                        )}
+                                      </For>
+                                    </datalist>
+                                    <input
+                                      type="text"
+                                      className="content-input img-alt"
+                                      name="image-alt"
+                                      value={item.alt ? item.alt : ""}
+                                      placeholder="Bild Beschreibung"
+                                      onChange={(e) =>
+                                        editContentFileAlt(
+                                          e,
+                                          indexHeadline(),
+                                          indexContent()
+                                        )
+                                      }
+                                    />
+                                    <textarea
+                                      className={`area content-input area-${
+                                        contentTamplates.filter(
+                                          (f) => f.name === "text-img"
+                                        )[0].name
+                                      }`}
+                                      name={
+                                        contentTamplates.filter(
+                                          (f) => f.name === "text-img"
+                                        )[0].name
+                                      }
+                                      placeholder={
+                                        contentTamplates.filter(
+                                          (f) => f.name === "text-img"
+                                        )[0].placeholder
+                                      }
+                                      value={item.text ? item.text : ""}
+                                      onChange={(e) =>
+                                        editContentTextAndFile_text(
+                                          e,
+                                          indexHeadline(),
+                                          indexContent()
+                                        )
+                                      }
+                                      onInput={(e) => setHeight(e)}
+                                      onFocus={(e) => setHeight(e)}
+                                      resize={false}
                                     />
                                   </div>
                                   <DeleteContentButton

@@ -184,11 +184,26 @@
 
             .img-body {
               width: 100%;
-              .img-input{
+              .img-input {
                 margin-bottom: 0;
                 border-radius: 0;
               }
               .img-alt {
+                border-top: none;
+              }
+            }
+
+            .text-img-body {
+              width: 100%;
+              .img-input,
+              .img-alt {
+                margin-bottom: 0;
+                border-radius: 0;
+              }
+              .img-alt {
+                border-top: none;
+              }
+              .area-text-img {
                 border-top: none;
               }
             }

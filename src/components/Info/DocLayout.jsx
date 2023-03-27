@@ -82,7 +82,8 @@ const DocLayout = (props) => {
   return (
     <>
       <div className="intro">
-        <h1>{item.title}</h1>
+        <h1 className='intro-title'>{item.title}</h1>
+        <img src="/placeholder.svg" alt="" className='intro-img'/>
         {item.description}
       </div>
       <div className="content">
@@ -103,7 +104,11 @@ const DocLayout = (props) => {
                     <Switch>
                       {/* >>>>>>>>>>>>>>>> text <<<<<<<<<<<<<<<< */}
                       <Match when={content.type === "text"}>
-                        <div className="text-box content-block">
+                        <div
+                          className="text-box content-block"
+                          style={{ overflow: "auto" }}
+                        >
+                          {/* <img src="/placeholder.svg" style={{float: 'right', 'margin-left': '2rem'}}/> */}
                           <For each={content.value.split("\n")}>
                             {(item) => highlightText(item)}
                           </For>
@@ -132,6 +137,28 @@ const DocLayout = (props) => {
                             }
                             src={content.value}
                           />
+                        </div>
+                      </Match>
+                      {/* >>>>>>>>>>>>>>>> text-img <<<<<<<<<<<<<<<< */}
+                      <Match when={content.type === "text-img"}>
+                        <div className="text-img-box content-block">
+                          <img
+                            alt={content.alt ? content.alt : ""}
+                            onClick={() =>
+                              setHandleFullScreenImage({
+                                open: true,
+                                alt: content.alt,
+                                name: content.name,
+                                src: content.value,
+                              })
+                            }
+                            src={content.value ? content.value : ""}
+                          />
+                          <For
+                            each={content.text ? content.text.split("\n") : ""}
+                          >
+                            {(item) => highlightText(item)}
+                          </For>
                         </div>
                       </Match>
                       {/* >>>>>>>>>>>>>>>> link <<<<<<<<<<<<<<<< */}

@@ -37,7 +37,15 @@
   .intro {
     grid-area: intro;
 
-    h1 {
+    .intro-img {
+      max-height: 20rem;
+      object-fit: cover;
+      border-radius: 0.25rem;
+      width: 100%;
+    }
+
+    .intro-title {
+      font-size: calc(1.575rem + 1.5vw);
       margin-bottom: 1rem;
     }
   }
@@ -63,6 +71,12 @@
         padding-top: 5rem;
       }
 
+      .text-box {
+        p:first-of-type {
+          margin-top: 0;
+        }
+      }
+
       .code-box pre {
         $color: #d1e1f8;
         background-color: $color;
@@ -79,9 +93,27 @@
         img {
           cursor: pointer;
           max-height: 20rem;
-          object-fit: contain;
+          object-fit: cover;
           border-radius: 0.25rem;
-          max-width: 100%;
+          width: 100%;
+        }
+      }
+
+      .text-img-box {
+        overflow: auto;
+        p:first-of-type {
+          margin-top: 0;
+        }
+        img {
+          position: relative;
+          float: right;
+          z-index: 1;
+          cursor: pointer;
+          max-height: 15rem;
+          max-width: 15rem;
+          object-fit: cover;
+          border-radius: 0.25rem;
+          margin: 0.25rem 1rem 1rem 1rem;
         }
       }
     }
@@ -195,6 +227,20 @@
 
 @media screen and (max-width: 768px) {
   .main {
+    .content {
+      .content-box {
+        .text-img-box {
+          img {
+            float: none;
+            object-fit: contain;
+            border-radius: 0.25rem;
+            margin-left: 50%;
+            margin-right: 50%;
+            transform: translate(-50%);
+          }
+        }
+      }
+    }
     .toc {
       h3,
       .divider {
@@ -237,6 +283,27 @@
         }
         .sub-list {
           margin-top: 0.5rem;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) and (orientation: landscape) {
+  .main {
+    .content {
+      .content-box {
+        .text-img-box {
+          img {
+            float: right;
+            margin-left: 1rem;
+            margin-bottom: 1rem;
+            max-width: 15rem;
+            margin-left: 1rem;
+            margin-right: auto;
+            transform: translate(0%);
+            object-fit: cover;
+          }
         }
       }
     }
