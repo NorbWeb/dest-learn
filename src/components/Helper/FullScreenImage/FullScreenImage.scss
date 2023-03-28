@@ -17,7 +17,7 @@
 
     .fullscreen-image {
       max-width: 95vw;
-      max-height: 95vh;
+      max-height: 90vh;
       box-shadow: rgba(255, 226, 226, 0.25) 0px 25px 50px -12px;
       border-radius: 0.25rem;
     }
@@ -37,8 +37,8 @@
     .image-wrapper {
       .fullscreen-image {
         max-width: 95vw;
-        max-height: 95vh;
-        margin-top: 2rem;
+        max-height: 80vh;
+        margin-top: 3rem;
       }
       .fullscreen-caption {
         font-size: 0.75rem;

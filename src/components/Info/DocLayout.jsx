@@ -1,4 +1,4 @@
-import { createEffect, createSignal, For, Match, Switch } from "solid-js";
+import { createEffect, createSignal, For, Match, Show, Switch } from "solid-js";
 import { createStore } from "solid-js/store";
 import { FullScreenImage } from "../Helper/FullScreenImage/FullScreenImage";
 
@@ -75,15 +75,25 @@ const DocLayout = (props) => {
     }
   }
 
-  createEffect(() => {
-    // console.log(listTest);
-  });
+  const introImages = {
+    Destillation: {
+      src: "/moonshine.jpg",
+      alt: "Destillations Intro-Bild",
+    },
+  };
+  createEffect(() => {});
 
   return (
     <>
       <div className="intro">
-        <h1 className='intro-title'>{item.title}</h1>
-        <img src="/placeholder.svg" alt="" className='intro-img'/>
+        <h1 className="intro-title">{item.title}</h1>
+        <Show when={introImages[item.title]}>
+          <img
+            src={introImages[item.title].src}
+            alt={introImages[item.title].alt}
+            className="intro-img"
+          />
+        </Show>
         {item.description}
       </div>
       <div className="content">

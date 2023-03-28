@@ -132,17 +132,12 @@ const Editorial = () => {
   function editContentFile(e, indexHeadline, indexContent) {
     if (e.target.value) {
       let name = e.target.value;
-      name;
       const storageRef = ref(storage, `content-images/${name}`);
       getDownloadURL(storageRef).then((downloadUrl) => {
-        setArticle(
-          "headline",
-          indexHeadline,
-          "content",
-          indexContent,
-          "value",
-          downloadUrl
-        );
+        setArticle("headline", indexHeadline, "content", indexContent, {
+          value: downloadUrl,
+          name: name,
+        });
       });
     }
   }

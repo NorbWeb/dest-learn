@@ -42,6 +42,7 @@
       object-fit: cover;
       border-radius: 0.25rem;
       width: 100%;
+      margin-bottom: 1rem;
     }
 
     .intro-title {
@@ -53,9 +54,9 @@
   .content {
     grid-area: content;
 
-    .headline-box:not(:last-of-type) {
-      margin-bottom: 3rem;
-    }
+    // .headline-box:not(:last-of-type) {
+    //   margin-bottom: 3rem;
+    // }
 
     .content-block {
       margin: 1rem 0;
@@ -101,6 +102,7 @@
 
       .text-img-box {
         overflow: auto;
+        overflow-x: hidden;
         p:first-of-type {
           margin-top: 0;
         }
@@ -116,6 +118,16 @@
           margin: 0.25rem 1rem 1rem 1rem;
         }
       }
+
+      .primary-content-list {
+        padding-left: 1.5rem;
+        li {
+          padding-bottom: 0.5rem;
+        }
+        .secondary-content-list {
+          padding-left: 2rem;
+        }
+      }
     }
   }
 
@@ -123,6 +135,10 @@
     padding-top: 5rem;
     margin-top: -5rem;
     margin-bottom: 1rem;
+
+    &:first-of-type {
+      margin-top: -3rem;
+    }
   }
 
   .toc {
@@ -230,6 +246,7 @@
     .content {
       .content-box {
         .text-img-box {
+
           img {
             float: none;
             object-fit: contain;
@@ -237,6 +254,13 @@
             margin-left: 50%;
             margin-right: 50%;
             transform: translate(-50%);
+          }
+        }
+        .primary-content-list {
+          padding-left: 1.1rem;
+
+          .secondary-content-list {
+            padding-left: 1.25rem;
           }
         }
       }
@@ -294,6 +318,7 @@
     .content {
       .content-box {
         .text-img-box {
+
           img {
             float: right;
             margin-left: 1rem;
