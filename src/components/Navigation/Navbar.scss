@@ -140,6 +140,20 @@
         transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
       }
     }
+
+    #steam {
+      width: 2rem;
+      height: 2rem;
+      position: absolute;
+      top: -0.3rem;
+      right: -0.5rem;
+      opacity: 0;
+
+      &.effect {
+        animation: smoke 750ms ease-out;
+        transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+      }
+    }
   }
 
   .log-out-btn {
@@ -174,7 +188,7 @@
       height: 100%;
       background-color: #fff;
       margin-left: auto;
-      padding: 0 1.5rem ;
+      padding: 0 1.5rem;
 
       &.show {
         animation: menuSlideInRight 300ms ease both;
@@ -258,6 +272,23 @@
   }
   100% {
     transform: rotate(0deg) scale(1);
+  }
+}
+
+@keyframes smoke {
+  0% {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.5);
+  }
+
+  1% {
+    opacity: 1;
+    transform: rotate(90deg) scale(0.5);
+  }
+  100% {
+    opacity: 1;
+
+    transform: translateX(2rem) rotate(90deg) scale(1.2);
   }
 }
 

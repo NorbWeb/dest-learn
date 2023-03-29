@@ -74,6 +74,11 @@ const Navbar = () => {
     }
   }
 
+  function handleLogoAnimation() {
+    document.getElementById("logo").classList.add("effect");
+    document.getElementById("steam").classList.add("effect");
+  }
+
   createEffect(() => {});
 
   return (
@@ -124,16 +129,17 @@ const Navbar = () => {
 
         {/* logo button - go to landing page */}
         <A href="/" activeClass={false} className="no-style home-icon">
-          <button
-            onClick={() =>
-              document.getElementById("logo").classList.add("effect")
-            }
-            className="logo-btn"
-          >
+          <button onClick={() => handleLogoAnimation()} className="logo-btn">
             <img
-              src={Logo}
+              src="/icons/icons8-whisky-logo-96.png"
               alt="Logo"
               id="logo"
+              onAnimationEnd={(e) => e.currentTarget.classList.remove("effect")}
+            />
+            <img
+              src="/icons/icons8-wasserdampf-96.png"
+              alt="Steam"
+              id="steam"
               onAnimationEnd={(e) => e.currentTarget.classList.remove("effect")}
             />
           </button>
