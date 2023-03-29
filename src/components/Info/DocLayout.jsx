@@ -108,6 +108,7 @@ const DocLayout = (props) => {
           {(headline) => (
             <div className="headline-box" id={headline.name}>
               <h2 className="headline">{headline.name}</h2>
+              <div className='divider headline-divider'></div>
               <div className="content-box">
                 <For each={headline.content}>
                   {(content) => (
